@@ -1,0 +1,1 @@
+# blanat-app
