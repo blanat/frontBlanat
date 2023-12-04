@@ -8,9 +8,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.model.User;
+import com.example.myapplication.retrofit.RetrofitService;
+import com.example.myapplication.retrofit.UserApi;
+
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginScreen extends AppCompatActivity {
 
@@ -43,6 +55,8 @@ public class LoginScreen extends AppCompatActivity {
             }
         });
 
+        initializeComponents();
+
         linkSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,4 +65,57 @@ public class LoginScreen extends AppCompatActivity {
             }
         });
     }
+
+    private void initializeComponents() {
+        final EditText etEmail = findViewById(R.id.etEmail);
+        final EditText etPassword = findViewById(R.id.etPassword);
+        Button buttonLogin = findViewById(R.id.btnLogin);
+
+        RetrofitService retrofitService = new RetrofitService();
+        UserApi userApi = retrofitService.getRetrofit().create(UserApi.class);
+
+        buttonLogin.setOnClickListener(view -> {
+            String email = String.valueOf(etEmail.getText());
+            String password = String.valueOf(etPassword.getText());
+
+            // Email validation
+            if (!isValidEmail(email)) {
+                etEmail.setError("Invalid email address");
+                return;
+            }
+            User user = new User();
+            user.setEmail(email);
+            user.setPassword(password);
+
+            // Call the login API
+            userApi.signin(user)
+                    .enqueue(new Callback<User>() {
+                        @Override
+                        public void onResponse(Call<User> call, Response<User> response) {
+                            if (response.isSuccessful() && response.body() != null) {
+                                // Login successful
+                                Toast.makeText(LoginScreen.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                // Login failed
+                                Toast.makeText(LoginScreen.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<User> call, Throwable t) {
+                            // Handle failure
+                            Toast.makeText(LoginScreen.this, "Login failed!", Toast.LENGTH_SHORT).show();
+                            Logger.getLogger(LoginScreen.class.getName()).log(Level.SEVERE, "An error occurred", t);
+                        }
+                    });
+        });
+    }
+
+    private boolean isValidEmail(String email) {
+        // You can add your email validation logic here
+        // For a simple check, you can use android.util.Patterns.EMAIL_ADDRESS
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+
 }
