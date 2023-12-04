@@ -7,10 +7,10 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 public interface UserApi {
-    @POST("/signin")
+    @POST("/api/authentication/signin")
     Call<User> signin();
 
-    @POST("/signup")
+    @POST("/api/authentication/signup")
     Call<User> signup(@Body User user);
 
 }
