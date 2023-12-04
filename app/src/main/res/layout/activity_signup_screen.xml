@@ -87,7 +87,7 @@
         android:layout_marginBottom="49dp"
         android:background="@drawable/custom_button"
         android:text="@string/signup"
-        app:layout_constraintBottom_toTopOf="@+id/linkSignUp"
+        app:layout_constraintBottom_toTopOf="@+id/linkLogIn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPassword2" />
@@ -110,16 +110,17 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
-        android:id="@+id/linkSignUp"
+        android:id="@+id/linkLogIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="98dp"
+        android:layout_marginBottom="50dp"
         android:autoLink="all"
         android:text="You already have an account? Log In."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSignup" />
+        app:layout_constraintTop_toBottomOf="@+id/btnSignup"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
