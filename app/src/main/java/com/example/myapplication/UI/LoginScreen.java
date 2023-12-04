@@ -31,6 +31,7 @@ public class LoginScreen extends AppCompatActivity {
                 String email = editTextEmail.getText().toString();
                 String password = editTextPassword.getText().toString();
 
+
                 Intent intent = new Intent(LoginScreen.this, MainActivity.class);
 
                 // Optionally, you can pass data to the next activity using extras
