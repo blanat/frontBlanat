@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-<<<<<<< HEAD
+
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
@@ -20,11 +20,7 @@
             android:name=".UI.LoginScreen"
             android:exported="false" />
         <activity
-=======
-        android:theme="@style/Theme.Blanat"
-        tools:targetApi="31">
-        <activity
->>>>>>> 17472692271c50170e1c9f36c07ca3ab7b22f87d
+
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
