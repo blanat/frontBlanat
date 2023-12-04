@@ -13,6 +13,10 @@ dependencyResolutionManagement {
     }
 }
 
+<<<<<<< HEAD
 rootProject.name = "My Application"
+=======
+rootProject.name = "Blanat"
+>>>>>>> 17472692271c50170e1c9f36c07ca3ab7b22f87d
 include(":app")
  

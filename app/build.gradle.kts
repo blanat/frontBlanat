@@ -3,6 +3,7 @@ plugins {
 }
 
 android {
+<<<<<<< HEAD
     namespace = "com.example.myapplication"
     compileSdk = 34
 
@@ -10,6 +11,15 @@ android {
         applicationId = "com.example.myapplication"
         minSdk = 24
         targetSdk = 34
+=======
+    namespace = "com.example.blanat"
+    compileSdk = 33
+
+    defaultConfig {
+        applicationId = "com.example.blanat"
+        minSdk = 24
+        targetSdk = 33
+>>>>>>> 17472692271c50170e1c9f36c07ca3ab7b22f87d
         versionCode = 1
         versionName = "1.0"
 
