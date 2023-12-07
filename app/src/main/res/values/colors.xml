@@ -5,5 +5,9 @@
     <color name="darkGrey">#787878</color>
     <color name="my_primary">#0D7686</color>
     <color name="my_secondary">#6AAE9F</color>
+    <color name="gray">#808080</color>
+    <color name="green">#07C607</color>
+    <color name="red">#FB0B2F</color>
+
 
 </resources>
