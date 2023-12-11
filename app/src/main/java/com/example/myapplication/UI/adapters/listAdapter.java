@@ -23,7 +23,7 @@ public class listAdapter extends ArrayAdapter<listData>{
     public listAdapter(@NonNull Context context, ArrayList<listData> dataArrayList) {
         super(context, R.layout.list_deals,dataArrayList);
     }
-/*
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View view, @NonNull ViewGroup parent) {
@@ -37,9 +37,9 @@ public class listAdapter extends ArrayAdapter<listData>{
         TextView listTime = view.findViewById(R.id.listTime);
 
 
-        ImageButton minusButton = view.findViewById(R.id.minusButton);
+        ImageButton minusButton = view.findViewById(R.id.moins);
         TextView voteCount = view.findViewById(R.id.voteCount);
-        ImageButton plusButton = view.findViewById(R.id.plusButton);
+        ImageButton plusButton = view.findViewById(R.id.plus);
 
 
         TextView listDesc = view.findViewById(R.id.listdesc);
@@ -96,5 +96,5 @@ public class listAdapter extends ArrayAdapter<listData>{
 
     }
 
- */
+
 }

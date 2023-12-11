@@ -12,7 +12,7 @@
     <!--app:cardCornerRadius="20dp"
     app:cardElevation="8dp"-->
 
-    <!--<RelativeLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.google.android.material.imageview.ShapeableImageView
@@ -43,13 +43,23 @@
             android:layout_toEndOf="@id/listImage"
             android:layout_marginTop="10dp">
 
-        <ImageButton
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:id="@+id/minusButton"
-            android:src="@drawable/moins"
-            android:scaleType="fitCenter"
-            android:background="?android:attr/selectableItemBackground"/>
+            <TextView
+                android:id="@+id/moins"
+                android:layout_width="15dp"
+                android:layout_height="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="90dp"
+                android:autoLink="all"
+                android:text="-"
+                android:textSize="18sp"
+                android:textColor="@color/red"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent" />
+
 
         <TextView
             android:id="@+id/voteCount"
@@ -61,14 +71,24 @@
             android:textColor="@color/red"
             android:textSize="14sp" />
 
-        <ImageButton
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:id="@+id/plusButton"
-            android:src="@drawable/plus"
-            android:scaleType="fitCenter"
-            android:background="?android:attr/selectableItemBackground"
-            android:contentDescription="plus button"/>
+            <TextView
+                android:id="@+id/plus"
+                android:layout_width="15dp"
+                android:layout_height="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="90dp"
+                android:autoLink="all"
+                android:text="+"
+                android:textSize="18sp"
+                android:textColor="@color/green"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+
 
         </LinearLayout>
 
@@ -117,7 +137,7 @@
                 android:textStyle="bold"
                 android:layout_marginStart="10dp"
                 android:textSize="9sp"/>
-            // livraison est invisible par defaut si selement si elle est disponible
+            <!--livraison est invisible par defaut si selement si elle est disponible-->
             <ImageView
                 android:id="@+id/livraisonIcon"
                 android:layout_width="22dp"
@@ -133,7 +153,7 @@
 
         <Button
             android:layout_width="105dp"
-            android:layout_height="30dp"
+            android:layout_height="48dp"
             android:id="@+id/listButton"
             android:textColor="@color/white"
             android:text="Voir Deal"
@@ -142,7 +162,9 @@
             android:layout_marginStart="280dp" />
 
 
-    </RelativeLayout>-->
+
+
+    </RelativeLayout>
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="0dp"

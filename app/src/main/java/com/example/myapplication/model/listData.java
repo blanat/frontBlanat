@@ -1,8 +1,7 @@
 package com.example.myapplication.model;
 
 public class listData {
-    String titre, time;
-    int ingredients, desc;
+    String titre, time, desc;
     int image;
     String prixN, prixA;
 
@@ -10,14 +9,15 @@ public class listData {
 
 
 
-    public listData(String titre, String time, int desc, int image, String prixN, String prixA, Boolean livraison) {
+    public listData(String titre, String time, String desc, int image, String prixN, String prixA, Boolean livraison) {
         this.titre = titre;
         this.time = time;
-
         this.desc = desc;
         this.image = image;
         this.prixN = prixN;
         this.prixA = prixA;
+        this.livraison = livraison;
+
     }
     public String getTitre() {
         return titre;
@@ -36,11 +36,11 @@ public class listData {
     }
 
 
-    public int getDesc() {
+    public String getDesc() {
         return desc;
     }
 
-    public void setDesc(int desc) {
+    public void setDesc(String desc) {
         this.desc = desc;
     }
 
