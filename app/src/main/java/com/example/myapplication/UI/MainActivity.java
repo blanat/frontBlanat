@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,8 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.myapplication.UI.LoginScreen;
-import com.example.myapplication.UI.SignupScreen;
+import com.example.myapplication.R;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,5 +1,6 @@
 package com.example.myapplication.retrofit;
 
+import com.example.myapplication.model.JwtAuthenticationResponse;
 import com.example.myapplication.model.User;
 import java.util.List;
 import retrofit2.Call;
@@ -11,8 +12,7 @@ import retrofit2.http.Query;
 
 public interface UserApi {
     @POST("/api/authentication/signin")
-    Call<User> signin(@Body User user);
-
+    Call<JwtAuthenticationResponse> signin(@Body User user);
 
     @POST("/api/authentication/signup")
     Call<User> signup(@Body User user);
