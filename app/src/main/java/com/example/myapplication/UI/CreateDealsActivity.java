@@ -102,6 +102,9 @@ public class CreateDealsActivity extends AppCompatActivity {
                 String title = titleEditText.getText().toString();
                 String description = descriptionEditText.getText().toString();
 
+                /*
+                ajouter les autres attribut dans le model Deal
+                * */
                 Deal deal = new Deal(title, description);
 
                 // Assuming you have GsonConverterFactory in your Retrofit setup
@@ -113,12 +116,7 @@ public class CreateDealsActivity extends AppCompatActivity {
                     public void onResponse(Call<RequestBody> call, Response<RequestBody> response) {
                         Log.d("Retrofit", "onResponse: " + response.toString());
 
-                        //=============================
-
-                        //=============================
-
                     }
-
                     @Override
                     public void onFailure(Call<RequestBody> call, Throwable t) {
                         Log.e("Retrofit", "onFailure: " + t.getMessage());
