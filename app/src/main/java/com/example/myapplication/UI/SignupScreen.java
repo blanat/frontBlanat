@@ -3,6 +3,7 @@ package com.example.myapplication.UI;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,13 +22,13 @@ import java.util.logging.Logger;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 public class SignupScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_screen);
+
         final TextView linkLogIn = findViewById(R.id.linkLogIn);
         initializeComponents();
 
@@ -45,12 +46,12 @@ public class SignupScreen extends AppCompatActivity {
         final EditText etEmail = findViewById(R.id.etEmail);
         final EditText etPassword = findViewById(R.id.etPassword);
         final EditText etPasswordVerif = findViewById(R.id.etPassword2);
-        Button buttonLogin = findViewById(R.id.btnSignup);
+        Button buttonSignup = findViewById(R.id.btnSignup);
 
-        RetrofitService retrofitService = new RetrofitService();
+        RetrofitService retrofitService = new RetrofitService(this);
         UserApi userApi = retrofitService.getRetrofit().create(UserApi.class);
 
-        buttonLogin.setOnClickListener(view -> {
+        buttonSignup.setOnClickListener(view -> {
             String name = String.valueOf(etName.getText());
             String email = String.valueOf(etEmail.getText());
             String password = String.valueOf(etPassword.getText());
@@ -78,7 +79,21 @@ public class SignupScreen extends AppCompatActivity {
                     .enqueue(new Callback<User>() {
                         @Override
                         public void onResponse(Call<User> call, Response<User> response) {
-                            Toast.makeText(SignupScreen.this, "Enregistrement réussi!", Toast.LENGTH_SHORT).show();
+                            if (response.isSuccessful()) {
+                                // Parse the response body to get the JWT token
+                                String responseBody = response.body().toString();
+                                String jwtToken = parseJwtTokenFromResponse(responseBody);
+
+                                // Store the JWT token using SharedPreferences
+                                saveJwtTokenToSharedPreferences(jwtToken);
+
+                                Intent intent = new Intent(SignupScreen.this, CreateDealsActivity.class);
+                                startActivity(intent);
+                                //Toast.makeText(SignupScreen.this, "Enregistrement réussi!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                // Handle unsuccessful response
+                                Toast.makeText(SignupScreen.this, "Échec de l'enregistrement!!!", Toast.LENGTH_SHORT).show();
+                            }
                         }
 
                         @Override
@@ -92,15 +107,28 @@ public class SignupScreen extends AppCompatActivity {
 
     // Email validation method
     private boolean isValidEmail(String email) {
-        // You can add your email validation logic here
-        // For a simple check, you can use android.util.Patterns.EMAIL_ADDRESS
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     // Password validation method
     private boolean isValidPassword(String password, String passwordVerif) {
-        // You can add your password validation logic here
         return password.equals(passwordVerif);
     }
 
+    // Method to parse JWT token from the response body
+    private String parseJwtTokenFromResponse(String responseBody) {
+        // Implement your logic to extract the JWT token from the response body
+        // This will depend on the format of the response from your server
+        // For example, if the token is in a JSON field named "token", you can use a JSON parser
+        // Replace this with your actual logic
+        return responseBody;
+    }
+
+    // Method to save JWT token to SharedPreferences
+    private void saveJwtTokenToSharedPreferences(String jwtToken) {
+        SharedPreferences preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("jwtToken", jwtToken);
+        editor.apply();
+    }
 }
