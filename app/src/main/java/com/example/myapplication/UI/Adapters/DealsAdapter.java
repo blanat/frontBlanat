@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.model.listData;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -33,20 +34,25 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull DealsHolder holder, int position) {
-            listData deals = dealslist.get(position);
-            holder.Titre.setText(deals.getTitle());
-            holder.listDesc.setText(deals.getDescription());
-            holder.listTime.setText(deals.getTime());
-            holder.priceA.setText(deals.getPrix_A());
-            holder.priceN.setText(deals.getPrix_N());
+        listData deals = dealslist.get(position);
+
+        // Load image using Picasso
+        Picasso.get().load(deals.getFirstImageUR()).into(holder.Image);
+
+        holder.Titre.setText(deals.getTitle());
+        holder.listDesc.setText(deals.getDescription());
+        holder.listTime.setText(deals.getTime());
+        holder.priceA.setText(deals.getPrix_A());
+        holder.priceN.setText(deals.getPrix_N());
+
         if (deals.getLivraisonExist()) {
             holder.livraisonIcon.setImageResource(R.drawable.livraison);
             holder.livraisonIcon.setVisibility(View.VISIBLE);
         } else {
             holder.livraisonIcon.setVisibility(View.INVISIBLE);
         }
-
     }
+
 
     @Override
     public int getItemCount() {

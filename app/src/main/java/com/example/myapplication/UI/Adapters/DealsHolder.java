@@ -21,8 +21,8 @@ public class DealsHolder extends RecyclerView.ViewHolder {
         super(itemView);
 
         Image = itemView.findViewById(R.id.listImage);
-         Titre = itemView.findViewById(R.id.listtitre);
-         listTime = itemView.findViewById(R.id.listTime);
+        Titre = itemView.findViewById(R.id.listtitre);
+        listTime = itemView.findViewById(R.id.listTime);
 
         voteCount = itemView.findViewById(R.id.voteCount);
         //ImageButton plusButton = itemView.findViewById(R.id.plus);
@@ -30,10 +30,10 @@ public class DealsHolder extends RecyclerView.ViewHolder {
 
 
 
-         listDesc = itemView.findViewById(R.id.listdesc);
-         priceN = itemView.findViewById(R.id.prixN);
-         priceA = itemView.findViewById(R.id.prixA);
-         livraisonIcon = itemView.findViewById(R.id.livraisonIcon);
+        listDesc = itemView.findViewById(R.id.listdesc);
+        priceN = itemView.findViewById(R.id.prixN);
+        priceA = itemView.findViewById(R.id.prixA);
+        livraisonIcon = itemView.findViewById(R.id.livraisonIcon);
 
 
 
