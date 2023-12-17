@@ -2,7 +2,6 @@ package com.example.myapplication.Services;
 
 import android.content.Context;
 
-import com.example.myapplication.UI.CreateDealsActivity;
 import com.example.myapplication.retrofit.DealApi;
 import com.example.myapplication.retrofit.RetrofitService;
 

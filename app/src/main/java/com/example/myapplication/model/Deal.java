@@ -21,6 +21,8 @@ public class Deal {
     private float livraison_prix;
 */
 
+    
+
     public Deal(String title, String description) {
         this.title = title;
         this.description = description;

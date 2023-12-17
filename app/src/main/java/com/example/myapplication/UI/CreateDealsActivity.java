@@ -32,7 +32,7 @@ import android.Manifest;
 import com.example.myapplication.R;
 import com.example.myapplication.Services.DealService;
 import com.example.myapplication.Services.RealPathUtil;
-import com.example.myapplication.UI.adapters.ImageAdapter;
+import com.example.myapplication.UI.Adapters.ImageAdapter;
 import com.example.myapplication.model.Deal;
 
 import java.util.ArrayList;
