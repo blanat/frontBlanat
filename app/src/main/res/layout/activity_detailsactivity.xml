@@ -37,7 +37,7 @@
             android:id="@+id/detailImage"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
-            android:src="@drawable/login"
+            android:src=""
             android:scaleType="centerCrop"/>
 
     </androidx.cardview.widget.CardView>
@@ -46,8 +46,9 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="titre de l'article"
-            android:textColor="@color/black"
+            android:hint="titre de l'article"
+            android:id="@+id/detailTitle"
+            android:textColorHint="@color/black"
             android:textStyle="bold"
             android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
@@ -61,16 +62,33 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="prix DH"
-            android:textColor="@color/green"
+            android:id="@+id/prixN"
+            android:hint="prix DH"
+            android:textColorHint="@color/green"
             android:textStyle="bold"
             android:layout_marginStart="10dp"
             android:textSize="24sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" prix DH"
-            android:textColor="@color/red"
+            android:id="@+id/prixA"
+            android:hint=" prix DH"
+            android:textColorHint="@color/red"
+            android:textStyle="bold"
+            android:layout_marginStart="10dp"
+            android:textSize="18sp"/>
+        <ImageView
+            android:id="@+id/commentIcon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="80dp"
+            android:src="@drawable/livraison" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/prix_livraison"
+            android:hint=" prix DH"
+            android:textColorHint="@color/black"
             android:textStyle="bold"
             android:layout_marginStart="10dp"
             android:textSize="18sp"/>
@@ -98,12 +116,51 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="description du pc"
+            android:hint="description du pc"
+            android:textColorHint="@color/black"
             android:layout_marginStart="10dp"
             android:textSize="16sp"
-            android:id="@+id/detailTime"/>
+            android:id="@+id/dealdesc"/>
 
-        <TextView
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Localisation du deal"
+        android:textColorHint="@color/black"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="9dp"
+        android:textSize="16sp"
+        android:id="@+id/locadeal"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="1dp">
+    <EditText
+        android:id="@+id/Ajoutercom"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="9dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginBottom="29dp"
+        android:background="@drawable/custom_edittext"
+        android:hint="Commentaire" />
+        <ImageView
+            android:id="@+id/imageViewClickable"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/send"
+           />
+
+    </LinearLayout>
+
+    <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Commentaires"
@@ -113,80 +170,32 @@
             android:layout_marginTop="20dp"
             android:textSize="22sp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="121dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="1dp"
-        android:orientation="horizontal">
 
-        <!-- image circulaire -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+           >
 
-        <!-- CardView pour la section "Répondre" -->
+            <!-- ImageView pour l'image -->
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="6dp"
-            app:cardCornerRadius="40dp"
-            app:cardElevation="8dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:text="commentaire 1"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="80dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="50dp"
-            android:clickable="true"
-            android:focusable="true"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="8dp"
-            tools:ignore="SmallSp">
+            <!-- TextView pour le texte -->
+            <ImageView
+                android:layout_width="46dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/person" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Réponses"
-                android:textColor="@color/my_primary"
-                android:textSize="15sp"
+                android:text="commentaire 1"
+                android:layout_marginStart="11dp"
+                android:textColorHint="@color/black"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                tools:ignore="SmallSp" />
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="80dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="50dp"
-            android:clickable="true"
-            android:focusable="true"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="8dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Répondre"
-                android:textColor="@color/my_primary"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-        </androidx.cardview.widget.CardView>
+                android:id="@+id/comment" />
+        </LinearLayout>
 
     </LinearLayout>
-
-
-</LinearLayout>
