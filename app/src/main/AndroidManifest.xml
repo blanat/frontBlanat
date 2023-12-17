@@ -39,7 +39,9 @@
         <activity
             android:name=".UI.LoginScreen"
             android:exported="false" />
-
+        <activity
+            android:name=".UI.recycleview_activity"
+            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
