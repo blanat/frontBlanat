@@ -42,9 +42,12 @@ public class recycleview_activity extends AppCompatActivity {
                 .enqueue(new Callback<List<listData>>() {
                     @Override
                     public void onResponse(Call<List<listData>> call, Response<List<listData>> response) {
-                        populateListView(response.body());
+                        if (response.isSuccessful() && response.body() != null) {
+                            populateListView(response.body());
+                        } else {
+                            Toast.makeText(recycleview_activity.this, "Failed to load Deals", Toast.LENGTH_SHORT).show();
+                        }
                     }
-
                     @Override
                     public void onFailure(Call<List<listData>> call, Throwable t) { // Corrected parameter list here
                         Toast.makeText(recycleview_activity.this, "Failed to load Deals", Toast.LENGTH_SHORT).show();

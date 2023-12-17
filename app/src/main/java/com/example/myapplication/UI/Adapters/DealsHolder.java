@@ -25,8 +25,8 @@ public class DealsHolder extends RecyclerView.ViewHolder {
          listTime = itemView.findViewById(R.id.listTime);
 
         voteCount = itemView.findViewById(R.id.voteCount);
-        ImageButton plusButton = itemView.findViewById(R.id.plus);
-        ImageButton moinsButton = itemView.findViewById(R.id.moins);
+        //ImageButton plusButton = itemView.findViewById(R.id.plus);
+        //ImageButton moinsButton = itemView.findViewById(R.id.moins);
 
 
 

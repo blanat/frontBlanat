@@ -21,13 +21,15 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsHolder> {
     }
 
 
+
     @NonNull
     @Override
     public DealsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_deals, parent, false);
-        return null;
+        return new DealsHolder(view); // Create and return a new DealsHolder
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull DealsHolder holder, int position) {
