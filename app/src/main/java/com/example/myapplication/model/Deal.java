@@ -14,7 +14,8 @@ public class Deal {
     private Categories category;
     private Date date_debut;
     private Date date_fin;
-    private String prix;
+    private String prixN;//prix nouveau
+    private String prixA;//prix ancien
     private String localisation;
     private boolean livraisonExist;
     private float livraison_prix;

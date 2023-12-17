@@ -1,11 +1,44 @@
 package com.example.myapplication.model;
 
+import java.time.LocalDateTime;
+
 public class listData {
+
+    //images problem
+ /*   private String title;
+    private String description;
+
+    //pour filtrage seulement
+    private Categories category;
+
+    //en backend si le deal depasse date_fin il sera supprimee
+    //private Date date_debut;
+    //private Date date_fin;
+    private String prixN;//prix nouveau
+    private String prixA;//prix ancien
+    private String localisation;
+    private boolean livraisonExist;
+    private float livraison_prix;
+    private int nbre_comment;
+    private int deg;
+
+    //pour calculer time dans listage des deal
+    private date dateCreation;
+
+    private string lienDeal;
+
+    //problem des commentaire: (comments avec la photo profil+nom)
+
+*/
+
+
+
     String titre, time, desc;
     int image;
     String prixN, prixA;
 
      Boolean livraison;
+
 
 
 
@@ -75,5 +108,8 @@ public class listData {
     public void setLivraison(Boolean livraison) {
         this.livraison = livraison;
     }
+
+
+
 
 }

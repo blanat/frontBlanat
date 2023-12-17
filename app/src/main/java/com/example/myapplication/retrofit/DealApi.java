@@ -21,4 +21,6 @@ public interface DealApi {
             @Part List<MultipartBody.Part> images
     );
 
+
+
 }
