@@ -1,3 +1,4 @@
+/*
 package com.example.myapplication.UI.adapters;
 
 import android.content.Context;
@@ -98,3 +99,4 @@ public class listAdapter extends ArrayAdapter<listData>{
 
 
 }
+*/
