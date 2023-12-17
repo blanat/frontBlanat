@@ -1,30 +1,64 @@
 package com.example.myapplication.model;
 
+import java.util.Date;
+
 public class listData {
-    String titre, time, desc;
-    int image;
-    String prixN, prixA;
+    long deal_ID;
+    Date date_fin;
+    String title, description, time, localisation, lienDeal, FirstImageUR, timePassedSinceCreation;
+    int nbre_comment, deg;
+    String prix_N, prix_A;
+    float livraison_prix;
+    Boolean livraisonExist;
 
-     Boolean livraison;
-
-
-
-    public listData(String titre, String time, String desc, int image, String prixN, String prixA, Boolean livraison) {
-        this.titre = titre;
+    public listData(long deal_ID, Date date_fin, String title, String description, String time, String localisation, String lienDeal, String firstImageUR, String timePassedSinceCreation, int nbre_comment, int deg, String prix_N, String prix_A, float livraison_prix, Boolean livraisonExist) {
+        this.deal_ID = deal_ID;
+        this.date_fin = date_fin;
+        this.title = title;
+        this.description = description;
         this.time = time;
-        this.desc = desc;
-        this.image = image;
-        this.prixN = prixN;
-        this.prixA = prixA;
-        this.livraison = livraison;
-
+        this.localisation = localisation;
+        this.lienDeal = lienDeal;
+        FirstImageUR = firstImageUR;
+        this.timePassedSinceCreation = timePassedSinceCreation;
+        this.nbre_comment = nbre_comment;
+        this.deg = deg;
+        this.prix_N = prix_N;
+        this.prix_A = prix_A;
+        this.livraison_prix = livraison_prix;
+        this.livraisonExist = livraisonExist;
     }
-    public String getTitre() {
-        return titre;
+
+    public long getDeal_ID() {
+        return deal_ID;
     }
 
-    public void setTitre(String titre) {
-        this.titre = titre;
+    public void setDeal_ID(long deal_ID) {
+        this.deal_ID = deal_ID;
+    }
+
+    public Date getDate_fin() {
+        return date_fin;
+    }
+
+    public void setDate_fin(Date date_fin) {
+        this.date_fin = date_fin;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getTime() {
@@ -35,45 +69,83 @@ public class listData {
         this.time = time;
     }
 
-
-    public String getDesc() {
-        return desc;
+    public String getLocalisation() {
+        return localisation;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setLocalisation(String localisation) {
+        this.localisation = localisation;
     }
 
-    public int getImage() {
-        return image;
+    public String getLienDeal() {
+        return lienDeal;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public void setLienDeal(String lienDeal) {
+        this.lienDeal = lienDeal;
     }
 
-    public String getPrixN() {
-        return prixN;
+    public String getFirstImageUR() {
+        return FirstImageUR;
     }
 
-    public void setPrixN(String prixN) {
-        this.prixN = prixN;
+    public void setFirstImageUR(String firstImageUR) {
+        FirstImageUR = firstImageUR;
     }
 
-    public String getPrixA() {
-        return prixA;
+    public String getTimePassedSinceCreation() {
+        return timePassedSinceCreation;
     }
 
-    public void setPrixA(String prixA) {
-        this.prixA = prixA;
+    public void setTimePassedSinceCreation(String timePassedSinceCreation) {
+        this.timePassedSinceCreation = timePassedSinceCreation;
     }
 
-    public Boolean getLivraison() {
-        return livraison;
+    public int getNbre_comment() {
+        return nbre_comment;
     }
 
-    public void setLivraison(Boolean livraison) {
-        this.livraison = livraison;
+    public void setNbre_comment(int nbre_comment) {
+        this.nbre_comment = nbre_comment;
     }
 
+    public int getDeg() {
+        return deg;
+    }
+
+    public void setDeg(int deg) {
+        this.deg = deg;
+    }
+
+    public String getPrix_N() {
+        return prix_N;
+    }
+
+    public void setPrix_N(String prix_N) {
+        this.prix_N = prix_N;
+    }
+
+    public String getPrix_A() {
+        return prix_A;
+    }
+
+    public void setPrix_A(String prix_A) {
+        this.prix_A = prix_A;
+    }
+
+    public float getLivraison_prix() {
+        return livraison_prix;
+    }
+
+    public void setLivraison_prix(float livraison_prix) {
+        this.livraison_prix = livraison_prix;
+    }
+
+    public Boolean getLivraisonExist() {
+        return livraisonExist;
+    }
+
+    public void setLivraisonExist(Boolean livraisonExist) {
+        this.livraisonExist = livraisonExist;
+    }
 }
