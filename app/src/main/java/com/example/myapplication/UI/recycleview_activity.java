@@ -1,6 +1,5 @@
 package com.example.myapplication.UI;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -11,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.UI.Adapters.DealsAdapter;
 import com.example.myapplication.model.listData;
-import com.example.myapplication.retrofit.DealsApi;
+import com.example.myapplication.retrofit.DealApi;
 import com.example.myapplication.retrofit.RetrofitService;
 
 import java.util.List;
@@ -37,7 +36,7 @@ public class recycleview_activity extends AppCompatActivity {
 
     private void loadDeals() {
         RetrofitService retrofitService = new RetrofitService(this);
-        DealsApi dealsApi = retrofitService.getRetrofit().create(DealsApi.class);
+        DealApi dealsApi = retrofitService.getRetrofit().create(DealApi.class);
         dealsApi.getListDeals()
                 .enqueue(new Callback<List<listData>>() {
                     @Override
