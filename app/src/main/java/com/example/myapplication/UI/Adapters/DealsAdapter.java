@@ -15,11 +15,12 @@ import java.util.List;
 
 public class DealsAdapter extends RecyclerView.Adapter<DealsHolder> {
 
-    private List<listData> dealslist;
+    private final List<listData> dealslist;
 
-    public DealsAdapter(List<listData> dealslist) {
-        this.dealslist = dealslist;
+    public DealsAdapter(List<listData> dealsList) {
+        this.dealslist = dealsList;
     }
+
 
 
 
@@ -37,13 +38,14 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsHolder> {
         listData deals = dealslist.get(position);
 
         // Load image using Picasso
-        Picasso.get().load(deals.getFirstImageUR()).into(holder.Image);
+        Picasso.get().load(deals.getfirstImageURL()).into(holder.Image);
 
         holder.Titre.setText(deals.getTitle());
         holder.listDesc.setText(deals.getDescription());
-        holder.listTime.setText(deals.getTime());
+        holder.listTime.setText(deals.getTimePassedSinceCreation());
         holder.priceA.setText(deals.getPrix_A());
         holder.priceN.setText(deals.getPrix_N());
+        holder.voteCount.setText(String.valueOf(deals.getDeg()));
 
         if (deals.getLivraisonExist()) {
             holder.livraisonIcon.setImageResource(R.drawable.livraison);

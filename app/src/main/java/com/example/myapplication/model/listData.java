@@ -1,17 +1,19 @@
 package com.example.myapplication.model;
 
+import android.util.Log;
+
 import java.util.Date;
 
 public class listData {
     long deal_ID;
     Date date_fin;
-    String title, description, time, localisation, lienDeal, FirstImageUR, timePassedSinceCreation;
+    String title, description, time, localisation, lienDeal, firstImageURL, timePassedSinceCreation;
     int nbre_comment, deg;
     String prix_N, prix_A;
     float livraison_prix;
     Boolean livraisonExist;
 
-    public listData(long deal_ID, Date date_fin, String title, String description, String time, String localisation, String lienDeal, String firstImageUR, String timePassedSinceCreation, int nbre_comment, int deg, String prix_N, String prix_A, float livraison_prix, Boolean livraisonExist) {
+    public listData(long deal_ID, Date date_fin, String title, String description, String time, String localisation, String lienDeal, String firstImageURL, String timePassedSinceCreation, int nbre_comment, int deg, String prix_N, String prix_A, float livraison_prix, Boolean livraisonExist) {
         this.deal_ID = deal_ID;
         this.date_fin = date_fin;
         this.title = title;
@@ -19,7 +21,7 @@ public class listData {
         this.time = time;
         this.localisation = localisation;
         this.lienDeal = lienDeal;
-        FirstImageUR = firstImageUR;
+        this.firstImageURL = firstImageURL;
         this.timePassedSinceCreation = timePassedSinceCreation;
         this.nbre_comment = nbre_comment;
         this.deg = deg;
@@ -85,12 +87,13 @@ public class listData {
         this.lienDeal = lienDeal;
     }
 
-    public String getFirstImageUR() {
-        return FirstImageUR;
+    public String getfirstImageURL() {
+        Log.d("Image URL Getter", "Getting Image URL: " + firstImageURL);
+        return firstImageURL;
     }
 
-    public void setFirstImageUR(String firstImageUR) {
-        FirstImageUR = firstImageUR;
+    public void setfirstImageURL(String firstImageURL) {
+        this.firstImageURL = firstImageURL;
     }
 
     public String getTimePassedSinceCreation() {

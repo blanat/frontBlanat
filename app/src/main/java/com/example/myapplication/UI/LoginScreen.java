@@ -82,7 +82,7 @@ public class LoginScreen extends AppCompatActivity {
                         // Store the JWT token using SharedPreferences
                         saveToken(jwtToken);
 
-                        Intent intent = new Intent(LoginScreen.this, recycleview_activity.class);
+                        Intent intent = new Intent(LoginScreen.this, CreateDealsActivity.class);
                         // Optionally, you can pass data to the next activity using extras
                         intent.putExtra("email", email);
                         intent.putExtra("password", password);
