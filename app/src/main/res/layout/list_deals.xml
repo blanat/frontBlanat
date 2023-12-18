@@ -32,15 +32,15 @@
             app:shapeAppearanceOverlay="@style/roundedImageViewRounded"/>
 
         <TextView
-            android:layout_width="35dp"
-            android:layout_height="25dp"
             android:id="@+id/listTime"
-            android:text="time"
-            android:textSize="16sp"
+            android:layout_width="52dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="173dp"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="190dp"
             android:layout_toEndOf="@id/listImage"
-            android:textColor="@color/gray"/>
+            android:text="time"
+            android:textColor="@color/gray"
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
