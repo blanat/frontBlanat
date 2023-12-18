@@ -38,16 +38,17 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsHolder> {
         listData deals = dealslist.get(position);
 
         // Load image using Picasso
-        Picasso.get().load(deals.getfirstImageURL()).into(holder.Image);
+        Picasso.get().load(deals.getFirstImageUrl()).into(holder.Image);
 
         holder.Titre.setText(deals.getTitle());
         holder.listDesc.setText(deals.getDescription());
         holder.listTime.setText(deals.getTimePassedSinceCreation());
-        holder.priceA.setText(deals.getPrix_A());
-        holder.priceN.setText(deals.getPrix_N());
+        holder.priceA.setText(String.valueOf((int) deals.getPrice()));
+        holder.priceN.setText(String.valueOf((int) deals.getNewPrice()));
+
         holder.voteCount.setText(String.valueOf(deals.getDeg()));
 
-        if (deals.getLivraisonExist()) {
+        if (deals.isDeliveryExist()) {
             holder.livraisonIcon.setImageResource(R.drawable.livraison);
             holder.livraisonIcon.setVisibility(View.VISIBLE);
         } else {
