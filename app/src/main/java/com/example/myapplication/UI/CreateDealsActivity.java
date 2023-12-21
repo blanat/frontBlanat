@@ -206,7 +206,9 @@ public class CreateDealsActivity extends AppCompatActivity {
     }
 
 
+    private void initializeComponents() {
 
+    }
 
 
 }
