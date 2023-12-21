@@ -15,6 +15,5 @@ public enum Categories {
     PHONES_AND_ACCESSORIES,
     GAMING,
     PETS,
-    SERVICES,
-    OTHER
+    SERVICES
 }

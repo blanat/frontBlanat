@@ -88,7 +88,7 @@ public class SignupScreen extends AppCompatActivity {
                                 // Store the JWT token using SharedPreferences
                                 saveJwtTokenToSharedPreferences(jwtToken);
 
-                                Intent intent = new Intent(SignupScreen.this, CreateDealsActivity.class);
+                                Intent intent = new Intent(SignupScreen.this, CreateDActivity.class);
                                 startActivity(intent);
                                 //Toast.makeText(SignupScreen.this, "Enregistrement réussi!", Toast.LENGTH_SHORT).show();
                             } else {
