@@ -4,13 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.example.myapplication.R;
+
 
 public class MainActivity extends AppCompatActivity {
 
+    private String TAG = "NotificationApp";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +39,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(signupIntent);
             }
         });
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                        return;
+                    }
+                    String token = task.getResult();
+                    Log.i(TAG, token.toString());
+
+                });
 
     }
 }
