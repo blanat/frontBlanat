@@ -9,7 +9,6 @@ public class Deal {
     private String title;
 
     private String description;
-/*
 
     private String lienDeal;
 
@@ -21,18 +20,23 @@ public class Deal {
 
     private float price;
 
+    private float newPrice;
+
     private String localisation;
 
     private boolean deliveryExist;
 
     private float deliveryPrice;
 
-*/
 
-
-
-    public Deal(String title, String description) {
+    public Deal(String title, String description, String lienDeal, float price, float newPrice, String localisation,Categories category,boolean deliveryExist ) {
         this.title = title;
         this.description = description;
+        this.lienDeal = lienDeal;
+        this.price = price;
+        this.newPrice = newPrice;
+        this.localisation = localisation;
+        this.category = category;
+        this.deliveryExist = deliveryExist;
     }
 }
