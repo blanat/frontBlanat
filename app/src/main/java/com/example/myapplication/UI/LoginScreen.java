@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.CreatDeals;
 import com.example.myapplication.R;
 import com.example.myapplication.model.JwtAuthenticationResponse;
 import com.example.myapplication.model.User;
@@ -82,7 +83,7 @@ public class LoginScreen extends AppCompatActivity {
                         // Store the JWT token using SharedPreferences
                         saveToken(jwtToken);
 
-                        Intent intent = new Intent(LoginScreen.this, CreateDealsActivity.class);
+                        Intent intent = new Intent(LoginScreen.this, CreatDeals.class);
                         // Optionally, you can pass data to the next activity using extras
                         intent.putExtra("email", email);
                         intent.putExtra("password", password);

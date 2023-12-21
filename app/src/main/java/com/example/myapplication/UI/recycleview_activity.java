@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.UI.Adapters.DealsAdapter;
+import com.example.myapplication.UI.Adapters.selectListener;
 import com.example.myapplication.model.listData;
 import com.example.myapplication.retrofit.DealApi;
 import com.example.myapplication.retrofit.RetrofitService;
@@ -19,7 +20,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class recycleview_activity extends AppCompatActivity {
+public class recycleview_activity extends AppCompatActivity implements selectListener {
 
     private RecyclerView recyclerView;
 
@@ -56,8 +57,14 @@ public class recycleview_activity extends AppCompatActivity {
     }
 
     private void populateListView(List<listData> dealslist) {
-        DealsAdapter dealsAdapter = new DealsAdapter(dealslist);
+        DealsAdapter dealsAdapter = new DealsAdapter(dealslist, this);
         recyclerView.setAdapter(dealsAdapter);
+    }
+
+
+    @Override
+    public void onItemClicked(listData listDealData) {
+        Toast.makeText(this,listDealData.getTitle(),Toast.LENGTH_SHORT).show();
     }
 }
 
