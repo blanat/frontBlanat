@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".create_deal">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="30dp"
+                    android:autoLink="all"
+                    android:text="Back"
+                    android:textSize="30sp"
+                    android:textColor="@color/my_primary"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.497"
+                    app:layout_constraintStart_toStartOf="parent" />
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="35dp"
+                    android:text="Nouveau Deal"
+                    android:textSize="30sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_centerInParent="true"/>
+
+                <Button
+                    android:id="@+id/submit"
+                    android:layout_width="70dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="27dp"
+                    android:layout_marginTop="7dp"
+                    android:text="save"
+                    android:textSize="10sp"
+                    android:layout_marginBottom="39dp"
+                    android:textColor="@color/white"/>
+
+
+            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="365dp"
+                android:layout_above="@+id/select"
+                android:layout_marginBottom="38dp"
+                android:padding="16dp" />
+
+
+            <Button
+                android:id="@+id/select"
+                android:layout_width="168dp"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/TitreDealText"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="116dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="127dp"
+                android:layout_marginBottom="70dp"
+                android:text="Select Images" />
+
+            <TextView
+                android:id="@+id/dealLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Lien du deal"
+                android:textSize="20sp"
+                android:textColor="@color/my_primary"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <EditText
+                android:id="@+id/line"
+                android:layout_width="370dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="9dp"
+                android:hint="https://"
+                android:textColorHint="@color/black"
+                android:textSize="16sp"
+                android:background="@drawable/custom_edittext"
+                app:layout_constraintTop_toBottomOf="@+id/dealLink"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/title_deal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Titre *"
+                android:textSize="20sp"
+                android:textColor="@color/my_primary"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <EditText
+                android:id="@+id/dealtitle"
+                android:layout_width="370dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="9dp"
+                android:hint="Titre"
+                android:textColorHint="@color/black"
+                android:textSize="20sp"
+                android:background="@drawable/custom_edittext"
+                app:layout_constraintTop_toBottomOf="@+id/title_deal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/Desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Description *"
+                android:textSize="20sp"
+                android:textColor="@color/my_primary"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="370dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="9dp"
+                android:hint="Description"
+                android:textColorHint="@color/black"
+                android:textSize="20sp"
+                android:background="@drawable/custom_edittext"
+                app:layout_constraintTop_toBottomOf="@+id/Desc"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Prix *"
+                android:textSize="20sp"
+                android:textColor="@color/my_primary"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <EditText
+                android:id="@+id/PrixN"
+                android:layout_width="370dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="9dp"
+                android:hint="Prix DH"
+                android:textColorHint="@color/black"
+                android:textSize="20sp"
+                android:background="@drawable/custom_edittext"
+                app:layout_constraintTop_toBottomOf="@+id/price"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView
+                android:id="@+id/pricea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Prix généralement constaté *"
+                android:textSize="20sp"
+                android:textColor="@color/my_primary"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <EditText
+                android:id="@+id/PrixA"
+                android:layout_width="370dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="9dp"
+                android:hint="Prix DH"
+                android:textColorHint="@color/black"
+                android:textSize="20sp"
+                android:background="@drawable/custom_edittext"
+                app:layout_constraintTop_toBottomOf="@+id/pricea"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="livraison"
+                    android:textSize="20sp"
+                    android:textColor="@color/my_primary"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <RadioGroup
+                    android:id="@+id/segmentedControl"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/option1"
+                        android:layout_marginTop="9dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Yes" />
+
+                    <RadioButton
+                        android:id="@+id/option2"
+                        android:layout_width="0dp"
+                        android:layout_marginTop="9dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="NO" />
+
+
+                </RadioGroup>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Code Reduction %"
+                android:textSize="20sp"
+                android:textColor="@color/my_primary"
+                android:textStyle="bold" />
+            <EditText
+                android:id="@+id/codereduction"
+                android:layout_width="370dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="9dp"
+                android:hint="Code Reduction"
+                android:textColorHint="@color/black"
+                android:textSize="20sp"
+                android:background="@drawable/custom_edittext"
+                app:layout_constraintTop_toBottomOf="@+id/pricea"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Date de debut"
+                android:textSize="20sp"
+                android:textColor="@color/my_primary"
+                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/datededebut"
+                    android:layout_width="130dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="9dp"
+                    android:text="Date début"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@drawable/custom_edittext"
+                    />
+                <TextView
+                    android:id="@+id/datedebut"
+                    android:layout_width="190dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Date selectioné"
+                    android:layout_marginStart="10dp"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/date"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="15dp"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Date de Fin"
+                android:textSize="20sp"
+                android:textColor="@color/my_primary"
+                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/datedefin"
+                    android:layout_width="130dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="9dp"
+                    android:text="Date Fin"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@drawable/custom_edittext"
+                    />
+                <TextView
+                    android:id="@+id/datefin"
+                    android:layout_width="190dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Date selectioné"
+                    android:layout_marginStart="10dp"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/date"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="15dp"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/local"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Localisation du Deal"
+                android:textSize="20sp"
+                android:textColor="@color/my_primary"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <EditText
+                android:id="@+id/localisation"
+                android:layout_width="370dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="9dp"
+                android:hint="Localisation "
+                android:textColorHint="@color/black"
+                android:textSize="20sp"
+                android:background="@drawable/custom_edittext"
+                app:layout_constraintTop_toBottomOf="@+id/Desc"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/Categorie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Categorie *"
+                android:textSize="20sp"
+                android:textColor="@color/my_primary"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:hint="catégorie"
+                app:boxBackgroundColor="@color/white"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+                <AutoCompleteTextView
+                    android:id="@+id/categories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
