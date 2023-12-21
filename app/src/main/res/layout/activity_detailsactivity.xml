@@ -8,7 +8,13 @@
     android:orientation="vertical"
     tools:context=".UI.Detailsactivity">
 
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,7 +43,6 @@
             android:id="@+id/detailImage"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
-            android:src="@drawable/login"
             android:scaleType="centerCrop"/>
 
     </androidx.cardview.widget.CardView>
@@ -57,10 +62,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="1dp">
+        android:layout_marginTop="5dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/prixnv"
             android:text="prix DH"
             android:textColor="@color/green"
             android:textStyle="bold"
@@ -69,11 +75,30 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/prixan"
             android:text=" prix DH"
             android:textColor="@color/red"
             android:textStyle="bold"
             android:layout_marginStart="10dp"
             android:textSize="18sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/prixli"
+            android:text=" prix DH"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="6dp"
+            android:textSize="18sp"/>
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="30dp"
+            android:src="@drawable/livraison"
+            android:id="@+id/iconeliv"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="7dp"
+            android:scaleType="centerCrop"/>
     </LinearLayout>
 
     <Button
@@ -98,10 +123,56 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="description du pc"
+            android:text="Descriptio du deal"
+            android:textColor="@color/black"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
             android:textSize="16sp"
-            android:id="@+id/detailTime"/>
+            android:id="@+id/dealdetail"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Localisation du Deal"
+        android:textColor="@color/black"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="9dp"
+        android:textSize="16sp"
+        android:id="@+id/localdeal"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="1dp">
+
+    <EditText
+    android:id="@+id/etPassword"
+    android:layout_width="310dp"
+    android:layout_height="48dp"
+    android:layout_marginBottom="18dp"
+    android:layout_marginStart="9dp"
+    android:layout_marginTop="7dp"
+    android:background="@drawable/custom_edittext"
+    android:hint="Commentaires"
+    android:inputType="textPassword"
+    app:layout_constraintBottom_toTopOf="@+id/etPassword2"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.495"
+    app:layout_constraintStart_toStartOf="parent" />
+        <ImageButton
+            android:id="@+id/PublierDeal"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/envoyer"
+            android:contentDescription="Publier"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="4dp"
+            android:background="?android:selectableItemBackground"
+            android:scaleType="centerCrop"
+            />
+
+    </LinearLayout>
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -120,9 +191,6 @@
         android:layout_marginTop="1dp"
         android:orientation="horizontal">
 
-        <!-- image circulaire -->
-
-        <!-- CardView pour la section "Répondre" -->
 
         <androidx.cardview.widget.CardView
             android:layout_width="80dp"
@@ -136,57 +204,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="26dp"
             android:text="commentaire 1"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="80dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="50dp"
-            android:clickable="true"
-            android:focusable="true"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="8dp"
-            tools:ignore="SmallSp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Réponses"
-                android:textColor="@color/my_primary"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                tools:ignore="SmallSp" />
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="80dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="50dp"
-            android:clickable="true"
-            android:focusable="true"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="8dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Répondre"
-                android:textColor="@color/my_primary"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
-
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
