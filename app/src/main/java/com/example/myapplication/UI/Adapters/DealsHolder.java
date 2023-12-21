@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
@@ -16,6 +17,8 @@ public class DealsHolder extends RecyclerView.ViewHolder {
     TextView Titre, listTime, voteCount, listDesc, priceN, priceA;
     ShapeableImageView Image;
     ImageView livraisonIcon;
+
+    CardView cardView;
 
     public DealsHolder(@NonNull View itemView) {
         super(itemView);
@@ -36,7 +39,8 @@ public class DealsHolder extends RecyclerView.ViewHolder {
         livraisonIcon = itemView.findViewById(R.id.livraisonIcon);
 
 
-
+        //for the onclick
+        cardView = itemView.findViewById(R.id.cardView);
 
 
 /*

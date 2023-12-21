@@ -13,16 +13,16 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+
 public class DealsAdapter extends RecyclerView.Adapter<DealsHolder> {
 
     private final List<listData> dealslist;
+    private selectListener listener;
 
-    public DealsAdapter(List<listData> dealsList) {
+    public DealsAdapter(List<listData> dealsList,selectListener listener) {
         this.dealslist = dealsList;
+        this.listener = listener;
     }
-
-
-
 
     @NonNull
     @Override
@@ -31,7 +31,6 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsHolder> {
                 .inflate(R.layout.list_deals, parent, false);
         return new DealsHolder(view); // Create and return a new DealsHolder
     }
-
 
     @Override
     public void onBindViewHolder(@NonNull DealsHolder holder, int position) {
@@ -54,6 +53,16 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsHolder> {
         } else {
             holder.livraisonIcon.setVisibility(View.INVISIBLE);
         }
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int clickedPosition = holder.getAdapterPosition();
+                if (clickedPosition != RecyclerView.NO_POSITION) {
+                    listener.onItemClicked(dealslist.get(clickedPosition));
+                }
+            }
+        });
     }
 
 
