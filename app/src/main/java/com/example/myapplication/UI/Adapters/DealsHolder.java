@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
@@ -18,7 +19,7 @@ public class DealsHolder extends RecyclerView.ViewHolder {
     ShapeableImageView Image;
     ImageView livraisonIcon;
 
-    CardView cardView;
+    ConstraintLayout cardView;
 
     public DealsHolder(@NonNull View itemView) {
         super(itemView);
