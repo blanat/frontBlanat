@@ -2,6 +2,7 @@ package com.example.myapplication.model;
 
 import com.example.myapplication.model.Enum.Categories;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Deal {
@@ -14,9 +15,9 @@ public class Deal {
 
     private Categories category;
 
-    private Date dateDebut;
+    private String dateDebut;
 
-    private Date dateFin;
+    private String dateFin;
 
     private float price;
 
@@ -29,7 +30,7 @@ public class Deal {
     private float deliveryPrice;
 
 
-    public Deal(String title, String description, String lienDeal, float price, float newPrice, String localisation,Categories category,boolean deliveryExist ) {
+    public Deal(String title, String description, String lienDeal, float price, float newPrice, String localisation,Categories category,boolean deliveryExist,float deliveryPrice,String dateDebut,String dateFin ) {
         this.title = title;
         this.description = description;
         this.lienDeal = lienDeal;
@@ -38,5 +39,10 @@ public class Deal {
         this.localisation = localisation;
         this.category = category;
         this.deliveryExist = deliveryExist;
+        this.deliveryPrice = deliveryPrice;
+        //newly added attributs
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+
     }
 }

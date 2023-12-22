@@ -8,13 +8,13 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
@@ -32,7 +32,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,9 +42,16 @@ import com.example.myapplication.Services.RealPathUtil;
 import com.example.myapplication.UI.Adapters.ImageAdapter;
 import com.example.myapplication.model.Deal;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -70,6 +76,10 @@ public class CreateDActivity extends AppCompatActivity {
     AutoCompleteTextView autoCompleteTextView;
     ArrayAdapter<String> adapterItems;
 
+
+    //===================
+    private boolean deliveryExist;
+    private float deliveryPrice = 0; // Default value for cases when "No" is selected
     //===================
 
     @Override
@@ -79,9 +89,9 @@ public class CreateDActivity extends AppCompatActivity {
 
         //=====================================
         dateselect = findViewById(R.id.datedebut);
-        datedebut = findViewById(R.id.datededebut);
+        //datedebut = findViewById(R.id.datededebut);
         dateselectF = findViewById(R.id.datefin);
-        datefin = findViewById(R.id.datedefin);
+        //datefin = findViewById(R.id.datedefin);
 
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
@@ -104,29 +114,11 @@ public class CreateDActivity extends AppCompatActivity {
         recyclerView.setAdapter(imageAdapter);
 
 
+
+        //============================
+        //new:
+
         //=============================
-        dateselect.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        CreateDActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth
-                        ,setListener,year,month,day);
-                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                datePickerDialog.show();
-
-
-            }
-
-        });
-        setListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                month = month+1;
-                String date = day+"/"+month+"/"+year;
-                datedebut.setText(date);
-            }
-        };
         dateselect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,35 +126,15 @@ public class CreateDActivity extends AppCompatActivity {
                         CreateDActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
-                        month = month+1;
-                        String date = day+"/"+month+"/"+year;
+                        month = month + 1;
+                        String date = String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month, day);
                         dateselect.setText(date);
                     }
-                },year,month,day);
+                }, year, month, day);
                 datePickerDialog.show();
             }
         });
 
-        dateselectF.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        CreateDActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth
-                        ,setListener,year,month,day);
-                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                datePickerDialog.show();
-            }
-
-        });
-        setListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                month = month+1;
-                String date = day+"/"+month+"/"+year;
-                datefin.setText(date);
-            }
-        };
         dateselectF.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,11 +142,11 @@ public class CreateDActivity extends AppCompatActivity {
                         CreateDActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
-                        month = month+1;
-                        String date = day+"/"+month+"/"+year;
+                        month = month + 1;
+                        String date = String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month, day);
                         dateselectF.setText(date);
                     }
-                },year,month,day);
+                }, year, month, day);
                 datePickerDialog.show();
             }
         });
@@ -202,6 +174,21 @@ public class CreateDActivity extends AppCompatActivity {
                 }
             });
 
+
+
+        //================================
+        // Checkbox logic
+        RadioGroup radioGroup = findViewById(R.id.segmentedControl);
+        EditText prixLivraisonEditText = findViewById(R.id.prixlivraison);
+
+        // Set a listener for the RadioGroup to handle checkbox changes
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                handleCheckboxChange(checkedId, prixLivraisonEditText);
+            }
+        });
+
         //================================
 
         selectButton.setOnClickListener(new View.OnClickListener() {
@@ -224,6 +211,10 @@ public class CreateDActivity extends AppCompatActivity {
             }
         });
 
+
+
+
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -236,19 +227,21 @@ public class CreateDActivity extends AppCompatActivity {
                 EditText localisationEditText = findViewById(R.id.localisation);
                 AutoCompleteTextView categoryAutoComplete = findViewById(R.id.categories);
 
+
                 //===================
+
+                // Retrieve selected RadioButton ID from the RadioGroup
                 RadioGroup radioGroup = findViewById(R.id.segmentedControl);
                 int selectedRadioButtonId = radioGroup.getCheckedRadioButtonId();
 
-                boolean deliveryExist;
-                if (selectedRadioButtonId == R.id.option1) {
-                    deliveryExist = true; // Yes is selected
-                } else if (selectedRadioButtonId == R.id.option2) {
-                    deliveryExist = false; // No is selected
-                } else {
-                    // Handle the case where no option is selected
-                    return;
-                }
+                // Retrieve the EditText for delivery price
+                EditText prixLivraisonEditText = findViewById(R.id.prixlivraison);
+
+                //===================
+                // Retrieve the selected date values
+                String debutDateString = dateselect.getText().toString();
+                String finDateString = dateselectF.getText().toString();
+
 
                 //===================
 
@@ -261,8 +254,12 @@ public class CreateDActivity extends AppCompatActivity {
                 String localisation = localisationEditText.getText().toString();
                 Categories selectedCategory = Categories.valueOf(categoryAutoComplete.getText().toString());
 
-                Deal deal = new Deal(title, description, lienDeal, price, newPrice, localisation,selectedCategory,deliveryExist);
+                // Use the handleCheckboxChange method to update deliveryExist and deliveryPrice
+                handleCheckboxChange(selectedRadioButtonId, prixLivraisonEditText);
 
+
+
+                Deal deal = new Deal(title, description, lienDeal, price, newPrice, localisation, selectedCategory, deliveryExist, deliveryPrice,debutDateString,finDateString);
 
                 // Assuming you have GsonConverterFactory in your Retrofit setup
                 Gson gson = new Gson();
@@ -272,17 +269,17 @@ public class CreateDActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<RequestBody> call, Response<RequestBody> response) {
                         Log.d("Retrofit", "onResponse: " + response.toString());
-
                     }
+
                     @Override
                     public void onFailure(Call<RequestBody> call, Throwable t) {
                         Log.e("Retrofit", "onFailure: " + t.getMessage());
                         // Handle the failure
                     }
-
                 });
             }
         });
+
     }
 
     private void openImagePicker() {
@@ -362,6 +359,27 @@ public class CreateDActivity extends AppCompatActivity {
         }
     }
 
+
+    // Method to handle changes in the checkbox state
+    private void handleCheckboxChange(int selectedRadioButtonId, EditText prixLivraisonEditText) {
+        if (selectedRadioButtonId == R.id.option1) {
+            deliveryExist = true; // Yes is selected
+            // Set visibility to VISIBLE
+            prixLivraisonEditText.setVisibility(View.VISIBLE);
+            // Retrieve the delivery price from EditText
+            String deliveryPriceString = prixLivraisonEditText.getText().toString();
+            if (!TextUtils.isEmpty(deliveryPriceString)) {
+                deliveryPrice = Float.parseFloat(deliveryPriceString);
+            }
+        } else if (selectedRadioButtonId == R.id.option2) {
+            // Set visibility to GONE
+            prixLivraisonEditText.setVisibility(View.GONE);
+            deliveryExist = false; // No is selected
+        } else {
+            // Handle the case where no option is selected
+            // You may add additional logic or show a message here
+        }
+    }
 
 
 

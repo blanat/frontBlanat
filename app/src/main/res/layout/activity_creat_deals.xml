@@ -67,10 +67,11 @@
 
 
             </LinearLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="365dp"
+                android:layout_height="175dp"
                 android:layout_above="@+id/select"
                 android:layout_marginBottom="38dp"
                 android:padding="16dp" />
@@ -224,17 +225,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="livraison"
+                    android:layout_marginStart="8dp"
+                    android:text="Livraison"
                     android:textSize="20sp"
                     android:textColor="@color/my_primary"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    android:textStyle="bold"/>
 
                 <RadioGroup
                     android:id="@+id/segmentedControl"
@@ -257,10 +258,24 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="NO" />
-
-
                 </RadioGroup>
             </LinearLayout>
+
+            <EditText
+                android:id="@+id/prixlivraison"
+                android:layout_width="370dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="11dp"
+                android:hint="Prix DH"
+                android:textColorHint="@color/black"
+                android:textSize="20sp"
+                android:background="@drawable/custom_edittext"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/pricea"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
 
             <!--<TextView
                 android:id="@+id/textView1"
@@ -297,18 +312,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <EditText
-                    android:id="@+id/datededebut"
-                    android:layout_width="130dp"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="9dp"
-                    android:text="Date début"
-                    android:textSize="20sp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:background="@drawable/custom_edittext"
-                    />
+
                 <TextView
                     android:id="@+id/datedebut"
                     android:layout_width="190dp"
@@ -340,18 +344,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <EditText
-                    android:id="@+id/datedefin"
-                    android:layout_width="130dp"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="9dp"
-                    android:text="Date Fin"
-                    android:textSize="20sp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:background="@drawable/custom_edittext"
-                    />
+
                 <TextView
                     android:id="@+id/datefin"
                     android:layout_width="190dp"
