@@ -97,7 +97,7 @@ public class CreateDActivity extends AppCompatActivity {
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
-       //=====================================
+        //=====================================
 
         recyclerView = findViewById(R.id.recyclerView);
         Button selectButton = findViewById(R.id.select);
@@ -155,24 +155,24 @@ public class CreateDActivity extends AppCompatActivity {
         autoCompleteTextView = findViewById(R.id.categories);
 
         // Convert Categories enum values to a String array
-            String[] items = new String[Categories.values().length];
-            for (int i = 0; i < Categories.values().length; i++) {
-                items[i] = Categories.values()[i].toString();
-            }
+        String[] items = new String[Categories.values().length];
+        for (int i = 0; i < Categories.values().length; i++) {
+            items[i] = Categories.values()[i].toString();
+        }
 
         // Initialize ArrayAdapter with the modified items array
-            adapterItems = new ArrayAdapter<>(this, R.layout.list_item, items);
+        adapterItems = new ArrayAdapter<>(this, R.layout.list_item, items);
 
-            autoCompleteTextView.setAdapter(adapterItems);
+        autoCompleteTextView.setAdapter(adapterItems);
 
-            autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long id) {
-                    // Retrieve the selected Categories enum value
-                    Categories selectedCategory = Categories.values()[i];
-                    Toast.makeText(CreateDActivity.this, "Category: " + selectedCategory, Toast.LENGTH_SHORT).show();
-                }
-            });
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long id) {
+                // Retrieve the selected Categories enum value
+                Categories selectedCategory = Categories.values()[i];
+                Toast.makeText(CreateDActivity.this, "Category: " + selectedCategory, Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
 

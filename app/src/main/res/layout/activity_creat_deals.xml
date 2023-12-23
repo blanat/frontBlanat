@@ -95,6 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_marginStart="12dp"
                 android:text="Lien du deal"
                 android:textSize="20sp"
                 android:textColor="@color/my_primary"
@@ -102,21 +103,29 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="48dp"
+                android:src="@drawable/date"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="15dp"/>
             <EditText
                 android:id="@+id/line"
-                android:layout_width="370dp"
+                android:layout_width="340dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginStart="9dp"
+                android:layout_marginStart="15dp"
                 android:hint="https://"
                 android:textColorHint="@color/black"
                 android:textSize="16sp"
-                android:background="@drawable/custom_edittext"
                 app:layout_constraintTop_toBottomOf="@+id/dealLink"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
-
+        </LinearLayout>
             <TextView
                 android:id="@+id/title_deal"
                 android:layout_width="match_parent"
@@ -181,6 +190,7 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
+
 
             <EditText
                 android:id="@+id/PrixN"
