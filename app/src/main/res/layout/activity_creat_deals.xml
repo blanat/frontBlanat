@@ -44,7 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:layout_marginStart="35dp"
+                    android:layout_marginStart="33dp"
                     android:text="Nouveau Deal"
                     android:textSize="30sp"
                     android:textColor="@color/black"
@@ -58,7 +58,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="27dp"
+                    android:layout_marginStart="25dp"
                     android:layout_marginTop="7dp"
                     android:text="save"
                     android:textSize="10sp"
@@ -71,9 +71,9 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="175dp"
+                android:layout_height="160dp"
                 android:layout_above="@+id/select"
-                android:layout_marginBottom="38dp"
+                android:layout_marginBottom="10dp"
                 android:padding="16dp" />
 
 
@@ -87,7 +87,6 @@
                 android:layout_marginStart="116dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="127dp"
-                android:layout_marginBottom="70dp"
                 android:text="Select Images" />
 
             <TextView
@@ -110,7 +109,7 @@
             <ImageView
                 android:layout_width="45dp"
                 android:layout_height="48dp"
-                android:src="@drawable/date"
+                android:src="@drawable/lien"
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="15dp"/>
             <EditText
@@ -118,7 +117,7 @@
                 android:layout_width="340dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="13dp"
                 android:hint="https://"
                 android:textColorHint="@color/black"
                 android:textSize="16sp"
@@ -131,59 +130,78 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_marginStart="12dp"
                 android:text="Titre *"
                 android:textSize="20sp"
                 android:textColor="@color/my_primary"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="48dp"
+                android:src="@drawable/baseline_title_24"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="31dp"/>
             <EditText
                 android:id="@+id/dealtitle"
-                android:layout_width="370dp"
-                android:layout_height="48dp"
+                android:layout_width="340dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="9dp"
                 android:hint="Titre"
                 android:textColorHint="@color/black"
                 android:textSize="20sp"
-                android:background="@drawable/custom_edittext"
                 app:layout_constraintTop_toBottomOf="@+id/title_deal"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
-
+        </LinearLayout>
             <TextView
                 android:id="@+id/Desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_marginStart="12dp"
                 android:text="Description *"
                 android:textSize="20sp"
                 android:textColor="@color/my_primary"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="48dp"
+                android:src="@drawable/description"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="15dp"/>
             <EditText
                 android:id="@+id/description"
-                android:layout_width="370dp"
+                android:layout_width="340dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="9dp"
                 android:hint="Description"
                 android:textColorHint="@color/black"
                 android:textSize="20sp"
-                android:background="@drawable/custom_edittext"
                 app:layout_constraintTop_toBottomOf="@+id/Desc"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
-
+        </LinearLayout>
             <TextView
                 android:id="@+id/price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_marginStart="12dp"
                 android:text="Prix *"
                 android:textSize="20sp"
                 android:textColor="@color/my_primary"
@@ -191,46 +209,64 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="48dp"
+                android:src="@drawable/prix"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="15dp"/>
             <EditText
                 android:id="@+id/PrixN"
-                android:layout_width="370dp"
+                android:layout_width="340dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="9dp"
                 android:hint="Prix DH"
                 android:textColorHint="@color/black"
                 android:textSize="20sp"
-                android:background="@drawable/custom_edittext"
                 app:layout_constraintTop_toBottomOf="@+id/price"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
+        </LinearLayout>
             <TextView
                 android:id="@+id/pricea"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_marginStart="12dp"
                 android:text="Prix généralement constaté *"
                 android:textSize="20sp"
                 android:textColor="@color/my_primary"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/pourcentage"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="15dp"/>
             <EditText
                 android:id="@+id/PrixA"
-                android:layout_width="370dp"
+                android:layout_width="340dp"
                 android:layout_height="48dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginStart="9dp"
                 android:hint="Prix DH"
                 android:textColorHint="@color/black"
                 android:textSize="20sp"
-                android:background="@drawable/custom_edittext"
                 app:layout_constraintTop_toBottomOf="@+id/pricea"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
-
+        </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -241,7 +277,7 @@
                     android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="12dp"
                     android:text="Livraison"
                     android:textSize="20sp"
                     android:textColor="@color/my_primary"
@@ -271,49 +307,70 @@
                 </RadioGroup>
             </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/liv"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="15dp"/>
             <EditText
                 android:id="@+id/prixlivraison"
-                android:layout_width="370dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="11dp"
+                android:layout_width="340dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="9dp"
                 android:hint="Prix DH"
                 android:textColorHint="@color/black"
                 android:textSize="20sp"
-                android:background="@drawable/custom_edittext"
-                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@+id/pricea"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
-
-            <!--<TextView
+        </LinearLayout>
+            <TextView
                 android:id="@+id/textView1"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_marginStart="12dp"
                 android:text="Code Reduction %"
                 android:textSize="20sp"
                 android:textColor="@color/my_primary"
                 android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/faiblecout"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="19dp"/>
             <EditText
                 android:id="@+id/codereduction"
-                android:layout_width="370dp"
-                android:layout_height="48dp"
+                android:layout_width="340dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="9dp"
                 android:hint="Code Reduction"
                 android:textColorHint="@color/black"
                 android:textSize="20sp"
-                android:background="@drawable/custom_edittext"
                 app:layout_constraintTop_toBottomOf="@+id/pricea"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>-->
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </LinearLayout>
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_marginStart="12dp"
                 android:text="Date de debut"
                 android:textSize="20sp"
                 android:textColor="@color/my_primary"
@@ -329,15 +386,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="Date selectioné"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="20dp"
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
                 <ImageView
                     android:layout_width="45dp"
                     android:layout_height="48dp"
-                    android:src="@drawable/date"
-                    android:layout_marginStart="2dp"
+                    android:src="@drawable/calendrier"
+                    android:layout_marginStart="7dp"
                     android:layout_marginTop="15dp"/>
             </LinearLayout>
 
@@ -346,6 +403,7 @@
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_marginStart="12dp"
                 android:text="Date de Fin"
                 android:textSize="20sp"
                 android:textColor="@color/my_primary"
@@ -361,14 +419,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="Date selectioné"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="20dp"
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
                 <ImageView
                     android:layout_width="45dp"
                     android:layout_height="48dp"
-                    android:src="@drawable/date"
+                    android:src="@drawable/calendrier"
                     android:layout_marginStart="2dp"
                     android:layout_marginTop="15dp"/>
             </LinearLayout>
@@ -377,12 +435,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_marginStart="12dp"
                 android:text="Localisation du Deal"
                 android:textSize="20sp"
                 android:textColor="@color/my_primary"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/emp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="19dp"/>
 
             <EditText
                 android:id="@+id/localisation"
@@ -393,16 +462,18 @@
                 android:hint="Localisation "
                 android:textColorHint="@color/black"
                 android:textSize="20sp"
-                android:background="@drawable/custom_edittext"
                 app:layout_constraintTop_toBottomOf="@+id/Desc"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
+
+        </LinearLayout>
 
             <TextView
                 android:id="@+id/Categorie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_marginStart="12dp"
                 android:text="Categorie *"
                 android:textSize="20sp"
                 android:textColor="@color/my_primary"
@@ -413,6 +484,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
+                android:layout_marginStart="14dp"
                 android:hint="catégorie"
                 app:boxBackgroundColor="@color/white"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
