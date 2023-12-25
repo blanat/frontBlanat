@@ -1,0 +1,64 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.Detailsactivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Other views as needed -->
+
+        <FrameLayout
+            android:id="@+id/fragmentContainerTop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:padding="16dp"/>
+
+        <!-- Fragment 2 Container -->
+        <FrameLayout
+            android:id="@+id/fragmentContainerBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fragmentContainerTop"
+            android:background="@android:color/background_light">
+            <!-- Additional views for the comment form can be added here -->
+        </FrameLayout>
+
+
+        <!-- Comment List RecyclerView -->
+        <RelativeLayout
+            android:id="@+id/commentForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/background_light">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp">
+                <!-- EditText for entering the comment -->
+                <EditText
+                    android:id="@+id/editTextComment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Type your comment here"
+                    android:layout_margin="16dp" />
+
+                <!-- Button for sending the comment -->
+                <Button
+                    android:id="@+id/buttonSendComment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:text="Send"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
+</ScrollView>

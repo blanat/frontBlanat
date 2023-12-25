@@ -1,15 +1,20 @@
-package com.example.myapplication.UI;
+package com.example.myapplication.UI.details;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.UI.Adapters.DetailsImagesAdapter;
 import com.example.myapplication.model.UserDTO;
@@ -18,44 +23,68 @@ import com.example.myapplication.retrofit.DealApi;
 import com.example.myapplication.retrofit.RetrofitService;
 import com.squareup.picasso.Picasso;
 
-import android.widget.Toast;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Detailsactivity extends AppCompatActivity {
+public class DealDetailsFrag extends Fragment {
+
+    private static final String ARG_DEAL = "arg_deal";
+    private listData deal;
+    private View view;
+    private RecyclerView recyclerView;
+
+
+
+    public DealDetailsFrag() {
+        // Required empty public constructor
+    }
+
+    public static DealDetailsFrag newInstance(listData deal) {
+        DealDetailsFrag fragment = new DealDetailsFrag();
+        Bundle args = new Bundle();
+        args.putParcelable(ARG_DEAL, deal);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detailsactivity);
+        if (getArguments() != null) {
+            deal = getArguments().getParcelable(ARG_DEAL);
 
-        // Receive Intent data
-        Intent intent = getIntent();
-        listData deal = intent.getParcelableExtra("deal");
+        }
+    }
 
-        // Call the method to load image URLs
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_deal_details, container, false);
+
+        // Initialize the RecyclerView
+        recyclerView = view.findViewById(R.id.recyclerView);
+
         if (deal != null) {
             loadImageUrls(deal.getDealID());
         }
-
         // Update UI
-        TextView titleTextView = findViewById(R.id.listtitre);
-        TextView prixnvTextView = findViewById(R.id.prixnv);
-        TextView prixanTextView = findViewById(R.id.prixan);
-        TextView prixliTextView = findViewById(R.id.prixli);
+        TextView titleTextView = view.findViewById(R.id.listtitre);
+        TextView prixnvTextView = view.findViewById(R.id.prixnv);
+        TextView prixanTextView = view.findViewById(R.id.prixan);
+        TextView prixliTextView = view.findViewById(R.id.prixli);
 
-        Button dealButton = findViewById(R.id.DealButton);
+        Button dealButton = view.findViewById(R.id.DealButton);
 
-        TextView dealDetailTextView = findViewById(R.id.dealdetail);
-        TextView localDealTextView = findViewById(R.id.localdeal);
+        TextView dealDetailTextView = view.findViewById(R.id.dealdetail);
+        TextView localDealTextView = view.findViewById(R.id.localdeal);
 
         // Added: User details
-        ImageView userProfileImageView = findViewById(R.id.userProfileImage);
-        TextView usernameTextView = findViewById(R.id.usernameTextView);
+        ImageView userProfileImageView = view.findViewById(R.id.userProfileImage);
+        TextView usernameTextView = view.findViewById(R.id.usernameTextView);
 
         // Check if deal is not null before accessing its properties
         if (deal != null) {
@@ -66,7 +95,7 @@ public class Detailsactivity extends AppCompatActivity {
             prixanTextView.setText(String.format("%s %s", deal.getPrice(), "DH"));
 
             // Set the delivery icon visibility based on deliveryExist
-            ImageView iconelivImageView = findViewById(R.id.iconeliv);
+            ImageView iconelivImageView = view.findViewById(R.id.iconeliv);
             iconelivImageView.setVisibility(deal.isDeliveryExist() ? View.VISIBLE : View.GONE);
 
             // Set the delivery price if delivery exists
@@ -85,8 +114,6 @@ public class Detailsactivity extends AppCompatActivity {
             UserDTO dealCreator = deal.getDealCreator();
             if (dealCreator != null) {
                 // Set the user profile image
-                // Note: You need to load the image using an image loading library like Glide or Picasso
-                // Example using Glide:
                 Picasso.get().load(dealCreator.getProfileImageUrl()).into(userProfileImageView);
 
                 // Set the username
@@ -105,11 +132,13 @@ public class Detailsactivity extends AppCompatActivity {
                 }
             });
         }
-    }
 
+        return view;
+    }
+// ...
 
     private void loadImageUrls(long dealId) {
-        RetrofitService retrofitService = new RetrofitService(this);
+        RetrofitService retrofitService = new RetrofitService(getContext()); // Use getContext() here
         DealApi dealsApi = retrofitService.getRetrofit().create(DealApi.class);
 
         // Corrected: Call the API method and enqueue the call
@@ -123,25 +152,22 @@ public class Detailsactivity extends AppCompatActivity {
                     initRecyclerView(imageUrls);
                 } else {
                     // Handle error
-                    Toast.makeText(Detailsactivity.this, "Failed to get image URLs", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Failed to get image URLs", Toast.LENGTH_SHORT).show(); // Use getContext() here
                 }
             }
 
             @Override
             public void onFailure(Call<List<String>> call, Throwable t) {
                 // Handle failure
-                Toast.makeText(Detailsactivity.this, "Network error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Network error", Toast.LENGTH_SHORT).show(); // Use getContext() here
             }
         });
     }
-
+    // Modify the initRecyclerView method to use the class field
     private void initRecyclerView(List<String> imageUrls) {
-        // Set up your RecyclerView with the imageUrls using the DetailsImagesAdapter
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        DetailsImagesAdapter adapter = new DetailsImagesAdapter(Detailsactivity.this, imageUrls);
-        recyclerView.setLayoutManager(new LinearLayoutManager(Detailsactivity.this, LinearLayoutManager.HORIZONTAL, false));
+        DetailsImagesAdapter adapter = new DetailsImagesAdapter(getContext(), imageUrls);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adapter);
     }
 
 }
-
