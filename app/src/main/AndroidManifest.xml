@@ -20,19 +20,14 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-<<<<<<< HEAD
             android:name=".Navmenu"
             android:exported="false" />
+
         <activity
-            android:name=".testnav"
-            android:exported="false"
-            android:label="@string/title_activity_testnav" />
-        <activity
-=======
+
             android:name=".UI.details.DetailsDealActivity"
             android:exported="false" />
         <activity
->>>>>>> origin/RollBackForFixes
             android:name=".UI.EntryPOINTactivity"
             android:exported="true">
             <intent-filter>
