@@ -7,6 +7,7 @@ import java.util.Date;
 
 public class Deal {
 
+
     private String title;
 
     private String description;

@@ -1,5 +1,6 @@
 package com.example.myapplication.UI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -61,10 +62,14 @@ public class recycleview_activity extends AppCompatActivity implements selectLis
         recyclerView.setAdapter(dealsAdapter);
     }
 
-
     @Override
-    public void onItemClicked(listData listDealData) {
-        Toast.makeText(this,listDealData.getTitle(),Toast.LENGTH_SHORT).show();
+    public void onItemClicked(listData deal) {
+        // Handle the item click
+        // Navigate to the details activity and pass the clicked listData
+
+        Intent intent = new Intent(this, Detailsactivity.class);
+        intent.putExtra("deal", deal);
+        startActivity(intent);
     }
 }
 

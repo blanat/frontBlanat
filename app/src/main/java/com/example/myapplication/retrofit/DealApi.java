@@ -13,19 +13,23 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 
 public interface DealApi {
     // Define your API endpoints here
     @Multipart
-    @POST("/api/deals/create")
+    @POST("/api/deals")
     Call<RequestBody> uploadDeal(
             @Part("deal") RequestBody deal,
             @Part List<MultipartBody.Part> images
     );
 
 
-    @GET("/api/deals/listDeals")
+    @GET("/api/deals")
     Call<List<listData>> getListDeals();
+
+    @GET("/api/images/Deal/urls/{dealId}")
+    Call<List<String>> getImageUrlsForDeal(@Path("dealId") long dealId);
 
 }
 
