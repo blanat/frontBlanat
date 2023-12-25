@@ -72,7 +72,9 @@ public class DetailsDealActivity extends AppCompatActivity {
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                                 if (response.isSuccessful()) {
                                     Toast.makeText(DetailsDealActivity.this, "Comment added: " + commentText, Toast.LENGTH_SHORT).show();
-
+// Clear the input field
+                                    editTextComment.setText("");
+                                    
                                     // Refresh the comment list
                                     CommentListFrag commentListFrag = (CommentListFrag) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerBottom);
                                     if (commentListFrag != null) {
