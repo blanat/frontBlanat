@@ -58,7 +58,7 @@ dependencies {
     implementation("com.squareup.picasso:picasso:2.71828")
 
     implementation("androidx.cardview:cardview:1.0.0")
-
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
 
 }
 

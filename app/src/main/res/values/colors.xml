@@ -8,6 +8,6 @@
     <color name="gray">#808080</color>
     <color name="green">#07C607</color>
     <color name="red">#FB0B2F</color>
-
-
+    <color name="gray2">#0D808080</color>
+    <color name="my_primary2">#1B0D7686</color>
 </resources>

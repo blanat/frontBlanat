@@ -4,5 +4,11 @@
     <string name="login">Log In</string>
     <string name="signup">Sign Up</string>
     <string name="fb">&#x1F44D; FaceBook</string>
+    <string name="SauvDeal">Deals Sauvegardés</string>
+    <string name="parametres">Paramètres</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
+    <string name="back">Back</string>
+
 
 </resources>
