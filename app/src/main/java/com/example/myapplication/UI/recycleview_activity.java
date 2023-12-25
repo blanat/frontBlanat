@@ -2,6 +2,7 @@ package com.example.myapplication.UI;
 
 import android.os.Bundle;
 import android.widget.Toast;
+import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -66,5 +67,8 @@ public class recycleview_activity extends AppCompatActivity implements selectLis
     public void onItemClicked(listData listDealData) {
         Toast.makeText(this,listDealData.getTitle(),Toast.LENGTH_SHORT).show();
     }
+
+
+
 }
 

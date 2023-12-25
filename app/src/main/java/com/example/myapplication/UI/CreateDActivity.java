@@ -70,7 +70,7 @@ public class CreateDActivity extends AppCompatActivity {
 
     //===================
     TextView dateselect, dateselectF;
-    EditText   datedebut, datefin;
+    //EditText   datedebut, datefin;
     DatePickerDialog.OnDateSetListener setListener;
     Categories[] items = Categories.values();
     AutoCompleteTextView autoCompleteTextView;
@@ -132,6 +132,7 @@ public class CreateDActivity extends AppCompatActivity {
                     }
                 }, year, month, day);
                 datePickerDialog.show();
+
             }
         });
 
@@ -259,12 +260,32 @@ public class CreateDActivity extends AppCompatActivity {
 
 
 
+
+
                 Deal deal = new Deal(title, description, lienDeal, price, newPrice, localisation, selectedCategory, deliveryExist, deliveryPrice,debutDateString,finDateString);
 
                 // Assuming you have GsonConverterFactory in your Retrofit setup
                 Gson gson = new Gson();
                 String dealJson = gson.toJson(deal);
                 RequestBody dealRequestBody = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), dealJson);
+
+
+                /*
+                //=======================
+
+                if (TextUtils.isEmpty(title) || TextUtils.isEmpty(description) ||
+                        TextUtils.isEmpty(priceEditText.getText()) || TextUtils.isEmpty(newPriceEditText.getText()) ||
+                        TextUtils.isEmpty(categoryAutoComplete.getText())) {
+
+                    // Afficher un message d'erreur si un des champs est vide
+                    Toast.makeText(CreateDActivity.this, R.string.required_fields_message, Toast.LENGTH_SHORT).show();
+
+                    // Sortir de la méthode sans soumettre le formulaire
+                    return;
+                }
+               */
+                //==========================
+
                 dealService.uploadDeal(dealRequestBody, imagePaths, new Callback<RequestBody>() {
                     @Override
                     public void onResponse(Call<RequestBody> call, Response<RequestBody> response) {
@@ -277,6 +298,7 @@ public class CreateDActivity extends AppCompatActivity {
                         // Handle the failure
                     }
                 });
+
             }
         });
 
@@ -380,6 +402,9 @@ public class CreateDActivity extends AppCompatActivity {
             // You may add additional logic or show a message here
         }
     }
+
+
+
 
 
 
