@@ -1,5 +1,6 @@
 package com.example.myapplication.UI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.UI.Adapters.DealsAdapter;
 import com.example.myapplication.UI.Adapters.selectListener;
+import com.example.myapplication.UI.details.DetailsDealActivity;
 import com.example.myapplication.model.listData;
 import com.example.myapplication.retrofit.DealApi;
 import com.example.myapplication.retrofit.RetrofitService;
@@ -62,10 +64,14 @@ public class recycleview_activity extends AppCompatActivity implements selectLis
         recyclerView.setAdapter(dealsAdapter);
     }
 
-
     @Override
-    public void onItemClicked(listData listDealData) {
-        Toast.makeText(this,listDealData.getTitle(),Toast.LENGTH_SHORT).show();
+    public void onItemClicked(listData deal) {
+        // Handle the item click
+        // Navigate to the details activity and pass the clicked listData
+
+        Intent intent = new Intent(this, DetailsDealActivity.class);
+        intent.putExtra("deal", deal);
+        startActivity(intent);
     }
 
 

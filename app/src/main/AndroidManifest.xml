@@ -20,6 +20,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+<<<<<<< HEAD
             android:name=".Navmenu"
             android:exported="false" />
         <activity
@@ -27,6 +28,11 @@
             android:exported="false"
             android:label="@string/title_activity_testnav" />
         <activity
+=======
+            android:name=".UI.details.DetailsDealActivity"
+            android:exported="false" />
+        <activity
+>>>>>>> origin/RollBackForFixes
             android:name=".UI.EntryPOINTactivity"
             android:exported="true">
             <intent-filter>
@@ -35,6 +41,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".UI.Detailsactivity"
+                  android:exported="false"/>
         <activity
             android:name=".UI.MainActivity"
             android:exported="false" />
@@ -49,6 +57,9 @@
             android:exported="false" />
         <activity
             android:name=".UI.recycleview_activity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.Detailsactivity"
             android:exported="false" />
 
         <provider

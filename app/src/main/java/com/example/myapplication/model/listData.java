@@ -1,12 +1,14 @@
 package com.example.myapplication.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.example.myapplication.model.Enum.Categories;
 
 import java.util.Date;
 
-public class listData {
+public class listData implements Parcelable {
 
     private long dealID;
     private String title;
@@ -22,7 +24,10 @@ public class listData {
     private int numberOfComments;
     private String lienDeal;
 
-        // Image and time will be added to the DTO
+    private UserDTO dealCreator; // Add this field
+
+
+    // Image and time will be added to the DTO
         private String firstImageUrl;
         private String timePassedSinceCreation; // corresponds to the same name in the entity
 
@@ -167,4 +172,73 @@ public class listData {
     public void setTimePassedSinceCreation(String timePassedSinceCreation) {
         this.timePassedSinceCreation = timePassedSinceCreation;
     }
+
+
+    public UserDTO getDealCreator() {
+        return dealCreator;
+    }
+
+
+    //===============================================================
+    protected listData(Parcel in) {
+        dealID = in.readLong();
+        title = in.readString();
+        description = in.readString();
+        category = Categories.valueOf(in.readString());
+        //dateFin = new Date(in.readLong());
+        price = in.readFloat();
+        newPrice = in.readFloat();
+        localisation = in.readString();
+        deliveryExist = in.readByte() != 0;
+        deliveryPrice = in.readFloat();
+        deg = in.readInt();
+        numberOfComments = in.readInt();
+        lienDeal = in.readString();
+        firstImageUrl = in.readString();
+        timePassedSinceCreation = in.readString();
+        dealCreator = in.readParcelable(UserDTO.class.getClassLoader()); // Read UserDTO
+
+    }
+
+
+    public static final Parcelable.Creator<listData> CREATOR = new Parcelable.Creator<listData>() {
+        @Override
+        public listData createFromParcel(Parcel in) {
+            return new listData(in);
+        }
+
+        @Override
+        public listData[] newArray(int size) {
+            return new listData[size];
+        }
+    };
+
+    // Add other getters and setters as needed
+
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(dealID);
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeString(category.name());
+//        dest.writeLong(dateFin.getTime());
+        dest.writeFloat(price);
+        dest.writeFloat(newPrice);
+        dest.writeString(localisation);
+        dest.writeByte((byte) (deliveryExist ? 1 : 0));
+        dest.writeFloat(deliveryPrice);
+        dest.writeInt(deg);
+        dest.writeInt(numberOfComments);
+        dest.writeString(lienDeal);
+        dest.writeString(firstImageUrl);
+        dest.writeString(timePassedSinceCreation);
+        dest.writeParcelable(dealCreator, flags); // Write UserDTO
+
+    }
+
+
+    public int describeContents() {
+        return 0;
+    }
+
+
 }

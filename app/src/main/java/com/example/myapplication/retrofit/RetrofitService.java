@@ -42,7 +42,11 @@ public class RetrofitService {
 
         // Build the Retrofit instance with the OkHttpClient and GsonConverterFactory
         retrofit = new Retrofit.Builder()
+<<<<<<< HEAD
                 .baseUrl("http://192.168.1.3:8085")
+=======
+                .baseUrl("http://192.168.1.103:8085")
+>>>>>>> origin/RollBackForFixes
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(okHttpClient)
                 .build();
