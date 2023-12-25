@@ -105,4 +105,11 @@ public class CommentListFrag extends Fragment {
         });
     }
 
+    public void refreshComments() {
+        // Reload and display comments for the deal
+        if (dealId > 0) {
+            initCommentsRecyclerView(dealId);
+        }
+    }
+
 }
