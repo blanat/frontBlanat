@@ -1,5 +1,6 @@
 package com.example.myapplication.UI.Adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,8 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsHolder> {
         holder.listTime.setText(deals.getTimePassedSinceCreation());
         holder.priceA.setText(String.valueOf((int) deals.getPrice()));
         holder.priceN.setText(String.valueOf((int) deals.getNewPrice()));
+        holder.commentCount.setText(String.valueOf((int) deals.getNumberOfComments()));
+        Log.d("CommentCount", "Number of comments: " + deals.getNumberOfComments());
 
         holder.voteCount.setText(String.valueOf(deals.getDeg()));
 
@@ -70,4 +73,8 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsHolder> {
     public int getItemCount() {
         return dealslist.size();
     }
+
+
+
+
 }

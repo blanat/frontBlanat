@@ -1,6 +1,7 @@
 package com.example.myapplication.UI.Adapters;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,11 +16,12 @@ import com.google.android.material.imageview.ShapeableImageView;
 
 public class DealsHolder extends RecyclerView.ViewHolder {
 
-    TextView Titre, listTime, voteCount, listDesc, priceN, priceA;
+    TextView Titre, listTime, voteCount, listDesc, priceN, priceA,commentCount;
     ShapeableImageView Image;
     ImageView livraisonIcon;
 
     ConstraintLayout cardView;
+    TextView plus, moins;
 
     public DealsHolder(@NonNull View itemView) {
         super(itemView);
@@ -33,6 +35,7 @@ public class DealsHolder extends RecyclerView.ViewHolder {
         //ImageButton moinsButton = itemView.findViewById(R.id.moins);
 
 
+        commentCount = itemView.findViewById(R.id.commentCount);
 
         listDesc = itemView.findViewById(R.id.listdesc);
         priceN = itemView.findViewById(R.id.prixN);
@@ -42,6 +45,9 @@ public class DealsHolder extends RecyclerView.ViewHolder {
 
         //for the onclick
         cardView = itemView.findViewById(R.id.cardView);
+
+        plus = itemView.findViewById(R.id.plus);
+        moins = itemView.findViewById(R.id.moins);
 
 
 /*

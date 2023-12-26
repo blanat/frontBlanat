@@ -36,8 +36,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UI.Detailsactivity"
-                  android:exported="false"/>
+
         <activity
             android:name=".UI.MainActivity"
             android:exported="false" />
@@ -50,12 +49,7 @@
         <activity
             android:name=".UI.LoginScreen"
             android:exported="false" />
-        <activity
-            android:name=".UI.recycleview_activity"
-            android:exported="false" />
-        <activity
-            android:name=".UI.Detailsactivity"
-            android:exported="false" />
+
 
         <provider
             android:name="androidx.core.content.FileProvider"

@@ -44,6 +44,13 @@ public interface DealApi {
     Call<ResponseBody> addComment(@Body CommentRequest commentRequest);
 
 
+
+    @POST("/{dealId}/increment")
+    Call<Void> incrementDeg(@Path("dealId") long dealId);
+
+    @POST("/{dealId}/decrement")
+    Call<Void> decrementDeg(@Path("dealId") long dealId);
+
 }
 
 
