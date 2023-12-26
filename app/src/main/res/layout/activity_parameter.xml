@@ -72,18 +72,20 @@
 
             <!-- New TextViews -->
             <TextView
+                android:id="@+id/modMdp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Modifier Mon Mot de Passe"
+                android:text="@string/modifier_mdp"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"
                 />
 
             <TextView
+                android:id="@+id/delAcc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Supprimer mon Compte"
+                android:text="@string/del_account"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"

@@ -12,19 +12,29 @@ import com.example.myapplication.R;
 import com.example.myapplication.UI.Parameter;
 
 public class Profile extends AppCompatActivity {
+    private String email;
+    private String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        final TextView paramsLink = findViewById(R.id.paramId);
+        Intent intent = getIntent();
 
+        if (intent.hasExtra("email") && intent.hasExtra("password")) {
+            email = intent.getStringExtra("email");
+            password = intent.getStringExtra("password");
+        }
+
+        final TextView paramsLink = findViewById(R.id.paramId);
 
         paramsLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent signupIntent = new Intent(Profile.this, Parameter.class);
+                signupIntent.putExtra("email", email);
+                signupIntent.putExtra("password", password);
                 startActivity(signupIntent);
             }
         });
