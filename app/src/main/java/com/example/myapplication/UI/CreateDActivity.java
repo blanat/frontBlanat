@@ -117,6 +117,16 @@ public class CreateDActivity extends AppCompatActivity {
 
         //============================
         //new:
+        TextView backButton = findViewById(R.id.back);
+
+        // Set an OnClickListener for the back button
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Call the onBackPressed method to navigate back
+                onBackPressed();
+            }
+        });
 
         //=============================
         dateselect.setOnClickListener(new View.OnClickListener() {
@@ -403,7 +413,17 @@ public class CreateDActivity extends AppCompatActivity {
     }
 
 
-
+    @Override
+    public void onBackPressed() {
+        // Check if the fragment manager has fragments in the back stack
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            // Pop the back stack to navigate back
+            getSupportFragmentManager().popBackStack();
+        } else {
+            // If no fragments in the back stack, finish the activity
+            super.onBackPressed();
+        }
+    }
 
 
 

@@ -33,9 +33,9 @@
 
         <TextView
             android:id="@+id/listTime"
-            android:layout_width="52dp"
+            android:layout_width="82dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="173dp"
+            android:layout_marginStart="140dp"
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@id/listImage"
             android:text="time"
@@ -135,6 +135,16 @@
                 android:textStyle="bold"
                 android:layout_marginStart="10dp"
                 android:textSize="11sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DH"
+                android:textColor="@color/green"
+                android:textStyle="bold"
+                android:layout_marginStart="2dp"
+                android:textSize="11sp"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -143,6 +153,15 @@
                 android:textColor="@color/red"
                 android:textStyle="bold"
                 android:layout_marginStart="10dp"
+                android:textSize="9sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DH"
+                android:textColor="@color/red"
+                android:textStyle="bold"
+                android:layout_marginStart="2dp"
                 android:textSize="9sp"/>
             <!--livraison est invisible par defaut si selement si elle est disponible-->
             <ImageView
@@ -205,8 +224,8 @@
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/black"
+        android:layout_height="2dp"
+        android:background="#D3D3D3"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
 
