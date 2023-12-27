@@ -9,13 +9,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.example.myapplication.retrofit.RequestInterceptor;
-import com.example.myapplication.Adapter.DiscussionAdapter;
+import com.example.myapplication.UI.adapters.DiscussionAdapter;
 import com.example.myapplication.R;
 import com.example.myapplication.model.Discussion;
 
@@ -27,7 +24,6 @@ import androidx.annotation.Nullable;
 import com.example.myapplication.retrofit.RetrofitService;
 import com.example.myapplication.retrofit.UserApi;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

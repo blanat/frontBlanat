@@ -7,8 +7,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.example.myapplication.Adapter.CommentDiscAdapter;
-import com.example.myapplication.retrofit.RequestInterceptor;
+import com.example.myapplication.UI.adapters.CommentDiscAdapter;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
@@ -18,7 +18,6 @@ import com.example.myapplication.retrofit.UserApi;
 
 import java.util.List;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

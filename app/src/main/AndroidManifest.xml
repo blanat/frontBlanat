@@ -42,6 +42,10 @@
             android:name=".UI.LoginScreen"
             android:exported="false" />
 
+        <activity android:name=".UI.CreateDiscScreen"/>
+        <activity android:name=".UI.CommentDiscScreen"/>
+        <activity android:name=".UI.DiscussionScreen"/>
+
 
         <provider
             android:name="androidx.core.content.FileProvider"
