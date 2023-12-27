@@ -58,7 +58,9 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
     implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
-
+    implementation ("com.airbnb.android:lottie:3.4.0")
+    implementation ("com.github.skydoves:powerspinner:1.2.7")
+    implementation ("com.squareup.picasso:picasso:2.8")
 }
 
 

@@ -1,0 +1,211 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/_10pxh"
+    tools:context=".UI.CreateDiscScreen">
+
+    <LinearLayout
+        android:id="@+id/linearColumnajouterunedis"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/_11pxh"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:id="@+id/scrollViewScrollview"
+            android:layout_width="match_parent"
+            android:layout_height="715dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:fillViewport="true"
+            android:gravity="start">
+
+            <LinearLayout
+                android:id="@+id/linearAdddiscussion"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_1pxh"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/_29pxh"
+                    android:paddingTop="@dimen/_30pxh"
+                    android:paddingEnd="@dimen/_29pxh">
+
+                    <TextView
+                        android:id="@+id/txtAjouterunedis"
+                        style="@style/txtIntersemibold24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textColor="@color/cyan_800"
+                        android:text="@string/msg_ajouter_une_dis" />
+
+                    <TextView
+                        android:id="@+id/txtBack"
+                        style="@style/txtIntermedium16"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_1pxh"
+                        android:layout_marginTop="@dimen/_10pxh"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="@string/lbl_back"
+                        android:textColor="@color/cyan_800" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearRowdiversity"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_1pxh"
+                    android:layout_marginTop="@dimen/_20pxh"
+                    android:layout_marginEnd="@dimen/_230pxh"
+                    android:gravity="start"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imageDiversity"
+                        android:layout_width="@dimen/_27pxh"
+                        android:layout_height="@dimen/_23pxh"
+                        android:layout_marginStart="@dimen/_10pxh"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/img_diversity"
+                        tools:ignore="ContentDescription"
+                        tools:src="@drawable/img_diversity" />
+
+                    <TextView
+                        android:id="@+id/txtLanguage"
+                        style="@style/txtIntermedium16"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_1pxh"
+                        android:layout_marginTop="@dimen/_2pxh"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="@string/lbl_categorie"
+                        android:textColor="@color/cyan_800" />
+
+
+
+                </LinearLayout>
+
+
+                <com.skydoves.powerspinner.PowerSpinnerView
+                    android:id="@+id/spinnerCategories"
+                    android:layout_width="302dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_40pxh"
+                    android:layout_marginTop="@dimen/_20pxh"
+                    android:background="@color/cyan_800"
+                    android:gravity="center"
+                    android:hint="Question 1"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/cyan_800"
+                    android:textSize="14.5sp"
+                    app:spinner_arrow_gravity="end"
+                    app:spinner_arrow_padding="8dp"
+                    app:spinner_divider_color="@color/black"
+                    app:spinner_divider_show="true"
+                    app:spinner_divider_size="0.4dp"
+                    app:spinner_item_height="46dp"
+                    app:spinner_popup_animation="dropdown"
+                    app:spinner_popup_background="@color/cyan_800"
+                    app:spinner_popup_elevation="14dp" />
+
+                <TextView
+                    android:id="@+id/txtTitrediscussion"
+                    style="@style/txtIntermedium16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20pxh"
+                    android:layout_marginTop="@dimen/_60pxh"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/msg_titre_de_discus"
+                    android:textColor="@color/cyan_800" />
+
+                <EditText
+                    android:id="@+id/etDiscussionTitle"
+                    style="@style/etRoundedOutline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtDescription"
+                    android:layout_marginStart="@dimen/_17pxh"
+                    android:layout_marginTop="@dimen/_17pxh"
+                    android:layout_marginEnd="@dimen/_17pxh"
+                    android:background="@drawable/rectangle_border_gray_101_radius_16"
+                    android:drawablePadding="@dimen/_8pxh"
+                    android:ellipsize="end"
+                    android:hint="@string/msg_veuillez_entrer"
+                    android:inputType="text"
+                    android:paddingStart="@dimen/_16pxh"
+                    android:paddingTop="@dimen/_30pxh"
+                    android:paddingEnd="@dimen/_30pxh"
+                    android:paddingBottom="@dimen/_30pxh"
+                    android:singleLine="true"
+                    android:textColorHint="@color/darkGrey"
+                    tools:ignore="Autofill" />
+
+                <TextView
+                    android:id="@+id/txtDescription"
+                    style="@style/txtIntermedium16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20pxh"
+                    android:layout_marginTop="@dimen/_10pxh"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/lbl_description"
+                    android:textColor="@color/cyan_800" />
+
+                <EditText
+                    android:id="@+id/etDiscussionDescription"
+                    style="@style/etRoundedOutline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btnCreateDiscussion"
+                    android:layout_marginStart="@dimen/_17pxh"
+                    android:layout_marginTop="@dimen/_20pxh"
+                    android:layout_marginEnd="@dimen/_17pxh"
+                    android:background="@drawable/rectangle_border_gray_101_radius_16"
+                    android:drawablePadding="@dimen/_8pxh"
+                    android:ellipsize="end"
+                    android:hint="@string/msg_veuillez_entrer2"
+                    android:inputType="text"
+                    android:paddingStart="@dimen/_16pxh"
+                    android:paddingTop="@dimen/_30pxh"
+                    android:paddingEnd="@dimen/_30pxh"
+                    android:paddingBottom="@dimen/_30pxh"
+                    android:singleLine="true"
+                    android:textColorHint="@color/darkGrey"
+                    tools:ignore="Autofill" />
+
+                <Button
+                    android:id="@+id/btnCreateDiscussion"
+                    android:layout_width="327dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/etDiscussionDescription"
+                    android:layout_marginStart="@dimen/_17pxh"
+                    android:layout_marginTop="@dimen/_40pxh"
+                    android:layout_marginEnd="@dimen/_17pxh"
+                    android:insetLeft="2dp"
+                    android:insetTop="2dp"
+                    android:insetBottom="2dp"
+                    android:text="Create Discussion" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</LinearLayout>

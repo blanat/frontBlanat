@@ -1,0 +1,57 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Comment Entry Section -->
+    <RelativeLayout
+        android:id="@+id/relativeCommentSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="16dp">
+
+        <!-- LinearLayout horizontal pour le contenu et le bouton -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/etContent"
+                style="@style/etSolidRoundedOutline"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_6pxh"
+                android:layout_weight="1"
+                android:hint="Ajouter un contenu"
+                android:inputType="text"
+                android:paddingStart="16dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="5dp"
+                android:rotationX="2" />
+
+            <Button
+                android:id="@+id/btnAddComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingStart="16dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="5dp"
+                android:text="Ajouter" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <!-- Comment List Section -->
+    <ListView
+        android:id="@+id/listViewComments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/relativeCommentSection"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="-10dp" />
+
+</RelativeLayout>

@@ -5,4 +5,28 @@
     <string name="signup">Sign Up</string>
     <string name="fb">&#x1F44D; FaceBook</string>
 
+
+    <string name="loading">Loading…</string>
+    <string name="no_internet_connection">No internet connection!</string>
+    <string name="msg_le_message_di">le message à discuter</string>
+    <string name="lbl_auteur">Auteur</string>
+    <string name="lbl_new_deal">New Deal</string>
+    <string name="lbl_back">Back</string>
+    <string name="lbl_search">Search</string>
+    <string name="lbl_nbre">nbre</string>
+    <string name="lbl_home">Home</string>
+    <string name="lbl_compte">Compte</string>
+    <string name="lbl_categorie">Categorie</string>
+    <string name="msg_heure_du_dernie">heure du dernier envoie</string>
+    <string name="lbl_acceuil">Acceuil</string>
+    <string name="lbl_account">Account</string>
+    <string name="lbl_nouveau_blan">Nouveau Blan</string>
+    <!--create discussion-->
+    <string name="msg_titre_de_discus">Titre de discussion:*</string>
+    <string name="msg_veuillez_entrer2">Veuillez entrer une description Valide</string>
+    <string name="msg_veuillez_entrer">Veuillez entrer un titre Valide</string>
+    <string name="lbl_description">Description:*</string>
+    <string name="msg_ajouter_une_dis">Ajouter une discussion</string>
+    <string name="lbl_create">Create</string>
+
 </resources>

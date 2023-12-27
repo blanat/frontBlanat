@@ -6,6 +6,25 @@ public class User {
     private String email;
     private String password;
     private Enum role;
+    private String profileImageUrl;
+
+    private Discussion discussion;
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
+
+    public Discussion getDiscussion() {
+        return discussion;
+    }
+
+    public void setDiscussion(Discussion discussion) {
+        this.discussion = discussion;
+    }
 
     // Getter for id
     public Long getId() {
