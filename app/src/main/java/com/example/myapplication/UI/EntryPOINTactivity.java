@@ -19,7 +19,7 @@ public class EntryPOINTactivity extends AppCompatActivity {
         // Check if the token exists in SharedPreferences
         if (tokenExists()) {
             // Token exists, go to CreateDealsActivity
-            Intent createDealsIntent = new Intent(this, LoginScreen.class);
+            Intent createDealsIntent = new Intent(this, Navmenu.class);
             startActivity(createDealsIntent);
         } else {
             // Token doesn't exist, go to MainActivity
