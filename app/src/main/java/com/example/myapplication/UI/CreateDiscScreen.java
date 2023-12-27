@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.model.Discussion;
 import com.example.myapplication.model.Enum.Categories;
-import com.example.myapplication.retrofit.RequestInterceptor;
 import com.example.myapplication.retrofit.RetrofitService;
 import com.example.myapplication.retrofit.UserApi;
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener;

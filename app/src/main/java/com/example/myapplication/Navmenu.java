@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.myapplication.UI.CreateDActivity;
+import com.example.myapplication.UI.DiscussionScreen;
 import com.example.myapplication.databinding.ActivityNavmenuBinding;
 
 public class Navmenu extends AppCompatActivity {
@@ -34,7 +35,9 @@ public class Navmenu extends AppCompatActivity {
                 // Start the CreateDActivity
                 startActivity(new Intent(Navmenu.this, CreateDActivity.class));
             } else if (item.getItemId() == R.id.profil) {
-                replaceFragment(new ProfilFragment());
+                startActivity(new Intent(Navmenu.this, DiscussionScreen.class));
+
+                //replaceFragment(new ProfilFragment());
             }
 
             return true;

@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.example.myapplication.retrofit.RequestInterceptor;
 import com.example.myapplication.Adapter.DiscussionAdapter;
 import com.example.myapplication.R;
 import com.example.myapplication.model.Discussion;
