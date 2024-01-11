@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 
-import com.example.myapplication.Navmenu;
 import com.example.myapplication.R;
 
 public class EntryPOINTactivity extends AppCompatActivity {
@@ -19,7 +18,7 @@ public class EntryPOINTactivity extends AppCompatActivity {
         // Check if the token exists in SharedPreferences
         if (tokenExists()) {
             // Token exists, go to CreateDealsActivity
-            Intent createDealsIntent = new Intent(this, Navmenu.class);
+            Intent createDealsIntent = new Intent(this, navActivity.class);
             startActivity(createDealsIntent);
         } else {
             // Token doesn't exist, go to MainActivity

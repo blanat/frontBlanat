@@ -37,4 +37,7 @@
     <color name="teal_900">#03314b</color>
     <color name="pink_400">#f23e69</color>
     <color name="purple_50">#f4ebff</color>
+
+    <!--Add for test-->
+    <color name="lavender">#8692f7</color>
 </resources>

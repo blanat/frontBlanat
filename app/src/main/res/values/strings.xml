@@ -38,4 +38,8 @@
     <string name="msg_ajouter_une_dis">Ajouter une discussion</string>
     <string name="lbl_create">Create</string>
 
+    <!--For Nav sideBar-->
+    <string name="open_nav">Open Navigation Drawer</string>
+    <string name="close_nav">Close Navigation Drawer</string>
+
 </resources>

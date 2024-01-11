@@ -54,7 +54,7 @@
 
             <ImageView
                 android:id="@+id/imageFloatingicon"
-                android:layout_width="29dp"
+                android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"

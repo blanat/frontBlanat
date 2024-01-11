@@ -1,5 +1,6 @@
 package com.example.myapplication.UI.Adapters;
 
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.model.UserDTO;
 import com.example.myapplication.model.listData;
 import com.squareup.picasso.Picasso;
 
@@ -41,10 +43,23 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsHolder> {
         Picasso.get().load(deals.getFirstImageUrl()).into(holder.Image);
 
         holder.Titre.setText(deals.getTitle());
+
+        UserDTO dealCreator = deals.getDealCreator();
+        if (dealCreator != null) {
+            // Set the user profile image
+            Picasso.get().load(dealCreator.getProfileImageUrl()).into(holder.userProfileImageView);
+
+            // Set the username
+            holder.usernameTextView.setText(dealCreator.getUserName());
+        }
+
+
         holder.listDesc.setText(deals.getDescription());
         holder.listTime.setText(deals.getTimePassedSinceCreation());
         holder.priceA.setText(String.valueOf((int) deals.getPrice()));
         holder.priceN.setText(String.valueOf((int) deals.getNewPrice()));
+        holder.priceA.setPaintFlags(holder.priceA.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
         holder.commentCount.setText(String.valueOf((int) deals.getNumberOfComments()));
         Log.d("CommentCount", "Number of comments: " + deals.getNumberOfComments());
 

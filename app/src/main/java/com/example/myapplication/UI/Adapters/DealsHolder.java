@@ -16,9 +16,9 @@ import com.google.android.material.imageview.ShapeableImageView;
 
 public class DealsHolder extends RecyclerView.ViewHolder {
 
-    TextView Titre, listTime, voteCount, listDesc, priceN, priceA,commentCount;
+    TextView Titre, listTime, voteCount, listDesc, priceN, priceA,commentCount,usernameTextView;
     ShapeableImageView Image;
-    ImageView livraisonIcon;
+    ImageView livraisonIcon, userProfileImageView;
 
     ConstraintLayout cardView;
     TextView plus, moins;
@@ -49,6 +49,9 @@ public class DealsHolder extends RecyclerView.ViewHolder {
         plus = itemView.findViewById(R.id.plus);
         moins = itemView.findViewById(R.id.moins);
 
+        // Added: User details
+        userProfileImageView = itemView.findViewById(R.id.userProfileImage);
+        usernameTextView = itemView.findViewById(R.id.usernameTextView);
 
 /*
         // Vérifiez si la livraison est disponible avant de définir la visibilité
