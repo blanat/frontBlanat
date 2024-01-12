@@ -12,12 +12,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.model.JwtAuthenticationResponse;
 import com.example.myapplication.model.User;
 import com.example.myapplication.retrofit.RetrofitService;
 import com.example.myapplication.retrofit.UserApi;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -64,8 +67,14 @@ public class SignupScreen extends AppCompatActivity {
                 return;
             }
 
-            // Password validation
-            if (!isValidPassword(password, passwordVerif)) {
+            //password Validation
+            if(!isValidPassword(password)){
+                etPassword.setError("weak password");
+                return;
+            }
+
+            // Password equality
+            if (!passwordEquality(password, passwordVerif)) {
                 etPassword.setError("Passwords do not match");
                 etPasswordVerif.setError("Passwords do not match");
                 return;
@@ -77,18 +86,22 @@ public class SignupScreen extends AppCompatActivity {
             user.setPassword(password);
 
             userApi.signup(user)
-                    .enqueue(new Callback<User>() {
+                    .enqueue(new Callback<JwtAuthenticationResponse>() {
                         @Override
-                        public void onResponse(Call<User> call, Response<User> response) {
+                        public void onResponse(Call<JwtAuthenticationResponse> call, Response<JwtAuthenticationResponse> response) {
                             if (response.isSuccessful()) {
                                 // Parse the response body to get the JWT token
-                                String responseBody = response.body().toString();
-                                String jwtToken = parseJwtTokenFromResponse(responseBody);
-
+                                JwtAuthenticationResponse response1 = response.body();
+                                String jwt = response1.getToken();
                                 // Store the JWT token using SharedPreferences
-                                saveJwtTokenToSharedPreferences(jwtToken);
+                                saveJwtTokenToSharedPreferences(response1.getToken());
 
                                 Intent intent = new Intent(SignupScreen.this, CreateDActivity.class);
+
+                                etEmail.setText("");
+                                etPasswordVerif.setText("");
+                                etPassword.setText("");
+
                                 startActivity(intent);
                                 //Toast.makeText(SignupScreen.this, "Enregistrement réussi!", Toast.LENGTH_SHORT).show();
                             } else {
@@ -98,7 +111,7 @@ public class SignupScreen extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onFailure(Call<User> call, Throwable t) {
+                        public void onFailure(Call<JwtAuthenticationResponse> call, Throwable t) {
                             Toast.makeText(SignupScreen.this, "Échec de l'enregistrement!!!", Toast.LENGTH_SHORT).show();
                             Logger.getLogger(SignupScreen.class.getName()).log(Level.SEVERE, "Une erreur s'est produite", t);
                         }
@@ -106,24 +119,8 @@ public class SignupScreen extends AppCompatActivity {
         });
     }
 
-    // Email validation method
-    private boolean isValidEmail(String email) {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
-    }
 
-    // Password validation method
-    private boolean isValidPassword(String password, String passwordVerif) {
-        return password.equals(passwordVerif);
-    }
 
-    // Method to parse JWT token from the response body
-    private String parseJwtTokenFromResponse(String responseBody) {
-        // Implement your logic to extract the JWT token from the response body
-        // This will depend on the format of the response from your server
-        // For example, if the token is in a JSON field named "token", you can use a JSON parser
-        // Replace this with your actual logic
-        return responseBody;
-    }
 
     // Method to save JWT token to SharedPreferences
     private void saveJwtTokenToSharedPreferences(String jwtToken) {
@@ -132,4 +129,33 @@ public class SignupScreen extends AppCompatActivity {
         editor.putString("jwtToken", jwtToken);
         editor.apply();
     }
+
+
+    public  boolean isValidPassword(String password) {
+        String regex = "^(?=.*[A-Z])(?=.*[0-9]).{8,}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(password);
+        return matcher.matches();
+    }
+
+    public  boolean isValidEmail(String email) {
+        String regex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$";
+        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    public  boolean isValidName(String name) {
+        // The name should start with a character, have max length 21, and not contain special characters
+        String regex = "^[A-Za-z][A-Za-z0-9]{0,20}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(name);
+        return matcher.matches();
+    }
+
+    public boolean passwordEquality(String password,String passwordVerification){
+        return password.equals(passwordVerification);
+    }
+
 }
+
