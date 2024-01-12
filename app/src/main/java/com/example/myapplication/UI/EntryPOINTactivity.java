@@ -15,6 +15,8 @@ public class EntryPOINTactivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Intent mainIntent = new Intent(this, MainActivity.class);
+        startActivity(mainIntent);
         // Check if the token exists in SharedPreferences
         if (tokenExists()) {
             // Token exists, go to CreateDealsActivity
@@ -22,8 +24,7 @@ public class EntryPOINTactivity extends AppCompatActivity {
             startActivity(createDealsIntent);
         } else {
             // Token doesn't exist, go to MainActivity
-            Intent mainIntent = new Intent(this, MainActivity.class);
-            startActivity(mainIntent);
+
         }
 
         // Finish the current activity to prevent going back to it
