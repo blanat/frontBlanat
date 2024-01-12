@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.example.myapplication.UI.Adapters.DeleteDiscussionAdapter;
 import com.example.myapplication.UI.Adapters.DiscussionAdapter;
 import com.example.myapplication.R;
 import com.example.myapplication.model.Discussion;
@@ -34,14 +35,21 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DeleteDiscussionActivity extends AppCompatActivity {
-    private DiscussionAdapter discussionAdapter;
+    private RetrofitService retrofitService;
+    private UserApi userApi;
+    private DeleteDiscussionAdapter discussionAdapter;
     private Button btnShowDialog;
+    private Button btnDelete;
     private List<Discussion> userDiscussionItemList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mydiscussions); // Utilisez le même XML que pour l'activité principale
+
+        // Initialisez RetrofitService et UserApi une seule fois
+        retrofitService = new RetrofitService(this);
+        userApi = retrofitService.getRetrofit().create(UserApi.class);
 
         // Récupérez le token de SharedPreferences
         String token = retrieveToken();
@@ -56,19 +64,16 @@ public class DeleteDiscussionActivity extends AppCompatActivity {
             // Ajoutez votre logique ici, comme afficher un écran de connexion ou rediriger vers l'activité de connexion.
         }
 
-        btnShowDialog = findViewById(R.id.imageFloatingicon);
 
-        btnShowDialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialog();
-            }
-        });
 
     }
-    private void showDialog(){
+
+    private void showDialog(final Long discussionIdToDelete) {
+
         Dialog dialog = new Dialog(this, R.style.DialogStyle);
         dialog.setContentView(R.layout.layout_discussion_dialog);
+
+
 
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.bg_window);
 
@@ -81,8 +86,21 @@ public class DeleteDiscussionActivity extends AppCompatActivity {
             }
         });
 
+        Button btnDelete = dialog.findViewById(R.id.btn_yes);
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Appeler la méthode pour supprimer la discussion
+                deleteDiscussion(discussionIdToDelete);
+
+                // Dismiss the dialog after deletion
+                dialog.dismiss();
+            }
+        });
+
         dialog.show();
     }
+
     private void fetchUserDiscussions(String token) {
         // Utilisez Retrofit pour récupérer les discussions créées par l'utilisateur
         RetrofitService retrofitService = new RetrofitService(this);
@@ -133,26 +151,62 @@ public class DeleteDiscussionActivity extends AppCompatActivity {
 
     // Utilisez la méthode updateUI pour mettre à jour l'interface utilisateur avec les discussions de l'utilisateur
     private void updateUI(List<Discussion> userDiscussionItemList) {
-        // Utilisez un adaptateur personnalisé
-        discussionAdapter = new DiscussionAdapter(this, userDiscussionItemList);
+        discussionAdapter = new DeleteDiscussionAdapter(this, userDiscussionItemList);
 
-        // Trouvez la ListView dans votre mise en page
         ListView listView = findViewById(R.id.listView);
-
-        // Définissez l'adaptateur pour la ListView
         listView.setAdapter(discussionAdapter);
 
-        // Définissez un auditeur de clic sur chaque élément de la liste
         listView.setOnItemClickListener((parent, view, position, id) -> {
-            // Gérez le clic sur l'élément, par exemple, affichez plus de détails sur la discussion
+            // Handle the click on the discussion item
             Discussion selectedDiscussion = userDiscussionItemList.get(position);
-            // Faites ce que vous devez faire avec la discussion sélectionnée
-            // ...
+
+            // Show the dialog when a discussion item is clicked, passing the discussion ID
+            showDialog(selectedDiscussion.getId());
+
+            // Additional logic if needed based on the selected discussion
+            // For example, you can pass the selected discussion to the dialog or perform other actions.
         });
 
         // Log pour vérifier si la méthode est appelée
         Log.d("UserDiscussionsActivity", "Méthode updateUI appelée");
     }
+
+    private void deleteDiscussion(Long discussionId) {
+        Call<Void> deleteCall = userApi.deleteDiscussionAndMessages(discussionId);
+        deleteCall.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    // Discussion supprimée avec succès
+                    Log.d("DeleteDiscussionActivity", "Discussion supprimée avec succès");
+                    // Actualiser la liste des discussions après la suppression
+                    fetchUserDiscussions(retrieveToken());
+                } else {
+                    // Gestion des erreurs lors de la suppression
+                    handleDeleteDiscussionFailure(response);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                // Gestion des erreurs réseau
+                Log.e("DeleteDiscussionActivity", "Erreur réseau lors de la suppression de la discussion : " + t.getMessage());
+                // Vous pouvez afficher un message à l'utilisateur ici s'il y a une erreur réseau
+            }
+        });
+    }
+
+    private void handleDeleteDiscussionFailure(Response<Void> response) {
+        // Gestion des erreurs lors de la suppression de la discussion
+        Log.e("DeleteDiscussionActivity", "Échec de la suppression de la discussion. Code : " + response.code());
+        try {
+            Log.e("DeleteDiscussionActivity", "Corps de l'erreur : " + response.errorBody().string());
+            // Vous pouvez afficher un message d'erreur à l'utilisateur ici en utilisant une notification ou un Toast
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
 
