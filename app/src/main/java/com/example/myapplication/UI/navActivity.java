@@ -1,6 +1,7 @@
 package com.example.myapplication.UI;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -110,6 +111,15 @@ public class navActivity extends AppCompatActivity {
             Log.d("NavActivity", "Replacing fragment with DiscussionFragment");
             replaceFragment(new DiscussionFragment());
         } else if (itemId == R.id.nav_logout) {
+
+            removeJwtTokenFromSharedPreferences();
+            // Create a new task and clear the existing task (activity stack)
+            Intent intent = new Intent(getBaseContext(), EntryPOINTactivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+
+            // Finish the current activity
+            finish();
             Log.d("NavActivity", "Logging out");
             Toast.makeText(this, "Logout!", Toast.LENGTH_SHORT).show();
         } else {
@@ -132,5 +142,13 @@ public class navActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void removeJwtTokenFromSharedPreferences() {
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPreferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove("jwtToken");
+        editor.apply();
+
     }
 }
