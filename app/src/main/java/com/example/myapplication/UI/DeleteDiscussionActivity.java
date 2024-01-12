@@ -53,6 +53,7 @@ public class DeleteDiscussionActivity extends AppCompatActivity {
 
         // Récupérez le token de SharedPreferences
         String token = retrieveToken();
+        Log.d("UserDiscussionsActivity", "Token: " + token);
 
         // Vérifiez si l'utilisateur est authentifié
         if (isAuthenticated(token)) {
@@ -142,7 +143,6 @@ public class DeleteDiscussionActivity extends AppCompatActivity {
         // For example, you can check if the token is valid or not expired
         return token != null && !token.isEmpty();
     }
-
     private String retrieveToken() {
         // Retrieve the token from SharedPreferences
         SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
