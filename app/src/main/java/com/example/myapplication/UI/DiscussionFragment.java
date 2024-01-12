@@ -8,6 +8,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -57,6 +60,8 @@ public class DiscussionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_discussion, container, false);
+        setHasOptionsMenu(true); // Indicate that the fragment has an options menu
+
 
         // Setup ListView and adapter
         ListView listView = view.findViewById(R.id.listView);
@@ -268,6 +273,44 @@ public class DiscussionFragment extends Fragment {
         }
     }
 
+
+
+    //=========================================
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.toolbar_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
+        // Find the "ADD" menu item
+        MenuItem addItem = menu.findItem(R.id.action_add);
+
+        // Adjust visibility based on your conditions
+        if (shouldShowAddButton()) {
+            addItem.setVisible(true);
+        } else {
+            addItem.setVisible(false);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_add) {
+            // Handle the "ADD" button click within the fragment
+            // For example, you can open a new activity or perform some action
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    // Other methods and code for your fragment
+
+    private boolean shouldShowAddButton() {
+        // Implement your conditions here
+        // For example, return true if you want to show the "ADD" button, false otherwise
+        return true;
+    }
 
 }
 
