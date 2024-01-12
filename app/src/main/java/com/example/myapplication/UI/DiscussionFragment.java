@@ -22,6 +22,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.UI.Adapters.DiscussionAdapter;
 import com.example.myapplication.UI.DeleteDiscussionActivity;
 
+
 import com.example.myapplication.model.Discussion;
 import com.example.myapplication.retrofit.RetrofitService;
 import com.example.myapplication.retrofit.UserApi;
@@ -41,6 +42,7 @@ import retrofit2.Response;
 public class DiscussionFragment extends Fragment {
 
     private DiscussionAdapter discussionAdapter;
+
     private List<Discussion> discussionItemList = new ArrayList<>();
 
     public DiscussionFragment() {
@@ -268,3 +270,9 @@ public class DiscussionFragment extends Fragment {
 
 
 }
+
+
+
+
+
+
