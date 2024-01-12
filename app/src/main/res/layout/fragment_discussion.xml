@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".UI.DiscussionFragment">
 
-<<<<<<< Updated upstream
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -94,8 +93,7 @@
             android:layout_marginTop="4dp"
             />
 
-=======
->>>>>>> Stashed changes
-    </RelativeLayout>
 
+    </RelativeLayout>
+</RelativeLayout>
 
