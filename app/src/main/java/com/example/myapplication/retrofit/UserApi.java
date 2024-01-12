@@ -7,6 +7,7 @@ import com.example.myapplication.model.User;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -49,4 +50,7 @@ public interface UserApi {
 
     @GET("/api/discussions/created-by-current-user")
     Call<List<Discussion>> getDiscussionsCreatedByCurrentUser();
+
+    @DELETE("/api/discussions/{discussionId}")
+    Call<Void> deleteDiscussionAndMessages(@Path("discussionId") Long discussionId);
 }
