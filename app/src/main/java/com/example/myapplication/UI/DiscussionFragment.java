@@ -3,6 +3,7 @@ package com.example.myapplication.UI;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -62,7 +63,6 @@ public class DiscussionFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_discussion, container, false);
         setHasOptionsMenu(true); // Indicate that the fragment has an options menu
 
-
         // Setup ListView and adapter
         ListView listView = view.findViewById(R.id.listView);
         discussionAdapter = new DiscussionAdapter(requireContext(), discussionItemList);
@@ -71,18 +71,10 @@ public class DiscussionFragment extends Fragment {
         // Retrieve the token from SharedPreferences
         String token = retrieveToken();
 
-        // Check if the user is authenticated
-        if (isAuthenticated(token)) {
-            // User is authenticated, proceed to fetch discussions
-            fetchDiscussions(token);
-        } else {
-            // User is not authenticated, handle accordingly (e.g., show login screen)
-            Log.e("DiscussionFragment", "User not authenticated");
-            // Add your logic here, such as showing a login screen or redirecting to the login activity.
-        }
+        // Proceed to fetch discussions regardless of the authentication status
+        fetchDiscussions(token);
 
         ImageView imageFloatingIcon = view.findViewById(R.id.imageFloatingicon);
-
 
         // Add a click listener to imageFloatingIcon
         imageFloatingIcon.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +89,6 @@ public class DiscussionFragment extends Fragment {
             }
         });
 
-
         ImageView deleteDiscussionImageView = view.findViewById(R.id.deletediscussion);
 
         deleteDiscussionImageView.setOnClickListener(v -> {
@@ -108,6 +99,7 @@ public class DiscussionFragment extends Fragment {
 
         return view;
     }
+
 
     // Use ActivityResultContracts.StartActivityForResult to handle the result
     ActivityResultLauncher<Intent> createDiscLauncher = registerForActivityResult(
@@ -186,12 +178,14 @@ public class DiscussionFragment extends Fragment {
         return token != null && !token.isEmpty();
     }
 
-    private String retrieveToken() {
 
+    private String retrieveToken() {
         // Retrieve the token from SharedPreferences
-        //SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        SharedPreferences preferences = requireActivity().getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        return preferences.getString("token", "");
+        SharedPreferences preferences = requireActivity().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        String jwtToken = preferences.getString("jwtToken", "");
+        // Log the token for debugging
+        Log.d("Token=====", "Retrieved JWT Token: " + jwtToken);
+        return jwtToken;
     }
 
     private void updateUI(List<Discussion> discussionItemList) {

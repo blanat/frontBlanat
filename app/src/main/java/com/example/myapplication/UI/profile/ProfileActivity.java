@@ -21,4 +21,5 @@ public class ProfileActivity extends AppCompatActivity {
 
         usernameTv.setText(username);
     }
+
 }

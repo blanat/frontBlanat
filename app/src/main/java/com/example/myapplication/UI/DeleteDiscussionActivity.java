@@ -1,6 +1,7 @@
 package com.example.myapplication.UI;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,6 +46,7 @@ public class DeleteDiscussionActivity extends AppCompatActivity {
 
         // Récupérez le token de SharedPreferences
         String token = retrieveToken();
+        Log.d("UserDiscussionsActivity", "Token: " + token);
 
         // Vérifiez si l'utilisateur est authentifié
         if (isAuthenticated(token)) {
@@ -125,10 +127,15 @@ public class DeleteDiscussionActivity extends AppCompatActivity {
         return token != null && !token.isEmpty();
     }
 
+
+
     private String retrieveToken() {
         // Retrieve the token from SharedPreferences
-        SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        return preferences.getString("token", "");
+        SharedPreferences preferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        String jwtToken = preferences.getString("jwtToken", "");
+        // Log the token for debugging
+        Log.d("Token", "Retrieved JWT Token: " + jwtToken);
+        return jwtToken;
     }
 
     // Utilisez la méthode updateUI pour mettre à jour l'interface utilisateur avec les discussions de l'utilisateur
