@@ -104,17 +104,20 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
-        <LinearLayout
+
+            <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <ImageView
-                android:layout_width="45dp"
-                android:layout_height="48dp"
-                android:src="@drawable/lien"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="10dp"/>
-            <EditText
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="35dp"
+                    android:src="@drawable/lien" />
+
+                <EditText
                 android:id="@+id/line"
                 android:layout_width="340dp"
                 android:layout_height="48dp"
@@ -126,7 +129,9 @@
                 app:layout_constraintTop_toBottomOf="@+id/dealLink"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
-        </LinearLayout>
+
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/title_deal"
                 android:layout_width="match_parent"
@@ -500,4 +505,10 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
 </LinearLayout>

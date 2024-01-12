@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+import com.example.myapplication.HomeFragment;
 import com.example.myapplication.model.Enum.Categories;
 import com.google.gson.Gson;
 
@@ -413,7 +414,7 @@ public class CreateDActivity extends AppCompatActivity {
     }
 
 
-    @Override
+    /*@Override
     public void onBackPressed() {
         // Check if the fragment manager has fragments in the back stack
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
@@ -423,7 +424,22 @@ public class CreateDActivity extends AppCompatActivity {
             // If no fragments in the back stack, finish the activity
             super.onBackPressed();
         }
+    }*/
+    @Override
+    public void onBackPressed() {
+        // Check if the fragment manager has fragments in the back stack
+        super.onBackPressed();
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            // Pop the back stack to navigate back
+            getSupportFragmentManager().popBackStack();
+        } else {
+            // If no fragments in the back stack, replace the current fragment with HomeFragment
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new HomeFragment())  // Replace with the ID of your fragment container
+                    .commit();
+        }
     }
+
 
 
 
