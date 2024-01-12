@@ -20,6 +20,8 @@ import com.example.myapplication.retrofit.UserApi;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -73,14 +75,12 @@ public class LoginScreen extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<JwtAuthenticationResponse> call, Response<JwtAuthenticationResponse> response) {
                     if (response.isSuccessful()) {
+
                         JwtAuthenticationResponse jwtResponse = response.body();
-
                         // Extract the JWT token from the response
-                        String jwtToken = extractTokenFromResponse(jwtResponse);
-                        //Log.d("JwtToken", "Parsed JWT Token: " + jwtToken);
-
+                        String jwtToken = jwtResponse.getToken();
                         // Store the JWT token using SharedPreferences
-                        saveToken(jwtToken);
+                        saveJwtTokenToSharedPreferences(jwtToken);
 
                         Intent intent = new Intent(LoginScreen.this, navActivity.class);
                         // Optionally, you can pass data to the next activity using extras
@@ -104,38 +104,23 @@ public class LoginScreen extends AppCompatActivity {
         });
     }
 
-    private boolean isValidEmail(String email) {
-        // You can add your email validation logic here
-        // For a simple check, you can use android.util.Patterns.EMAIL_ADDRESS
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    public  boolean isValidEmail(String email) {
+        String regex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$";
+        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 
-    // Method to parse JWT token from the response body
-    private String parseJwtTokenFromResponse(String responseBody) {
-        // Implement your logic to extract the JWT token from the response body
-        // This will depend on the format of the response from your server
-        // For example, if the token is in a JSON field named "token", you can use a JSON parser
-        // Replace this with your actual logic
-        return responseBody;
-    }
 
-    // Method to save JWT token to SharedPreferences
-    private String extractTokenFromResponse(JwtAuthenticationResponse jwtResponse) {
-        if (jwtResponse != null) {
-            return jwtResponse.getToken();
-        } else {
-            Log.e("TokenExtraction", "Failed to extract token from response body: " + jwtResponse);
-            return null;
-        }
-    }
-
-    private void saveToken(String token) {
-        SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+    private void saveJwtTokenToSharedPreferences(String jwtToken) {
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPreferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("token", token);
+        editor.putString("jwtToken", jwtToken);
         editor.apply();
-        Log.d("TokenDebug", "Token saved: " + token);
     }
+
+
+
 
 
 }
