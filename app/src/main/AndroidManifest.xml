@@ -21,9 +21,11 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".UI.profile.ProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".UI.navActivity"
             android:exported="false" />
-
         <activity
             android:name=".UI.details.DetailsDealActivity"
             android:exported="false" />
