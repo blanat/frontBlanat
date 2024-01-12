@@ -45,7 +45,7 @@ import retrofit2.Response;
 public class DiscussionFragment extends Fragment {
 
     private DiscussionAdapter discussionAdapter;
-
+    private View view; // Declare the view variable
     private List<Discussion> discussionItemList = new ArrayList<>();
 
     public DiscussionFragment() {
@@ -59,7 +59,7 @@ public class DiscussionFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_discussion, container, false);
+        view = inflater.inflate(R.layout.fragment_discussion, container, false);
         setHasOptionsMenu(true); // Indicate that the fragment has an options menu
 
 
@@ -102,7 +102,7 @@ public class DiscussionFragment extends Fragment {
 
         deleteDiscussionImageView.setOnClickListener(v -> {
             // Déclencher l'intention de passer à l'activité de liste de discussions créées par l'utilisateur
-            Intent intent = new Intent(requireContext(),DeleteDiscussionActivity.class);
+            Intent intent = new Intent(requireContext(), DeleteDiscussionActivity.class);
             startActivity(intent);
         });
 
@@ -129,7 +129,7 @@ public class DiscussionFragment extends Fragment {
                             discussionAdapter.notifyDataSetChanged();
                         } else {
                             // Si l'adaptateur n'a pas encore été initialisé, initialisez-le et définissez-le pour la ListView
-                            discussionAdapter =new DiscussionAdapter(requireContext(), discussionItemList);
+                            discussionAdapter = new DiscussionAdapter(requireContext(), discussionItemList);
                             // Find the ListView in your layout
                             ListView listView = getView().findViewById(R.id.listView);
                             listView.setAdapter(discussionAdapter);
@@ -274,8 +274,8 @@ public class DiscussionFragment extends Fragment {
     }
 
 
-
     //=========================================
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.toolbar_menu, menu);
@@ -295,8 +295,13 @@ public class DiscussionFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_add) {
-            // Handle the "ADD" button click within the fragment
-            // For example, you can open a new activity or perform some action
+            // Handle the "ADD" button click
+            // Redirect to the discussion creation page
+            // Start CreateDiscScreen using startActivityForResult with the contract
+            Intent intent = new Intent(requireContext(), CreateDiscScreen.class);
+            Log.d("DiscussionFragment", "Launching createDiscLauncher");
+            createDiscLauncher.launch(intent);
+            Log.d("DiscussionFragment", "createDiscLauncher launched successfully");
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -304,7 +309,7 @@ public class DiscussionFragment extends Fragment {
     }
 
 
-    // Other methods and code for your fragment
+// Other methods and code for your fragment
 
     private boolean shouldShowAddButton() {
         // Implement your conditions here
@@ -312,10 +317,8 @@ public class DiscussionFragment extends Fragment {
         return true;
     }
 
+
 }
-
-
-
 
 
 
