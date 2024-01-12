@@ -50,8 +50,8 @@ public class RetrofitService {
 
     private String getJwtToken() {
         // Retrieve the token from SharedPreferences
-        SharedPreferences preferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        String jwtToken = preferences.getString("token", "");
+        SharedPreferences preferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        String jwtToken = preferences.getString("jwtToken", "");
         // Log the token for debugging
         Log.d("Token", "Retrieved JWT Token: " + jwtToken);
         return jwtToken;

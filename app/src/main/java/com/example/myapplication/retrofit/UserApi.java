@@ -22,7 +22,7 @@ public interface UserApi {
     Call<JwtAuthenticationResponse> signin(@Body User user);
 
     @POST("/api/authentication/signup")
-    Call<User> signup(@Body User user);
+    Call<JwtAuthenticationResponse> signup(@Body User user);
 
 
     @GET("/api/discussions/getAllDiscussions")

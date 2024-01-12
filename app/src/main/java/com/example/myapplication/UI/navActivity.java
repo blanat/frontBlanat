@@ -114,7 +114,7 @@ public class navActivity extends AppCompatActivity {
 
             removeJwtTokenFromSharedPreferences();
             // Create a new task and clear the existing task (activity stack)
-            Intent intent = new Intent(getBaseContext(), EntryPOINTactivity.class);
+            Intent intent = new Intent(getBaseContext(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
 
