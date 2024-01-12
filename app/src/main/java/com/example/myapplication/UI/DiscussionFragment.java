@@ -19,6 +19,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
+import com.example.myapplication.UI.Adapters.DiscussionAdapter;
+import com.example.myapplication.UI.DeleteDiscussionActivity;
+
 import com.example.myapplication.model.Discussion;
 import com.example.myapplication.retrofit.RetrofitService;
 import com.example.myapplication.retrofit.UserApi;
@@ -37,7 +40,7 @@ import retrofit2.Response;
 
 public class DiscussionFragment extends Fragment {
 
-    private com.example.myapplication.Adapter.DiscussionAdapter discussionAdapter;
+    private DiscussionAdapter discussionAdapter;
     private List<Discussion> discussionItemList = new ArrayList<>();
 
     public DiscussionFragment() {
@@ -55,7 +58,7 @@ public class DiscussionFragment extends Fragment {
 
         // Setup ListView and adapter
         ListView listView = view.findViewById(R.id.listView);
-        discussionAdapter = new com.example.myapplication.Adapter.DiscussionAdapter(requireContext(), discussionItemList);
+        discussionAdapter = new DiscussionAdapter(requireContext(), discussionItemList);
         listView.setAdapter(discussionAdapter);
 
         // Retrieve the token from SharedPreferences
@@ -73,6 +76,7 @@ public class DiscussionFragment extends Fragment {
 
         ImageView imageFloatingIcon = view.findViewById(R.id.imageFloatingicon);
 
+
         // Add a click listener to imageFloatingIcon
         imageFloatingIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +88,15 @@ public class DiscussionFragment extends Fragment {
                 createDiscLauncher.launch(intent);
                 Log.d("DiscussionFragment", "createDiscLauncher launched successfully");
             }
+        });
+
+
+        ImageView deleteDiscussionImageView = view.findViewById(R.id.deletediscussion);
+
+        deleteDiscussionImageView.setOnClickListener(v -> {
+            // Déclencher l'intention de passer à l'activité de liste de discussions créées par l'utilisateur
+            Intent intent = new Intent(requireContext(),DeleteDiscussionActivity.class);
+            startActivity(intent);
         });
 
         return view;
@@ -109,7 +122,7 @@ public class DiscussionFragment extends Fragment {
                             discussionAdapter.notifyDataSetChanged();
                         } else {
                             // Si l'adaptateur n'a pas encore été initialisé, initialisez-le et définissez-le pour la ListView
-                            discussionAdapter = new com.example.myapplication.Adapter.DiscussionAdapter(requireContext(), discussionItemList);
+                            discussionAdapter =new DiscussionAdapter(requireContext(), discussionItemList);
                             // Find the ListView in your layout
                             ListView listView = getView().findViewById(R.id.listView);
                             listView.setAdapter(discussionAdapter);
@@ -176,8 +189,7 @@ public class DiscussionFragment extends Fragment {
 
     private void updateUI(List<Discussion> discussionItemList) {
         // Create a custom adapter
-        com.example.myapplication.Adapter.DiscussionAdapter adapter = new com.example.myapplication.Adapter.DiscussionAdapter(requireContext(), discussionItemList);
-
+        DiscussionAdapter adapter = new DiscussionAdapter(requireContext(), discussionItemList);
         // Find the ListView in your layout
         ListView listView = getView().findViewById(R.id.listView);
 

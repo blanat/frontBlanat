@@ -51,6 +51,7 @@
         <activity android:name=".UI.CreateDiscScreen" />
         <activity android:name=".UI.DiscussionScreen" />
         <activity android:name=".UI.CommentDiscScreen" />
+        <activity android:name=".UI.DeleteDiscussionActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

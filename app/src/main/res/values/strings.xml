@@ -21,6 +21,8 @@
     <string name="lbl_auteur">Auteur</string>
     <string name="lbl_new_deal">New Deal</string>
     <string name="lbl_back">Back</string>
+    <string name="lbl_Mydiscussion">My Discussions</string>
+
     <string name="lbl_search">Search</string>
     <string name="lbl_nbre">nbre</string>
     <string name="lbl_home">Home</string>
@@ -41,5 +43,8 @@
     <!--For Nav sideBar-->
     <string name="open_nav">Open Navigation Drawer</string>
     <string name="close_nav">Close Navigation Drawer</string>
+    <!--For Dialog Discussion-->
+    <string name="Dialog_Discussion">CustomDialog</string>
+
 
 </resources>

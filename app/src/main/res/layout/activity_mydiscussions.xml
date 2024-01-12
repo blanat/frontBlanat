@@ -28,31 +28,11 @@
                 android:layout_marginTop="@dimen/_16pxh"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="@string/lbl_back" />
+                android:text="@string/lbl_Mydiscussion" />
 
-            <EditText
-                android:id="@+id/etInputSearch"
-                style="@style/etSolidRoundedOutline"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/txtBack"
-                android:layout_marginStart="@dimen/_10pxh"
-                android:layout_marginTop="@dimen/_11pxh"
-                android:layout_marginEnd="@dimen/_10pxh"
-                android:layout_centerVertical="true"
-                android:layout_weight="1"
-                android:background="@drawable/rectangle_bg_gray_100_border_gray_200_radius_16"
-                android:ellipsize="end"
-                android:hint="@string/lbl_search"
-                android:inputType="text"
-                android:paddingStart="@dimen/_16pxh"
-                android:paddingTop="@dimen/_6pxh"
-                android:paddingEnd="@dimen/_30pxh"
-                android:paddingBottom="@dimen/_5pxh"
-                android:singleLine="true"
-                android:textColorHint="@color/gray_400" />
 
-            <ImageView
+
+            <Button
                 android:id="@+id/imageFloatingicon"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
@@ -63,16 +43,7 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/img_floatingicon" />
 
-            <ImageView
-                android:id="@+id/deletediscussion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="@dimen/_14pxh"
-                android:layout_marginEnd="@dimen/_35pxh"
-                android:scaleType="fitXY"
-                android:src="@drawable/deleteicon" />
+
 
         </RelativeLayout>
 

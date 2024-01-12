@@ -24,7 +24,6 @@ public interface UserApi {
     Call<User> signup(@Body User user);
 
 
-
     @GET("/api/discussions/getAllDiscussions")
     Call<List<Discussion>> getAllDiscussionsInfo();
 
@@ -37,7 +36,7 @@ public interface UserApi {
 
 
     @POST("/api/discussions/{discussionId}/messages")
-    Call <MessageDTO> addMessage(@Path("discussionId") Long discussionId, @Body MessageDTO messageDTO);
+    Call<MessageDTO> addMessage(@Path("discussionId") Long discussionId, @Body MessageDTO messageDTO);
 
     @POST("/api/discussions/create")
     Call<Discussion> createDiscussion(@Body Discussion discussionDTO);
@@ -48,5 +47,6 @@ public interface UserApi {
     @PUT("/api/discussions/{discussionId}/update-views")
     Call<Long> updateViews(@Path("discussionId") Long discussionId, @Header("Authorization") String token);
 
-
+    @GET("/api/discussions/created-by-current-user")
+    Call<List<Discussion>> getDiscussionsCreatedByCurrentUser();
 }

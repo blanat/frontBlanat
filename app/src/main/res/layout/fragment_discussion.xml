@@ -57,6 +57,16 @@
                     android:textColorHint="@color/gray_400" />
 
                 <ImageView
+                    android:id="@+id/deletediscussion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="@dimen/_14pxh"
+                    android:layout_marginEnd="@dimen/_35pxh"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/deleteicon" />
+                <ImageView
                     android:id="@+id/imageFloatingicon"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
@@ -66,6 +76,8 @@
                     android:layout_marginTop="@dimen/_14pxh"
                     android:scaleType="fitXY"
                     android:src="@drawable/img_floatingicon" />
+
+
 
             </RelativeLayout>
 

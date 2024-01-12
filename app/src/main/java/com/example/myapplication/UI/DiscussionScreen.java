@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.example.myapplication.Adapter.DiscussionAdapter;
+import com.example.myapplication.UI.Adapters.DiscussionAdapter;
 import com.example.myapplication.R;
 import com.example.myapplication.model.Discussion;
 
