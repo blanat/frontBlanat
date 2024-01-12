@@ -39,18 +39,17 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="12dp"/>
 
+
             <TextView
                 android:id="@+id/txttite"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginStart="10dp"
                 android:fontFamily="@font/font_certs"
-                android:text="ES-tu sûr de supprimer cette discussion!"
+                android:text="@string/Dialog_message"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
-
-
-
 
             <LinearLayout
                 android:layout_width="match_parent"

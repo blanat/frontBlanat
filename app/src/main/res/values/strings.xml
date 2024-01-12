@@ -45,6 +45,7 @@
     <string name="close_nav">Close Navigation Drawer</string>
     <!--For Dialog Discussion-->
     <string name="Dialog_Discussion">CustomDialog</string>
+    <string name="Dialog_message">Es-tu sûr de supprimer cette discussion!</string>
 
 
 </resources>
