@@ -47,7 +47,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="15dp"
                                 android:layout_marginStart="40dp"
-                                android:text="Nouveau Deal"
+                                android:text="Poster un Deal"
                                 android:textSize="25sp"
                                 android:textColor="@color/black"
                                 android:layout_centerInParent="true"/>
@@ -63,16 +63,80 @@
                                 android:layout_marginTop="7dp"
                                 android:text="save"
                                 android:textSize="10sp"
-                                android:layout_marginBottom="39dp"
+                                android:layout_marginBottom="30dp"
                                 android:textColor="@color/white"/>
+
+
 
 
                         </LinearLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="40dp">
+
+                <TextView
+                    android:id="@+id/shareDealMessage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Partager un bon plan avec des millions d'utilisateurs"
+                    android:textSize="20sp"
+                    android:textColor="@color/my_primary"
+                    app:layout_constraintWidth_percent="0.9"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/txtLay_dealLink"
+                    app:layout_constraintVertical_bias="0.1" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtLay_dealLink"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    app:startIconDrawable="@drawable/liendeal"
+                    app:startIconTint="@color/my_primary"
+                    app:layout_constraintWidth_percent="0.9"
+                    app:layout_constraintHeight_percent="0.1"
+                    android:hint="Lien du deal"
+                    app:endIconMode="clear_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/shareDealMessage"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintVertical_bias="0.05">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/dealLink"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="20" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/dealLinkHint"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Veuillez donner le lien de la page où la communauté pourra obtenir des informations sur votre bon plan"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/darker_gray"
+                    app:layout_constraintWidth_percent="0.9"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtLay_dealLink"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintVertical_bias="0.05" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
+                android:layout_height="180dp"
                 android:layout_above="@+id/select"
                 android:layout_marginBottom="10dp"
                 android:padding="16dp" />
@@ -90,38 +154,6 @@
                 android:layout_marginEnd="127dp"
                 android:text="Ajouter Images" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="40dp"
-                >
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/txtLay_dealLink"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-                    app:boxBackgroundColor="@color/white"
-                    android:layout_width="0dp"
-                    android:layout_height="60dp"
-                    app:startIconDrawable="@drawable/liendeal"
-                    app:layout_constraintWidth_percent="0.9"
-                    app:layout_constraintHeight_percent="0.1"
-                    android:hint="Lien du deal"
-                    app:endIconMode="clear_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintVertical_bias="0.3">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/dealLink"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLength="20" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
             <!--
             ====================================
             <TextView
@@ -230,6 +262,8 @@
                     android:id="@+id/txtLay_dealtitle"
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     app:boxBackgroundColor="@color/white"
+                    app:startIconDrawable="@drawable/titredeal"
+                    app:startIconTint="@color/my_primary"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
                     app:layout_constraintWidth_percent="0.9"
@@ -252,22 +286,49 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:srcCompat="@drawable/descriptiondeal"
+                app:tint="@color/my_primary"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"/>
+            <TextView
+
+                android:id="@+id/title_deal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="10dp"
+                android:text="Description *"
+                android:textSize="16sp"
+                android:textColor="@color/my_primary"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            </LinearLayout>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginBottom="8dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="2dp"
                 >
-
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/txtLay_description"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="0dp"
-                    android:layout_height="60dp"
+                    android:layout_height="wrap_content"
+                    app:boxBackgroundColor="@color/white"
                     app:layout_constraintWidth_percent="0.9"
                     app:layout_constraintHeight_percent="0.4"
-                    android:hint="description *"
+                    android:hint=" "
+                    android:inputType="textMultiLine"
+                    android:gravity="top"
                     app:endIconMode="clear_text"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -279,7 +340,12 @@
                         android:id="@+id/description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:maxLength="20" />
+                        android:minLines="5"
+                        android:gravity="top|start"
+                        android:inputType="textMultiLine"
+                        android:maxLines="10"
+                        android:maxLength="500"
+                    />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -333,6 +399,8 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
+                    app:startIconDrawable="@drawable/prixdeal"
+                    app:startIconTint="@color/my_primary"
                     app:layout_constraintWidth_percent="0.9"
                     app:layout_constraintHeight_percent="0.1"
                     android:hint="Nouveau Prix DH *"
@@ -405,6 +473,8 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
+                    app:startIconDrawable="@drawable/prixdeal"
+                    app:startIconTint="@color/my_primary"
                     app:layout_constraintWidth_percent="0.9"
                     app:layout_constraintHeight_percent="0.1"
                     android:hint="Prix Ancien DH *"
@@ -540,6 +610,8 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
+                    app:startIconDrawable="@drawable/deliverydeal"
+                    app:startIconTint="@color/my_primary"
                     app:layout_constraintWidth_percent="0.9"
                     app:layout_constraintHeight_percent="0.1"
                     android:hint="prix de livraison DH *"
@@ -715,6 +787,9 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
+                    app:boxBackgroundColor="@color/white"
+                    app:startIconDrawable="@drawable/localisateurdeal"
+                    app:startIconTint="@color/my_primary"
                     app:layout_constraintWidth_percent="0.9"
                     app:layout_constraintHeight_percent="0.1"
                     android:hint="Localisation *"
@@ -751,7 +826,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
+                android:layout_marginBottom="100dp"
                 android:layout_marginStart="14dp"
+                app:startIconDrawable="@drawable/categoriedeal"
+                app:startIconTint="@color/my_primary"
                 android:hint="catégorie"
                 app:boxBackgroundColor="@color/white"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
