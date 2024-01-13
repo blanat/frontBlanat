@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.myapplication.HomeFragment;
 import com.example.myapplication.ProfilFragment;
 import com.example.myapplication.R;
+import com.example.myapplication.UI.profile.Profile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -64,7 +65,7 @@ public class navActivity extends AppCompatActivity {
             } else if (itemId == R.id.add) {
                 startActivity(new Intent(navActivity.this, CreateDActivity.class));
             } else if (itemId == R.id.profil) {
-                startActivity(new Intent(navActivity.this, DiscussionScreen.class));
+                startActivity(new Intent(navActivity.this, Profile.class));
             } else {
                 Log.w("Navmenu", "Unhandled item ID: " + itemId);
             }
@@ -98,7 +99,7 @@ public class navActivity extends AppCompatActivity {
         } else if (itemId == R.id.add) {
             startActivity(new Intent(navActivity.this, CreateDActivity.class));
         } else if (itemId == R.id.profil) {
-            startActivity(new Intent(navActivity.this, ProfilFragment.class));
+            startActivity(new Intent(navActivity.this, Profile.class));
         } else {
             Log.w("NavActivity", "Unhandled item ID: " + itemId);
         }
