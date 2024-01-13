@@ -25,6 +25,13 @@ public interface UserApi {
     Call<JwtAuthenticationResponse> signup(@Body User user);
 
 
+    @PUT("/api/user/{email}/password")
+    Call<User> updatePassword(@Path("email") String email, @Body String newPassword);
+
+    @DELETE("/api/user/{email}")
+    Call<Void> deleteUser(@Path("email") String email);
+
+
     @GET("/api/discussions/getAllDiscussions")
     Call<List<Discussion>> getAllDiscussionsInfo();
 
