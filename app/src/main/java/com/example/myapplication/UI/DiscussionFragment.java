@@ -13,9 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -72,28 +70,9 @@ public class DiscussionFragment extends Fragment {
         // Proceed to fetch discussions regardless of the authentication status
         fetchDiscussions(token);
 
-        ImageView imageFloatingIcon = view.findViewById(R.id.imageFloatingicon);
 
-        // Add a click listener to imageFloatingIcon
-        imageFloatingIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Redirect to the discussion creation page
-                // Start CreateDiscFragment using startActivityForResult with the contract
-                Intent intent = new Intent(requireContext(), CreateDiscFragment.class);
-                Log.d("DiscussionFragment", "Launching createDiscLauncher");
-                createDiscLauncher.launch(intent);
-                Log.d("DiscussionFragment", "createDiscLauncher launched successfully");
-            }
-        });
 
-        ImageView deleteDiscussionImageView = view.findViewById(R.id.deletediscussion);
 
-        deleteDiscussionImageView.setOnClickListener(v -> {
-            // Déclencher l'intention de passer à l'activité de liste de discussions créées par l'utilisateur
-            Intent intent = new Intent(requireContext(), DeleteDiscussionActivity.class);
-            startActivity(intent);
-        });
 
         return view;
     }
@@ -291,7 +270,9 @@ public class DiscussionFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_add) {
+        int itemId = item.getItemId();
+
+        if (itemId == R.id.action_add) {
             // Handle the "ADD" button click
             // Replace the current fragment with CreateDiscFragment
             requireActivity().getSupportFragmentManager().beginTransaction()
@@ -299,10 +280,19 @@ public class DiscussionFragment extends Fragment {
                     .addToBackStack(null)
                     .commit();
             return true;
-        } else {
-            return super.onOptionsItemSelected(item);
+        } else if (itemId == R.id.action_delete) {
+            // Handle the "Delete" button click
+            // Start DeleteDiscussionFragment
+            requireActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new DeleteDiscussionFragment())
+                    .addToBackStack(null)
+                    .commit();
+            return true;
         }
+
+        return super.onOptionsItemSelected(item);
     }
+
 
 
 
