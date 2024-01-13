@@ -13,10 +13,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
@@ -57,12 +60,24 @@ public class DiscussionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_discussion, container, false);
-        setHasOptionsMenu(true); // Indicate that the fragment has an options menu
+        setHasOptionsMenu(true);
 
         // Setup ListView and adapter
         ListView listView = view.findViewById(R.id.listView);
         discussionAdapter = new DiscussionAdapter(requireContext(), discussionItemList);
         listView.setAdapter(discussionAdapter);
+
+        // Retrieve the discussion ID from the arguments
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            Long discussionId = arguments.getLong("discussionId", -1L);
+
+            // Check if the discussionId is valid
+            if (discussionId != -1L) {
+                // Call the updateSaveDiscussion function with the discussionId
+                updateSaveDiscussion(discussionId);
+            }
+        }
 
         // Retrieve the token from SharedPreferences
         String token = retrieveToken();
@@ -70,12 +85,9 @@ public class DiscussionFragment extends Fragment {
         // Proceed to fetch discussions regardless of the authentication status
         fetchDiscussions(token);
 
-
-
-
-
         return view;
     }
+
 
 
 
@@ -145,6 +157,46 @@ public class DiscussionFragment extends Fragment {
             public void onFailure(Call<List<Discussion>> call, Throwable t) {
                 // Handle the failure
                 Log.e("DiscussionScreen", "Network error: " + t.getMessage());
+            }
+        });
+    }
+    private void updateSaveDiscussion(Long discussionId) {
+        // Retrofit setup
+        RetrofitService retrofitService = new RetrofitService(requireContext());
+
+        // Create an instance of RequestInterceptor with the token
+
+        // Pass the interceptor to Retrofit setup
+        UserApi userApi = retrofitService.getRetrofit().newBuilder()
+                .build()
+                .create(UserApi.class);
+
+        // Make a POST request to the updateSave endpoint
+        Call<Discussion> call = userApi.updateSave(discussionId);
+        call.enqueue(new Callback<Discussion>() {
+            @Override
+            public void onResponse(Call<Discussion> call, Response<Discussion> response) {
+                if (response.isSuccessful()) {
+                    // Discussion save updated successfully, update UI or perform any other actions
+                    Discussion updatedDiscussion = response.body();
+
+                    // You may want to handle the updated discussion accordingly
+                    Log.d("DiscussionFragment", "Save updated for discussion: " + updatedDiscussion.getId());
+                } else {
+                    // Log details about the failure
+                    Log.e("DiscussionFragment", "Failed to update save. Code: " + response.code());
+                    try {
+                        Log.e("DiscussionFragment", "Error body: " + response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Discussion> call, Throwable t) {
+                // Handle the failure
+                Log.e("DiscussionFragment", "Network error: " + t.getMessage());
             }
         });
     }

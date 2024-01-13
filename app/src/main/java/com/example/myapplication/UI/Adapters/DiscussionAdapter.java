@@ -1,6 +1,8 @@
 package com.example.myapplication.UI.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +13,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.myapplication.R;
+import com.example.myapplication.UI.DiscussionFragment;
 import com.example.myapplication.model.Discussion;
 import com.example.myapplication.picasso.CircleTransform;
 import com.squareup.picasso.Picasso;
@@ -121,6 +126,37 @@ public class DiscussionAdapter extends ArrayAdapter<Discussion> {
 
 
         }
+        // Get the discussion item for the current position
+        final Discussion discussion = getItem(position);
+
+        // Find the ImageView in your item_discussion layout
+        ImageView imageVector = convertView.findViewById(R.id.imageVector);
+
+// Set an OnClickListener on the ImageView
+        imageVector.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle the click event
+                if (discussion != null) {
+                    // Create an instance of DiscussionFragment
+                    DiscussionFragment discussionFragment = new DiscussionFragment();
+
+                    // Pass the discussion ID as an argument to the fragment
+                    Bundle args = new Bundle();
+                    args.putLong("discussionId", discussion.getId());
+                    discussionFragment.setArguments(args);
+
+
+                    // Replace the current fragment with DiscussionFragment
+                    FragmentTransaction transaction = ((AppCompatActivity) getContext()).getSupportFragmentManager().beginTransaction();
+
+                    transaction.replace(R.id.fragment_container, discussionFragment);
+                    transaction.addToBackStack(null);  // If you want to add to the back stack
+                    transaction.commit();
+                }
+            }
+        });
+
 
         return convertView;
     }
