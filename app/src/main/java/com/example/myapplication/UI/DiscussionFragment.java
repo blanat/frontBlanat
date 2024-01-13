@@ -1,7 +1,6 @@
 package com.example.myapplication.UI;
 
 import static android.app.Activity.RESULT_OK;
-import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,12 +18,12 @@ import android.widget.ListView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
 import com.example.myapplication.UI.Adapters.DiscussionAdapter;
-import com.example.myapplication.UI.DeleteDiscussionActivity;
 
 
 import com.example.myapplication.model.Discussion;
@@ -61,12 +60,24 @@ public class DiscussionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_discussion, container, false);
-        setHasOptionsMenu(true); // Indicate that the fragment has an options menu
+        setHasOptionsMenu(true);
 
         // Setup ListView and adapter
         ListView listView = view.findViewById(R.id.listView);
         discussionAdapter = new DiscussionAdapter(requireContext(), discussionItemList);
         listView.setAdapter(discussionAdapter);
+
+        // Retrieve the discussion ID from the arguments
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            Long discussionId = arguments.getLong("discussionId", -1L);
+
+            // Check if the discussionId is valid
+            if (discussionId != -1L) {
+                // Call the updateSaveDiscussion function with the discussionId
+                updateSaveDiscussion(discussionId);
+            }
+        }
 
         // Retrieve the token from SharedPreferences
         String token = retrieveToken();
@@ -74,31 +85,10 @@ public class DiscussionFragment extends Fragment {
         // Proceed to fetch discussions regardless of the authentication status
         fetchDiscussions(token);
 
-        ImageView imageFloatingIcon = view.findViewById(R.id.imageFloatingicon);
-
-        // Add a click listener to imageFloatingIcon
-        imageFloatingIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Redirect to the discussion creation page
-                // Start CreateDiscScreen using startActivityForResult with the contract
-                Intent intent = new Intent(requireContext(), CreateDiscScreen.class);
-                Log.d("DiscussionFragment", "Launching createDiscLauncher");
-                createDiscLauncher.launch(intent);
-                Log.d("DiscussionFragment", "createDiscLauncher launched successfully");
-            }
-        });
-
-        ImageView deleteDiscussionImageView = view.findViewById(R.id.deletediscussion);
-
-        deleteDiscussionImageView.setOnClickListener(v -> {
-            // Déclencher l'intention de passer à l'activité de liste de discussions créées par l'utilisateur
-            Intent intent = new Intent(requireContext(), DeleteDiscussionActivity.class);
-            startActivity(intent);
-        });
-
         return view;
     }
+
+
 
 
     // Use ActivityResultContracts.StartActivityForResult to handle the result
@@ -167,6 +157,46 @@ public class DiscussionFragment extends Fragment {
             public void onFailure(Call<List<Discussion>> call, Throwable t) {
                 // Handle the failure
                 Log.e("DiscussionScreen", "Network error: " + t.getMessage());
+            }
+        });
+    }
+    private void updateSaveDiscussion(Long discussionId) {
+        // Retrofit setup
+        RetrofitService retrofitService = new RetrofitService(requireContext());
+
+        // Create an instance of RequestInterceptor with the token
+
+        // Pass the interceptor to Retrofit setup
+        UserApi userApi = retrofitService.getRetrofit().newBuilder()
+                .build()
+                .create(UserApi.class);
+
+        // Make a POST request to the updateSave endpoint
+        Call<Discussion> call = userApi.updateSave(discussionId);
+        call.enqueue(new Callback<Discussion>() {
+            @Override
+            public void onResponse(Call<Discussion> call, Response<Discussion> response) {
+                if (response.isSuccessful()) {
+                    // Discussion save updated successfully, update UI or perform any other actions
+                    Discussion updatedDiscussion = response.body();
+
+                    // You may want to handle the updated discussion accordingly
+                    Log.d("DiscussionFragment", "Save updated for discussion: " + updatedDiscussion.getId());
+                } else {
+                    // Log details about the failure
+                    Log.e("DiscussionFragment", "Failed to update save. Code: " + response.code());
+                    try {
+                        Log.e("DiscussionFragment", "Error body: " + response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Discussion> call, Throwable t) {
+                // Handle the failure
+                Log.e("DiscussionFragment", "Network error: " + t.getMessage());
             }
         });
     }
@@ -277,30 +307,45 @@ public class DiscussionFragment extends Fragment {
 
         // Find the "ADD" menu item
         MenuItem addItem = menu.findItem(R.id.action_add);
+        MenuItem deleteItem = menu.findItem(R.id.action_delete);
 
         // Adjust visibility based on your conditions
         if (shouldShowAddButton()) {
             addItem.setVisible(true);
+            deleteItem.setVisible(true);
         } else {
             addItem.setVisible(false);
+            deleteItem.setVisible(false);
+
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_add) {
+        int itemId = item.getItemId();
+
+        if (itemId == R.id.action_add) {
             // Handle the "ADD" button click
-            // Redirect to the discussion creation page
-            // Start CreateDiscScreen using startActivityForResult with the contract
-            Intent intent = new Intent(requireContext(), CreateDiscScreen.class);
-            Log.d("DiscussionFragment", "Launching createDiscLauncher");
-            createDiscLauncher.launch(intent);
-            Log.d("DiscussionFragment", "createDiscLauncher launched successfully");
+            // Replace the current fragment with CreateDiscFragment
+            requireActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new CreateDiscFragment())
+                    .addToBackStack(null)
+                    .commit();
             return true;
-        } else {
-            return super.onOptionsItemSelected(item);
+        } else if (itemId == R.id.action_delete) {
+            // Handle the "Delete" button click
+            // Start DeleteDiscussionFragment
+            requireActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new DeleteDiscussionFragment())
+                    .addToBackStack(null)
+                    .commit();
+            return true;
         }
+
+        return super.onOptionsItemSelected(item);
     }
+
+
 
 
 // Other methods and code for your fragment

@@ -1,6 +1,7 @@
 package com.example.myapplication.UI.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.myapplication.R;
-import com.example.myapplication.UI.DeleteDiscussionActivity;
+import com.example.myapplication.UI.DiscussionFragment;
 import com.example.myapplication.model.Discussion;
 import com.example.myapplication.picasso.CircleTransform;
 import com.squareup.picasso.Picasso;
@@ -48,6 +49,7 @@ public class DeleteDiscussionAdapter extends ArrayAdapter<Discussion> {
         }
         // Find ImageView from the inflated layout (convertView)
         ImageView imageGroupOne = convertView.findViewById(R.id.imageGroupOne);
+
 
         // Utilisez Picasso pour charger l'image dans votre ImageView
 
@@ -126,8 +128,22 @@ public class DeleteDiscussionAdapter extends ArrayAdapter<Discussion> {
 
         }
 
+
+
         return convertView;
     }
 
+    private void launchDiscussionFragment() {
+        // Vous devez définir comment lancer votre DiscussionFragment ici.
+        // Cela dépend de la structure de votre application.
+
+        // Si vous utilisez une activité, vous pouvez lancer DiscussionFragment comme suit :
+        Intent intent = new Intent(context, DiscussionFragment.class);
+        context.startActivity(intent);
+
+        // Si vous utilisez des fragments, vous pouvez informer votre activité hôte pour afficher DiscussionFragment.
+
+        // Assurez-vous d'ajuster cela en fonction de la structure de votre application.
+    }
 
 }

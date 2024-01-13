@@ -2,14 +2,13 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <FrameLayout
         android:id="@+id/frameStackinputsearch"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_53pxh"
-        >
+        android:layout_height="@dimen/_53pxh">
+
         <RelativeLayout
             android:id="@+id/relativeRowInputSearch"
             style="@style/groupStylewhite_A700"
@@ -17,24 +16,36 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center">
 
+            <ImageView
+                android:id="@+id/imgBack"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/back_icon" />
+
             <TextView
                 android:id="@+id/txtBack"
                 style="@style/txtIntermedium16_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="137dp"
-                android:layout_marginTop="@dimen/_16pxh"
+                android:layout_marginStart="117dp"
+                android:layout_toEndOf="@id/imgBack"
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:text="@string/lbl_Mydiscussion" />
 
-
         </RelativeLayout>
 
-
+        <FrameLayout
+            android:id="@+id/fragmentContainer2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/fragment_container" />
     </FrameLayout>
+
+
 
     <!-- Include the ListView -->
     <ListView
@@ -42,7 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/frameStackinputsearch"
-        android:layout_marginTop="4dp"
-        />
+        android:layout_marginTop="4dp" />
+
 
 </RelativeLayout>

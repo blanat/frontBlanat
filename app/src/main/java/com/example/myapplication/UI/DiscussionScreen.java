@@ -9,8 +9,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -26,7 +24,6 @@ import androidx.annotation.Nullable;
 import com.example.myapplication.retrofit.RetrofitService;
 import com.example.myapplication.retrofit.UserApi;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -62,8 +59,8 @@ public class DiscussionScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Redirigez vers la page de création de discussion
-                // Start CreateDiscScreen using startActivityForResult with the contract
-                Intent intent = new Intent(DiscussionScreen.this, CreateDiscScreen.class);
+                // Start CreateDiscFragment using startActivityForResult with the contract
+                Intent intent = new Intent(DiscussionScreen.this, CreateDiscFragment.class);
                 Log.d("DiscussionScreen", "Launching createDiscLauncher");
                 createDiscLauncher.launch(intent);
                 Log.d("DiscussionScreen", "createDiscLauncher launched successfully");

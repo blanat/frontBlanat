@@ -172,7 +172,9 @@
                     android:layout_marginEnd="@dimen/_104pxh"
                     android:layout_marginBottom="@dimen/_10pxh"
                     android:scaleType="fitXY"
-                    android:src="@drawable/img_vector" />
+                    android:src="@drawable/avantsaveicon"
+                    android:tag="{position}" />
+
             </FrameLayout>
         </LinearLayout>
 

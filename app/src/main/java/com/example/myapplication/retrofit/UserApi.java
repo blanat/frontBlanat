@@ -25,6 +25,13 @@ public interface UserApi {
     Call<JwtAuthenticationResponse> signup(@Body User user);
 
 
+    @PUT("/api/user/{email}/password")
+    Call<User> updatePassword(@Path("email") String email, @Body String newPassword);
+
+    @DELETE("/api/user/{email}")
+    Call<Void> deleteUser(@Path("email") String email);
+
+
     @GET("/api/discussions/getAllDiscussions")
     Call<List<Discussion>> getAllDiscussionsInfo();
 
@@ -53,4 +60,7 @@ public interface UserApi {
 
     @DELETE("/api/discussions/{discussionId}")
     Call<Void> deleteDiscussionAndMessages(@Path("discussionId") Long discussionId);
+
+    @POST("/api/discussions/{discussionId}/updateSave")
+    Call<Discussion> updateSave(@Path("discussionId") Long discussionId);
 }
