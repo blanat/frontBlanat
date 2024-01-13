@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
@@ -19,6 +20,7 @@ import com.example.myapplication.model.Discussion;
 import com.example.myapplication.model.Enum.Categories;
 import com.example.myapplication.retrofit.RetrofitService;
 import com.example.myapplication.retrofit.UserApi;
+import com.google.android.material.snackbar.Snackbar;
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener;
 import com.skydoves.powerspinner.PowerSpinnerView;
 
@@ -75,17 +77,7 @@ public class CreateDiscFragment extends Fragment {
             }
         });
 
-        btnCreateDiscussion.setOnClickListener(v -> {
-            String token = retrieveToken();
-            String title = etDiscussionTitle.getText().toString();
-            String description = etDiscussionDescription.getText().toString();
 
-            if (selectedCategory != null) {
-                createDiscussion(token, title, description, selectedCategory);
-            } else {
-                Toast.makeText(requireContext(), "Please select a category", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         TextView txtBack = view.findViewById(R.id.txtBack);
 
@@ -95,13 +87,53 @@ public class CreateDiscFragment extends Fragment {
             navigateToDiscussionFragment();
         });
 
+        btnCreateDiscussion.setOnClickListener(v -> {
+            String token = retrieveToken();
+            String title = etDiscussionTitle.getText().toString();
+            String description = etDiscussionDescription.getText().toString();
+
+            if (selectedCategory == null) {
+                showSnackbar("Please select a category");
+            } else if (title.isEmpty()) {
+                etDiscussionTitle.setError("Title is required");
+            } else if (description.isEmpty()) {
+                etDiscussionDescription.setError("Description is required");
+            } else {
+                // All fields are filled, proceed to create discussion
+                createDiscussion(token, title, description, selectedCategory);
+            }
+        });
+
+
+
+
+
+
+        etDiscussionTitle.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                etDiscussionTitle.setError(null);
+            }
+        });
+
+        etDiscussionDescription.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                etDiscussionDescription.setError(null);
+            }
+        });
+
+
 
 
         return view;
     }
 
 
-
+    private void showSnackbar(String message) {
+        Snackbar snackbar = Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG);
+        View snackbarView = snackbar.getView();
+        snackbarView.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.red)); // Set your desired color
+        snackbar.show();
+    }
     private String retrieveToken() {
         // Retrieve the token from SharedPreferences
         SharedPreferences preferences = requireActivity().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
