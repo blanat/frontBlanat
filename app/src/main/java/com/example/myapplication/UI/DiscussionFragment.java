@@ -1,7 +1,6 @@
 package com.example.myapplication.UI;
 
 import static android.app.Activity.RESULT_OK;
-import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,12 +18,10 @@ import android.widget.ListView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
 import com.example.myapplication.UI.Adapters.DiscussionAdapter;
-import com.example.myapplication.UI.DeleteDiscussionActivity;
 
 
 import com.example.myapplication.model.Discussion;
@@ -81,8 +78,8 @@ public class DiscussionFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Redirect to the discussion creation page
-                // Start CreateDiscScreen using startActivityForResult with the contract
-                Intent intent = new Intent(requireContext(), CreateDiscScreen.class);
+                // Start CreateDiscFragment using startActivityForResult with the contract
+                Intent intent = new Intent(requireContext(), CreateDiscFragment.class);
                 Log.d("DiscussionFragment", "Launching createDiscLauncher");
                 createDiscLauncher.launch(intent);
                 Log.d("DiscussionFragment", "createDiscLauncher launched successfully");
@@ -290,17 +287,17 @@ public class DiscussionFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_add) {
             // Handle the "ADD" button click
-            // Redirect to the discussion creation page
-            // Start CreateDiscScreen using startActivityForResult with the contract
-            Intent intent = new Intent(requireContext(), CreateDiscScreen.class);
-            Log.d("DiscussionFragment", "Launching createDiscLauncher");
-            createDiscLauncher.launch(intent);
-            Log.d("DiscussionFragment", "createDiscLauncher launched successfully");
+            // Replace the current fragment with CreateDiscFragment
+            requireActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new CreateDiscFragment())
+                    .addToBackStack(null)
+                    .commit();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
     }
+
 
 
 // Other methods and code for your fragment

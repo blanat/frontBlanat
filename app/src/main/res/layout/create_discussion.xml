@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="@dimen/_10pxh"
-    tools:context=".UI.CreateDiscScreen">
+    tools:context=".UI.CreateDiscFragment">
 
     <LinearLayout
         android:id="@+id/linearColumnajouterunedis"
@@ -55,7 +55,7 @@
                         style="@style/txtIntermedium16"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_1pxh"
+                        android:layout_marginRight="@dimen/_250pxh"
                         android:layout_marginTop="@dimen/_10pxh"
                         android:ellipsize="end"
                         android:singleLine="true"
@@ -205,6 +205,12 @@
                     android:insetTop="2dp"
                     android:insetBottom="2dp"
                     android:text="Create Discussion" />
+
+                <FrameLayout
+                    android:id="@+id/fragmentContainer1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/fragment_container" />
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
