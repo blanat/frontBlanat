@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -96,6 +97,7 @@ public class DiscussionFragment extends Fragment {
 
         return view;
     }
+
 
 
     // Use ActivityResultContracts.StartActivityForResult to handle the result
