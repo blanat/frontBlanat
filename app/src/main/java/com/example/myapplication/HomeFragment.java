@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,8 +59,8 @@ public class HomeFragment extends Fragment implements selectListener {
                         if (response.isSuccessful() && response.body() != null) {
                             populateListView(response.body());
                         } else {
-                            // Handle the error case
-                        }
+                            Log.e("HomeFragment", " erreur : ");
+                       }
                     }
 
                     @Override
@@ -70,9 +71,19 @@ public class HomeFragment extends Fragment implements selectListener {
     }
 
     private void populateListView(List<listData> dealslist) {
-        DealsAdapter dealsAdapter = new DealsAdapter(dealslist, this);
-        recyclerView.setAdapter(dealsAdapter);
+        Log.d("HomeFragment", "populateListView called with " + dealslist.size() + " deals");
+        if (!dealslist.isEmpty()) {
+            for (listData deal : dealslist) {
+                Log.d("HomeFragment", "Deal: " + deal.getTitle()); // Ajoutez des logs pour chaque propriété que vous voulez vérifier
+            }
+            DealsAdapter dealsAdapter = new DealsAdapter(dealslist, this);
+            recyclerView.setAdapter(dealsAdapter);
+        } else {
+            Log.e("HomeFragment", "Deals list is empty");
+        }
     }
+
+
 
     @Override
     public void onItemClicked(listData deal) {
