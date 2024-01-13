@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 
@@ -16,6 +18,16 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     private final List<String> imagePaths;
     private final Context context;
+
+    // Add a boolean to track whether to show default images
+    private boolean showDefaultImages = true;
+
+    // Default placeholder images
+    private static final int[] DEFAULT_IMAGES = {
+            R.drawable.imagedef,
+            R.drawable.imagedef,
+            R.drawable.imagedef
+    };
 
     public ImageAdapter(Context context, List<String> imagePaths) {
         this.context = context;
@@ -31,13 +43,24 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String imagePath = imagePaths.get(position);
-        Glide.with(context).load(imagePath).into(holder.imageView);
+        if (showDefaultImages) {
+            // Show default placeholder images
+            holder.imageView.setImageResource(DEFAULT_IMAGES[position % DEFAULT_IMAGES.length]);
+        } else {
+            // Load user-uploaded images using Glide
+            String imagePath = imagePaths.get(position);
+            Glide.with(context).load(imagePath).into(holder.imageView);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return imagePaths.size();
+        return showDefaultImages ? DEFAULT_IMAGES.length : imagePaths.size();
+    }
+
+    public void setShowDefaultImages(boolean showDefaultImages) {
+        this.showDefaultImages = showDefaultImages;
+        notifyDataSetChanged(); // Notify adapter to refresh the view
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

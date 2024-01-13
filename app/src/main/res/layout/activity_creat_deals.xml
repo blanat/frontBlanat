@@ -12,63 +12,62 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="0dp"
 
             android:orientation="vertical">
 
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginBottom="30dp"
-                    android:autoLink="all"
-                    android:text="Back"
-                    android:textSize="20sp"
-                    android:textColor="@color/my_primary"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.497"
-                    app:layout_constraintStart_toStartOf="parent" />
-                <TextView
-                    android:id="@+id/title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginStart="33dp"
-                    android:text="Nouveau Deal"
-                    android:textSize="25sp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:layout_centerInParent="true"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/submit"
-                    android:layout_width="70dp"
-                    android:layout_height="48dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="7dp"
-                    android:text="save"
-                    android:textSize="10sp"
-                    android:layout_marginBottom="39dp"
-                    android:textColor="@color/white"/>
+                            <TextView
+                                android:id="@+id/back"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginBottom="30dp"
+                                android:autoLink="all"
+                                android:text="Back"
+                                android:textSize="20sp"
+                                android:textColor="@color/my_primary"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.497"
+                                app:layout_constraintStart_toStartOf="parent" />
+                            <TextView
+                                android:id="@+id/title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginStart="40dp"
+                                android:text="Nouveau Deal"
+                                android:textSize="25sp"
+                                android:textColor="@color/black"
+                                android:layout_centerInParent="true"/>
+
+                            <Button
+                                android:id="@+id/submit"
+                                android:layout_width="80dp"
+                                android:layout_height="48dp"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginStart="30dp"
+                                android:layout_marginTop="7dp"
+                                android:text="save"
+                                android:textSize="10sp"
+                                android:layout_marginBottom="39dp"
+                                android:textColor="@color/white"/>
 
 
-            </LinearLayout>
+                        </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
@@ -89,8 +88,42 @@
                 android:layout_marginStart="116dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="127dp"
-                android:text="Select Images" />
+                android:text="Ajouter Images" />
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="40dp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtLay_dealLink"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                    app:boxBackgroundColor="@color/white"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    app:startIconDrawable="@drawable/liendeal"
+                    app:layout_constraintWidth_percent="0.9"
+                    app:layout_constraintHeight_percent="0.1"
+                    android:hint="Lien du deal"
+                    app:endIconMode="clear_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintVertical_bias="0.3">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/dealLink"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="20" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <!--
+            ====================================
             <TextView
                 android:id="@+id/dealLink"
                 android:layout_width="match_parent"
@@ -131,8 +164,11 @@
                 app:layout_constraintEnd_toEndOf="parent"/>
 
             </LinearLayout>
+-->
+          <!-- ====================================
 
-            <TextView
+           <TextView
+
                 android:id="@+id/title_deal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -143,8 +179,8 @@
                 android:textColor="@color/my_primary"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-        <LinearLayout
+                app:layout_constraintEnd_toEndOf="parent"/>-->
+       <!-- <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -166,8 +202,88 @@
                 app:layout_constraintTop_toBottomOf="@+id/title_deal"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
-        </LinearLayout>
-            <TextView
+        </LinearLayout>-->
+
+
+            <!-- <TextView
+              android:id="@+id/title_deal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="20dp"
+              android:layout_marginStart="12dp"
+              android:text="Titre *"
+              android:textSize="16sp"
+              android:textColor="@color/my_primary"
+              android:textStyle="bold"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"/>-->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="20dp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtLay_dealtitle"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                    app:boxBackgroundColor="@color/white"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    app:layout_constraintWidth_percent="0.9"
+                    app:layout_constraintHeight_percent="0.1"
+                    android:hint="Titre *"
+                    app:endIconMode="clear_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintVertical_bias="0.3">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/dealtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="20" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="20dp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtLay_description"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    app:layout_constraintWidth_percent="0.9"
+                    app:layout_constraintHeight_percent="0.4"
+                    android:hint="description *"
+                    app:endIconMode="clear_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintVertical_bias="0.3">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="20" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <!--<TextView
                 android:id="@+id/Desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -202,7 +318,42 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
-        </LinearLayout>
+        </LinearLayout>-->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="20dp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtLay_PrixN"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    app:layout_constraintWidth_percent="0.9"
+                    app:layout_constraintHeight_percent="0.1"
+                    android:hint="Nouveau Prix DH *"
+                    app:endIconMode="clear_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintVertical_bias="0.3">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/PrixN"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="20" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+<!--
             <TextView
                 android:id="@+id/price"
                 android:layout_width="match_parent"
@@ -238,8 +389,41 @@
                 app:layout_constraintTop_toBottomOf="@+id/price"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
-        </LinearLayout>
-            <TextView
+        </LinearLayout>-->
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="20dp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtLay_PrixA"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    app:layout_constraintWidth_percent="0.9"
+                    app:layout_constraintHeight_percent="0.1"
+                    android:hint="Prix Ancien DH *"
+                    app:endIconMode="clear_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintVertical_bias="0.3">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/PrixA"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="20" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+           <!-- <TextView
                 android:id="@+id/pricea"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -273,7 +457,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/pricea"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
-        </LinearLayout>
+        </LinearLayout>-->
+
+
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -284,7 +472,7 @@
                     android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="20dp"
                     android:text="Livraison"
                     android:textSize="16sp"
                     android:textColor="@color/my_primary"
@@ -314,7 +502,7 @@
                 </RadioGroup>
             </LinearLayout>
 
-        <LinearLayout
+        <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -337,7 +525,41 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
-        </LinearLayout>
+        </LinearLayout>-->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="10dp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtLay_prixlivraison"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    app:layout_constraintWidth_percent="0.9"
+                    app:layout_constraintHeight_percent="0.1"
+                    android:hint="prix de livraison DH *"
+                    app:endIconMode="clear_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintVertical_bias="0.3">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/prixlivraison"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="20" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
             <!--<TextView
                 android:id="@+id/textView1"
                 android:layout_width="180dp"
@@ -372,7 +594,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
         </LinearLayout>-->
-            <TextView
+            <!--<TextView
                 android:id="@+id/textView2"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
@@ -381,7 +603,7 @@
                 android:text="Date de debut"
                 android:textSize="16sp"
                 android:textColor="@color/my_primary"
-                android:textStyle="bold" />
+                android:textStyle="bold" />-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -392,10 +614,10 @@
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="Date selectioné"
+                    android:text="Date de Debut"
                     android:layout_marginStart="20dp"
                     android:textSize="16sp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/my_primary"
                     android:textStyle="bold" />
                 <ImageView
                     android:layout_width="45dp"
@@ -405,7 +627,7 @@
                     android:layout_marginTop="15dp"/>
             </LinearLayout>
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/textView3"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
@@ -414,7 +636,7 @@
                 android:text="Date de Fin"
                 android:textSize="16sp"
                 android:textColor="@color/my_primary"
-                android:textStyle="bold" />
+                android:textStyle="bold" />-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -425,10 +647,10 @@
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="Date selectioné"
+                    android:text="Date de fin"
                     android:layout_marginStart="20dp"
                     android:textSize="16sp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/my_primary"
                     android:textStyle="bold" />
                 <ImageView
                     android:layout_width="45dp"
@@ -437,7 +659,9 @@
                     android:layout_marginStart="2dp"
                     android:layout_marginTop="15dp"/>
             </LinearLayout>
-            <TextView
+
+
+           <!-- <TextView
                 android:id="@+id/local"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -475,12 +699,48 @@
 
         </LinearLayout>
 
+
+-->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="10dp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtLay_localisation"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    app:layout_constraintWidth_percent="0.9"
+                    app:layout_constraintHeight_percent="0.1"
+                    android:hint="Localisation *"
+                    app:endIconMode="clear_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintVertical_bias="0.3">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/localisation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="20" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
             <TextView
                 android:id="@+id/Categorie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="20dp"
                 android:text="Categorie *"
                 android:textSize="16sp"
                 android:textColor="@color/my_primary"

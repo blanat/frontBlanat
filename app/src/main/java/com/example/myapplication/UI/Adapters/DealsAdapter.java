@@ -40,7 +40,7 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsHolder> {
         listData deals = dealslist.get(position);
 
         // Load image using Picasso
-        Picasso.get().load(deals.getFirstImageUrl()).into(holder.Image);
+        Picasso.get().load(deals.getFirstImageUrl()).error(R.drawable.imagedef).into(holder.Image);
 
         holder.Titre.setText(deals.getTitle());
 
