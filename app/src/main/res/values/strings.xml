@@ -33,9 +33,13 @@
     <string name="lbl_account">Account</string>
     <string name="lbl_nouveau_blan">Nouveau Blan</string>
     <!--create discussion-->
+    <string name="enter_deal_link">Veuillez entrer un lien valide :*</string>
     <string name="msg_titre_de_discus">Titre de discussion:*</string>
-    <string name="msg_veuillez_entrer2">Veuillez entrer une description Valide</string>
-    <string name="msg_veuillez_entrer">Veuillez entrer un titre Valide</string>
+    <string name="msg_veuillez_entrer">Veuillez saisir un titre </string>
+    <string name="msg_veuillez_entrer2">Veuillez saisir une description </string>
+    <string name="msg_veuillez_entrer3">Veuillez saisir une localisation </string>
+    <string name="msg_veuillez_entrer4">Le champ Nouveau Prix DH est obligatoire </string>
+    <string name="msg_veuillez_entrer5">Le champ Ancien Prix DH est obligatoire </string>
     <string name="lbl_description">Description:*</string>
     <string name="msg_ajouter_une_dis">Ajouter une discussion</string>
     <string name="lbl_create">Create</string>

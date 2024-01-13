@@ -71,4 +71,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             imageView = itemView.findViewById(R.id.selectedImageView);
         }
     }
+
+    public List<String> getImagePaths() {
+        return imagePaths;
+    }
 }
