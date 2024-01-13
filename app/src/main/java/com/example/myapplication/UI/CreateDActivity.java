@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,11 +19,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.example.myapplication.HomeFragment;
-import com.example.myapplication.UI.Adapters.DealsAdapter;
 import com.example.myapplication.model.Enum.Categories;
-import com.example.myapplication.model.listData;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
 import okhttp3.RequestBody;
@@ -251,13 +247,6 @@ public class CreateDActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -280,7 +269,6 @@ public class CreateDActivity extends AppCompatActivity {
 
                     // Retrieve the EditText for delivery price
                     EditText prixLivraisonEditText = findViewById(R.id.prixlivraison);
-
 
                     //===================
                     // Retrieve the selected date values
@@ -324,13 +312,14 @@ public class CreateDActivity extends AppCompatActivity {
                         }
                     });
 
-                } else {
+                }else{
                     Toast.makeText(CreateDActivity.this, "Please fill in all required fields", Toast.LENGTH_SHORT).show();
                 }
             }
-            });
+        });
 
     }
+
 
     private boolean validateForm() {
         boolean isValid = true;
@@ -489,16 +478,6 @@ public class CreateDActivity extends AppCompatActivity {
 
         return isValid;
     }
-
-
-    private void openImagePicker() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_MULTIPLE);
-    }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
