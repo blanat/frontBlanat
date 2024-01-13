@@ -85,6 +85,8 @@ public class DiscussionFragment extends Fragment {
         // Proceed to fetch discussions regardless of the authentication status
         fetchDiscussions(token);
 
+
+
         return view;
     }
 
