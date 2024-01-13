@@ -13,6 +13,19 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!--profile-->
+    <string name="SauvDeal">Deals Sauvegardés</string>
+    <string name="parametres">Paramètres</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
+    <string name="back">Back</string>
+    <string name="modmdp">Modifier Mot de Passe</string>
+    <string name="ancien_mdp">Ancien Mot de Passe</string>
+    <string name="verifier_mdp">Verifier Mot de Passe</string>
+    <string name="nv_mdp">Nouveau Mot de Passe</string>
+    <string name="modifier_mdp">Modifier Mon Mot de Passe</string>
+    <string name="del_account">Supprimer mon Compte</string>
+
     <!--incoming-->
 
     <string name="loading">Loading…</string>
