@@ -10,9 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Your other views go here -->
 
-        <!-- Include the ListView -->
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"

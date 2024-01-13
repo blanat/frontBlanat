@@ -13,9 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -284,9 +282,11 @@ public class DiscussionFragment extends Fragment {
             return true;
         } else if (itemId == R.id.action_delete) {
             // Handle the "Delete" button click
-            // Start DeleteDiscussionActivity
-            Intent deleteIntent = new Intent(requireContext(), DeleteDiscussionActivity.class);
-            startActivity(deleteIntent);
+            // Start DeleteDiscussionFragment
+            requireActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new DeleteDiscussionFragment())
+                    .addToBackStack(null)
+                    .commit();
             return true;
         }
 

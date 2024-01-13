@@ -4,21 +4,20 @@ import android.app.Dialog;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.myapplication.UI.Adapters.DeleteDiscussionAdapter;
-import com.example.myapplication.UI.Adapters.DiscussionAdapter;
 import com.example.myapplication.R;
 import com.example.myapplication.model.Discussion;
 
@@ -26,16 +25,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.retrofit.RetrofitService;
 import com.example.myapplication.retrofit.UserApi;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DeleteDiscussionActivity extends AppCompatActivity {
+public class DeleteDiscussionFragment extends Fragment {
     private RetrofitService retrofitService;
     private UserApi userApi;
     private DeleteDiscussionAdapter discussionAdapter;
@@ -43,44 +42,51 @@ public class DeleteDiscussionActivity extends AppCompatActivity {
     private Button btnDelete;
     private List<Discussion> userDiscussionItemList = new ArrayList<>();
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mydiscussions); // Utilisez le même XML que pour l'activité principale
-
-        // Initialisez RetrofitService et UserApi une seule fois
-        retrofitService = new RetrofitService(this);
-        userApi = retrofitService.getRetrofit().create(UserApi.class);
-
-        // Récupérez le token de SharedPreferences
-        String token = retrieveToken();
-        Log.d("UserDiscussionsActivity", "Token: " + token);
-
-        // Vérifiez si l'utilisateur est authentifié
-        if (isAuthenticated(token)) {
-            // Utilisateur authentifié, procédez à la récupération des discussions créées par l'utilisateur
-            fetchUserDiscussions(token);
-        } else {
-            // Utilisateur non authentifié, gérez en conséquence (par exemple, affichez l'écran de connexion)
-            Log.e("UserDiscussionsActivity", "Utilisateur non authentifié");
-            // Ajoutez votre logique ici, comme afficher un écran de connexion ou rediriger vers l'activité de connexion.
-        }
-
-
-
+    public DeleteDiscussionFragment() {
+        // Required empty public constructor
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.activity_mydiscussions, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Initialize RetrofitService and UserApi only once
+        retrofitService = new RetrofitService(requireContext());
+        userApi = retrofitService.getRetrofit().create(UserApi.class);
+
+        // Retrieve the token from SharedPreferences
+        String token = retrieveToken();
+        Log.d("UserDiscussionsFragment", "Token: " + token);
+
+        // Check if the user is authenticated
+        if (isAuthenticated(token)) {
+            // User is authenticated, proceed to fetch user discussions
+            fetchUserDiscussions(token);
+        } else {
+            // User is not authenticated, handle accordingly (e.g., show the login screen)
+            Log.e("UserDiscussionsFragment", "User not authenticated");
+            // Add your logic here, such as showing a login screen or redirecting to the login activity.
+        }
+    }
+
+
+
+
+
     private void showDialog(final Long discussionIdToDelete) {
-
-        Dialog dialog = new Dialog(this, R.style.DialogStyle);
+        // Use the Fragment's context to create the Dialog
+        Dialog dialog = new Dialog(requireContext(), R.style.DialogStyle);
         dialog.setContentView(R.layout.layout_discussion_dialog);
-
-
-
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.bg_window);
 
         ImageView btnClose = dialog.findViewById(R.id.btn_close);
-
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,11 +98,19 @@ public class DeleteDiscussionActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Appeler la méthode pour supprimer la discussion
+                // Call the method to delete the discussion
                 deleteDiscussion(discussionIdToDelete);
 
                 // Dismiss the dialog after deletion
                 dialog.dismiss();
+            }
+        });
+
+        Button btn_no = dialog.findViewById(R.id.btn_no);
+        btn_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
             }
         });
 
@@ -105,7 +119,7 @@ public class DeleteDiscussionActivity extends AppCompatActivity {
 
     private void fetchUserDiscussions(String token) {
         // Utilisez Retrofit pour récupérer les discussions créées par l'utilisateur
-        RetrofitService retrofitService = new RetrofitService(this);
+        RetrofitService retrofitService = new RetrofitService(requireContext());
         UserApi userApi = retrofitService.getRetrofit().newBuilder()
                 .build()
                 .create(UserApi.class);
@@ -147,8 +161,8 @@ public class DeleteDiscussionActivity extends AppCompatActivity {
 
 
     private String retrieveToken() {
-        // Retrieve the token from SharedPreferences
-        SharedPreferences preferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        // Retrieve the token from SharedPreferences using the Fragment's context
+        SharedPreferences preferences = requireActivity().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
         String jwtToken = preferences.getString("jwtToken", "");
         // Log the token for debugging
         Log.d("Token", "Retrieved JWT Token: " + jwtToken);
@@ -157,9 +171,9 @@ public class DeleteDiscussionActivity extends AppCompatActivity {
 
     // Utilisez la méthode updateUI pour mettre à jour l'interface utilisateur avec les discussions de l'utilisateur
     private void updateUI(List<Discussion> userDiscussionItemList) {
-        discussionAdapter = new DeleteDiscussionAdapter(this, userDiscussionItemList);
 
-        ListView listView = findViewById(R.id.listView);
+        ListView listView = requireView().findViewById(R.id.listView);
+        discussionAdapter = new DeleteDiscussionAdapter(requireContext(), userDiscussionItemList);
         listView.setAdapter(discussionAdapter);
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
@@ -173,8 +187,8 @@ public class DeleteDiscussionActivity extends AppCompatActivity {
             // For example, you can pass the selected discussion to the dialog or perform other actions.
         });
 
-        // Log pour vérifier si la méthode est appelée
-        Log.d("UserDiscussionsActivity", "Méthode updateUI appelée");
+        // Log to check if the method is called
+        Log.d("UserDiscussionsActivity", "Method updateUI called");
     }
 
     private void deleteDiscussion(Long discussionId) {
@@ -184,7 +198,7 @@ public class DeleteDiscussionActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     // Discussion supprimée avec succès
-                    Log.d("DeleteDiscussionActivity", "Discussion supprimée avec succès");
+                    Log.d("DeleteDiscussionFragment", "Discussion supprimée avec succès");
                     // Actualiser la liste des discussions après la suppression
                     fetchUserDiscussions(retrieveToken());
                 } else {
@@ -196,7 +210,7 @@ public class DeleteDiscussionActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 // Gestion des erreurs réseau
-                Log.e("DeleteDiscussionActivity", "Erreur réseau lors de la suppression de la discussion : " + t.getMessage());
+                Log.e("DeleteDiscussionFragment", "Erreur réseau lors de la suppression de la discussion : " + t.getMessage());
                 // Vous pouvez afficher un message à l'utilisateur ici s'il y a une erreur réseau
             }
         });
@@ -204,9 +218,9 @@ public class DeleteDiscussionActivity extends AppCompatActivity {
 
     private void handleDeleteDiscussionFailure(Response<Void> response) {
         // Gestion des erreurs lors de la suppression de la discussion
-        Log.e("DeleteDiscussionActivity", "Échec de la suppression de la discussion. Code : " + response.code());
+        Log.e("DeleteDiscussionFragment", "Échec de la suppression de la discussion. Code : " + response.code());
         try {
-            Log.e("DeleteDiscussionActivity", "Corps de l'erreur : " + response.errorBody().string());
+            Log.e("DeleteDiscussionFragment", "Corps de l'erreur : " + response.errorBody().string());
             // Vous pouvez afficher un message d'erreur à l'utilisateur ici en utilisant une notification ou un Toast
         } catch (IOException e) {
             e.printStackTrace();

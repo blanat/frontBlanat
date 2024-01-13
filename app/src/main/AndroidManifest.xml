@@ -62,7 +62,7 @@
             android:exported="false" />
         <activity android:name=".UI.DiscussionScreen" />
         <activity android:name=".UI.CommentDiscScreen" />
-        <activity android:name=".UI.DeleteDiscussionActivity" />
+        <activity android:name=".UI.DeleteDiscussionFragment" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
