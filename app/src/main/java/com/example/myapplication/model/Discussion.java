@@ -15,6 +15,7 @@ public class Discussion implements Parcelable{
     private Categories categorie;
     private int nbrvue;
     private String profileImageUrl;
+    private int save;
 
     public String getProfileImageUrl() {
         return profileImageUrl;
@@ -22,6 +23,10 @@ public class Discussion implements Parcelable{
 
     public void setProfileImageUrl(String profileImageUrl) {
         this.profileImageUrl = profileImageUrl;
+    }
+
+    public int getSave() {
+        return save;
     }
 
     public Categories getCategorie() {

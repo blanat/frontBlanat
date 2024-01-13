@@ -20,17 +20,23 @@ import com.example.myapplication.R;
 import com.example.myapplication.UI.DiscussionFragment;
 import com.example.myapplication.model.Discussion;
 import com.example.myapplication.picasso.CircleTransform;
+import com.example.myapplication.retrofit.RetrofitService;
+import com.example.myapplication.retrofit.UserApi;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
+import java.io.IOException;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DiscussionAdapter extends ArrayAdapter<Discussion> {
 
     public DiscussionAdapter(Context context, List<Discussion> discussionItemList) {
         super(context, 0, discussionItemList);
     }
-
 
 
     @NonNull
@@ -80,7 +86,6 @@ public class DiscussionAdapter extends ArrayAdapter<Discussion> {
         }
 
 
-
         Log.d("DiscussionAdapter1", "Discussion: " + discussionItem);
         Log.d("DiscussionAdapter2", "Discussion: " + discussionItem.getCreateurUsername());
         // Check if convertView is null and inflate the layout if needed
@@ -102,17 +107,17 @@ public class DiscussionAdapter extends ArrayAdapter<Discussion> {
             // Assuming getCategories() returns an Enum instance, you can use name() to get the enum name
             if (discussionItem.getCategories() != null) {
                 txtCategorie.setText(discussionItem.getCategories().name());
-            }else {
+            } else {
                 // Handle the case where getCategories() returns null
                 txtCategorie.setText("Unknown Category");
             }
             // Check if the user associated with the discussion is not null
 
-            if (discussionItem.getCreateurUsername()!= null) {
+            if (discussionItem.getCreateurUsername() != null) {
                 // Set the user's name to txtCreateur, with a null check
                 String userName = discussionItem.getCreateurUsername();
                 txtCreateur.setText(userName != null ? userName : "Unknown User");
-            }else {
+            } else {
                 // Handle the case where the user is null
                 txtCreateur.setText("Unknown USERNAME");
             }
@@ -132,27 +137,15 @@ public class DiscussionAdapter extends ArrayAdapter<Discussion> {
         // Find the ImageView in your item_discussion layout
         ImageView imageVector = convertView.findViewById(R.id.imageVector);
 
+
 // Set an OnClickListener on the ImageView
         imageVector.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Handle the click event
                 if (discussion != null) {
-                    // Create an instance of DiscussionFragment
-                    DiscussionFragment discussionFragment = new DiscussionFragment();
-
-                    // Pass the discussion ID as an argument to the fragment
-                    Bundle args = new Bundle();
-                    args.putLong("discussionId", discussion.getId());
-                    discussionFragment.setArguments(args);
-
-
-                    // Replace the current fragment with DiscussionFragment
-                    FragmentTransaction transaction = ((AppCompatActivity) getContext()).getSupportFragmentManager().beginTransaction();
-
-                    transaction.replace(R.id.fragment_container, discussionFragment);
-                    transaction.addToBackStack(null);  // If you want to add to the back stack
-                    transaction.commit();
+                    // Call the updateSave function and update the icon based on the result
+                    updateSave(discussion, imageVector);
                 }
             }
         });
@@ -161,5 +154,54 @@ public class DiscussionAdapter extends ArrayAdapter<Discussion> {
         return convertView;
     }
 
+    private void updateSave(Discussion discussion, ImageView imageVector) {
+        // Retrofit setup
+        RetrofitService retrofitService = new RetrofitService(getContext());
 
+        // Create an instance of RequestInterceptor with the token
+
+        // Pass the interceptor to Retrofit setup
+        UserApi userApi = retrofitService.getRetrofit().newBuilder()
+                .build()
+                .create(UserApi.class);
+
+        // Make a POST request to the updateSave endpoint
+        Call<Discussion> call = userApi.updateSave(discussion.getId());
+        call.enqueue(new Callback<Discussion>() {
+            @Override
+            public void onResponse(Call<Discussion> call, Response<Discussion> response) {
+                if (response.isSuccessful()) {
+                    // Discussion save updated successfully, update UI or perform any other actions
+                    Discussion updatedDiscussion = response.body();
+
+                    // Check the updated save value and update the icon accordingly
+                    if (updatedDiscussion != null && updatedDiscussion.getSave() == 1) {
+                        // Change the icon to img_vector
+                        imageVector.setImageResource(R.drawable.img_vector);
+                    } else {
+                        // Handle other cases or keep the default icon
+                    }
+
+                    // You may want to handle the updated discussion accordingly
+                    Log.d("DiscussionAdapter", "Save updated for discussion: " + updatedDiscussion.getId());
+                } else {
+                    // Log details about the failure
+                    Log.e("DiscussionAdapter", "Failed to update save. Code: " + response.code());
+                    try {
+                        Log.e("DiscussionAdapter", "Error body: " + response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Discussion> call, Throwable t) {
+                // Handle the failure
+                Log.e("DiscussionAdapter", "Network error: " + t.getMessage());
+            }
+        });
+
+    }
 }
+
