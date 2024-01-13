@@ -74,6 +74,20 @@ public class DeleteDiscussionFragment extends Fragment {
             Log.e("UserDiscussionsFragment", "User not authenticated");
             // Add your logic here, such as showing a login screen or redirecting to the login activity.
         }
+
+        ImageView imgBack = view.findViewById(R.id.imgBack);
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToDiscussionFragment();
+            }
+        });
+    }
+    private void navigateToDiscussionFragment() {
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new DiscussionFragment())
+                .addToBackStack(null)
+                .commit();
     }
 
 
