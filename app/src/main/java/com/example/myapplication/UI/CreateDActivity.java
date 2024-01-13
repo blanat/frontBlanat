@@ -219,6 +219,7 @@ public class CreateDActivity extends AppCompatActivity {
                     // Permission is already granted, proceed with your logic
                     openImagePicker();
                 }
+                imageAdapter.setShowDefaultImages(false);
 
 
             }
@@ -234,7 +235,7 @@ public class CreateDActivity extends AppCompatActivity {
                 // Create a Deal instance with title and description
                 EditText titleEditText = findViewById(R.id.dealtitle);
                 EditText descriptionEditText = findViewById(R.id.description);
-                EditText lienDealEditText = findViewById(R.id.line);
+                EditText lienDealEditText = findViewById(R.id.dealLink);
                 EditText priceEditText = findViewById(R.id.PrixN);
                 EditText newPriceEditText = findViewById(R.id.PrixA);
                 EditText localisationEditText = findViewById(R.id.localisation);
