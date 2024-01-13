@@ -1,18 +1,17 @@
 package com.example.myapplication.UI;
-
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
 import com.example.myapplication.model.Discussion;
@@ -26,14 +25,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
-
-public class CreateDiscScreen extends AppCompatActivity {
+public class CreateDiscFragment extends Fragment {
     private EditText etDiscussionTitle;
     private EditText etDiscussionDescription;
     private Button btnCreateDiscussion;
@@ -41,19 +37,20 @@ public class CreateDiscScreen extends AppCompatActivity {
     private Categories selectedCategory;
     private PowerSpinnerView spinnerCategories;
 
-
-
+    public CreateDiscFragment() {
+        // Required empty public constructor
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_discussion);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.create_discussion, container, false);
 
-        etDiscussionTitle = findViewById(R.id.etDiscussionTitle);
-        etDiscussionDescription = findViewById(R.id.etDiscussionDescription);
-        btnCreateDiscussion = findViewById(R.id.btnCreateDiscussion);
-        spinnerCategories = findViewById(R.id.spinnerCategories);
+        etDiscussionTitle = view.findViewById(R.id.etDiscussionTitle);
+        etDiscussionDescription = view.findViewById(R.id.etDiscussionDescription);
+        btnCreateDiscussion = view.findViewById(R.id.btnCreateDiscussion);
+        spinnerCategories = view.findViewById(R.id.spinnerCategories);
 
+        // Rest of your code remains unchanged...
         List<Categories> categoriesList = Arrays.asList(Categories.values());
         List<String> categoryNames = new ArrayList<>();
         for (Categories category : categoriesList) {
@@ -73,34 +70,44 @@ public class CreateDiscScreen extends AppCompatActivity {
                     }
                 }
                 if (selectedCategory != null) {
-                    Toast.makeText(CreateDiscScreen.this, "Selected Category: " + selectedCategory.name(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        btnCreateDiscussion.setOnClickListener(view -> {
-            // Your logic to create the discussion using selectedCategory
+        btnCreateDiscussion.setOnClickListener(v -> {
             String token = retrieveToken();
-            Log.d("CreateDiscScreen", "Selected Category: " + token);
-
             String title = etDiscussionTitle.getText().toString();
             String description = etDiscussionDescription.getText().toString();
 
             if (selectedCategory != null) {
                 createDiscussion(token, title, description, selectedCategory);
             } else {
-                Toast.makeText(CreateDiscScreen.this, "Please select a category", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Please select a category", Toast.LENGTH_SHORT).show();
             }
         });
+
+        return view;
     }
 
     private String retrieveToken() {
-        SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        return preferences.getString("token", "");
+        // Retrieve the token from SharedPreferences
+        SharedPreferences preferences = requireActivity().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        String jwtToken = preferences.getString("jwtToken", "");
+
+        // Log the token for debugging
+        Log.d("Token=====", "Retrieved JWT Token: " + jwtToken);
+
+        // Ensure the token is not empty
+        if (jwtToken.isEmpty()) {
+            Log.e("Token=====", "Token is empty!");
+        }
+
+        return jwtToken;
     }
 
+
     private void createDiscussion(String token, String title, String description, Categories selectedCategory) {
-        RetrofitService retrofitService = new RetrofitService(this);
+        RetrofitService retrofitService = new RetrofitService(requireContext());
         UserApi userApi = retrofitService.getRetrofit().newBuilder()
                 .build()
                 .create(UserApi.class);
@@ -117,39 +124,32 @@ public class CreateDiscScreen extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Discussion createdDiscussion = response.body();
 
-                    // Vérification si la réponse contient des données valides
                     if (createdDiscussion != null) {
-                        Toast.makeText(CreateDiscScreen.this, "Discussion created successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Discussion created successfully", Toast.LENGTH_SHORT).show();
 
-                        Intent resultIntent = new Intent();
-                        resultIntent.putExtra("discussion", createdDiscussion);
-                        setResult(RESULT_OK, resultIntent);
+                        // Navigate to DiscussionFragment after creating the discussion
+                        navigateToDiscussionFragment();
 
-                        // Démarrer l'activité DiscussionScreen pour voir la discussion créée
-                        Intent intent = new Intent(CreateDiscScreen.this, DiscussionScreen.class);
-                        intent.putExtra("discussion", createdDiscussion);
-                        startActivity(intent);
-
-                        finish();
                     } else {
-                        Toast.makeText(CreateDiscScreen.this, "Empty response body", Toast.LENGTH_SHORT).show();
-                        setResult(RESULT_CANCELED);
-                        finish();
+                        Toast.makeText(requireContext(), "Empty response body", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(CreateDiscScreen.this, "Failed to create discussion. Code: " + response.code(), Toast.LENGTH_SHORT).show();
-                    setResult(RESULT_CANCELED);
-                    finish();
+                    Toast.makeText(requireContext(), "Failed to create discussion. Code: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
-
             @Override
             public void onFailure(Call<Discussion> call, Throwable t) {
-                Log.e("CreateDiscussionActivity", "Network error: " + t.getMessage());
-                setResult(RESULT_CANCELED);
-                finish();
+                Log.e("CreateDiscussionFragment", "Network error: " + t.getMessage());
             }
         });
+    }
+
+    private void navigateToDiscussionFragment() {
+        // Use FragmentTransaction to replace the current fragment with DiscussionFragment
+        requireActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, DiscussionFragment.newInstance())
+                .addToBackStack(null)
+                .commit();
     }
 }

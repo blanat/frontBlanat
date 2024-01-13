@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 
 import okhttp3.RequestBody;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -57,13 +58,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.contract.ActivityResultContracts;
 public class CreateDActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_MULTIPLE = 1;
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
 
-
+    private ActivityResultLauncher<String> permissionLauncher;
+    private ActivityResultLauncher<Intent> imagePickerLauncher;
     private RecyclerView recyclerView;
     private ImageAdapter imageAdapter;
     private List<String> imagePaths;
@@ -114,9 +118,25 @@ public class CreateDActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(imageAdapter);
 
+        // Initialize the ActivityResultLauncher for permission request
+        permissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), result -> {
+            if (result) {
+                openImagePicker();
+            } else {
+                // Handle the case where permission is denied
+                // You may show a message or disable functionality that requires this permission
+                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
-
+        // Initialize the ActivityResultLauncher for image picker
+        imagePickerLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        handleImagePickerResult(result.getData());
+                    }
+                });
         //============================
         //new:
         TextView backButton = findViewById(R.id.back);
@@ -204,26 +224,28 @@ public class CreateDActivity extends AppCompatActivity {
 
         //================================
 
-        selectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                // Check if the app has the necessary permission
-                if (ContextCompat.checkSelfPermission(CreateDActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    // Permission is not granted, request it
-                    ActivityCompat.requestPermissions(CreateDActivity.this,
-                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                            MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-                } else {
-                    // Permission is already granted, proceed with your logic
-                    openImagePicker();
-                }
+        selectButton.setOnClickListener(view -> {
+            if (ContextCompat.checkSelfPermission(CreateDActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                // Log statement to verify that this block is executed
+                Log.d("Permission", "Permission not granted, launching permission request");
+
+                // Permission is not granted, request it using the launcher
+                permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+            } else {
+                // Permission is already granted, proceed with your logic
+                openImagePicker();
                 imageAdapter.setShowDefaultImages(false);
 
-
             }
+            imageAdapter.setShowDefaultImages(false);
         });
+
+
+
+
+
 
 
 
@@ -317,15 +339,6 @@ public class CreateDActivity extends AppCompatActivity {
 
     }
 
-    private void openImagePicker() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_MULTIPLE);
-    }
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
@@ -338,45 +351,76 @@ public class CreateDActivity extends AppCompatActivity {
             } else {
                 // Permission denied, handle accordingly
                 // You may show a message or disable functionality that requires this permission
+                Log.e("Permission", "Permission denied");
+                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_MULTIPLE && resultCode == RESULT_OK && data != null) {
-            // Handle the selected images from the intent data
-            ArrayList<String> selectedImagePaths = new ArrayList<>();
 
-            ClipData clipData = data.getClipData();
-            if (clipData != null) {
-                Log.d("clipData", "clipData is not empty" + clipData );
 
-                for (int i = 0; i < clipData.getItemCount(); i++) {
-                    Uri imageUri = clipData.getItemAt(i).getUri();
-                    Log.d("imageUri", "imageUri: is " + imageUri );
+    private void openImagePicker() {
+        Log.d("CreateDActivity", "openImagePicker: Starting image picker activity");
 
-                    String imagePath = getImagePathFromUri(imageUri);
-                    Log.d("imagePath", "imagePath: is " + imagePath );
+        // Use Intent.ACTION_OPEN_DOCUMENT for document access on Android 11 and above
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
 
-                    selectedImagePaths.add(imagePath);
-                }
-            } else {
-                Log.d("clipDataPROBLEM", "clipDataPROBLEM====================================== "  );
-            }
-
-            // Update the imagePaths list and notify the adapter
-            imagePaths.addAll(selectedImagePaths);
-            for (String imagePath : selectedImagePaths) {
-                Log.d("ImagePath", "Selected Image Path: " + imagePath);
-            }
-
-            imageAdapter.notifyDataSetChanged();
-        }
+        // Use the ActivityResultLauncher to launch the activity
+        imagePickerLauncher.launch(intent);
+        imageAdapter.setShowDefaultImages(false);
     }
+
+
+    private void handleImagePickerResult(Intent data) {
+        Log.d("CreateDActivity", "handleImagePickerResult: Handling image picker result");
+        if (data == null) {
+            Log.d("CreateDActivity", "handleImagePickerResult: Intent data is null");
+            return;
+        }
+
+        // Handle the selected images from the intent data
+        ArrayList<String> selectedImagePaths = new ArrayList<>();
+
+        ClipData clipData = data.getClipData();
+        if (clipData != null) {
+            Log.d("CreateDActivity", "handleImagePickerResult: clipData is not empty" + clipData);
+
+            for (int i = 0; i < clipData.getItemCount(); i++) {
+                Uri imageUri = clipData.getItemAt(i).getUri();
+                Log.d("CreateDActivity", "handleImagePickerResult: imageUri: is " + imageUri);
+
+                String imagePath = getImagePathFromUri(imageUri);
+                Log.d("CreateDActivity", "handleImagePickerResult: imagePath: is " + imagePath);
+
+                selectedImagePaths.add(imagePath);
+            }
+        } else {
+            // Handle the case where a single image is selected without ClipData
+            Uri imageUri = data.getData();
+            if (imageUri != null) {
+                String imagePath = getImagePathFromUri(imageUri);
+                selectedImagePaths.add(imagePath);
+            }
+        }
+
+        // Update the imagePaths list and notify the adapter
+        imagePaths.addAll(selectedImagePaths);
+        for (String imagePath : selectedImagePaths) {
+            Log.d("CreateDActivity", "handleImagePickerResult: Selected Image Path: " + imagePath);
+        }
+
+        imageAdapter.notifyDataSetChanged();
+    }
+
+
+
+
+
 
 
     private String getImagePathFromUri(Uri uri) {
