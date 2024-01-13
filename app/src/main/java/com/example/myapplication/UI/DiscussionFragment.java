@@ -276,12 +276,16 @@ public class DiscussionFragment extends Fragment {
 
         // Find the "ADD" menu item
         MenuItem addItem = menu.findItem(R.id.action_add);
+        MenuItem deleteItem = menu.findItem(R.id.action_delete);
 
         // Adjust visibility based on your conditions
         if (shouldShowAddButton()) {
             addItem.setVisible(true);
+            deleteItem.setVisible(true);
         } else {
             addItem.setVisible(false);
+            deleteItem.setVisible(false);
+
         }
     }
 
