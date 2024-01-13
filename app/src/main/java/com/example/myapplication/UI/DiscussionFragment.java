@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -96,6 +97,7 @@ public class DiscussionFragment extends Fragment {
 
         return view;
     }
+
 
 
     // Use ActivityResultContracts.StartActivityForResult to handle the result
@@ -274,12 +276,16 @@ public class DiscussionFragment extends Fragment {
 
         // Find the "ADD" menu item
         MenuItem addItem = menu.findItem(R.id.action_add);
+        MenuItem deleteItem = menu.findItem(R.id.action_delete);
 
         // Adjust visibility based on your conditions
         if (shouldShowAddButton()) {
             addItem.setVisible(true);
+            deleteItem.setVisible(true);
         } else {
             addItem.setVisible(false);
+            deleteItem.setVisible(false);
+
         }
     }
 

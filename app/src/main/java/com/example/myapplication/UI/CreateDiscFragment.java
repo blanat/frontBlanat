@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -86,8 +87,20 @@ public class CreateDiscFragment extends Fragment {
             }
         });
 
+        TextView txtBack = view.findViewById(R.id.txtBack);
+
+
+        txtBack.setOnClickListener(v -> {
+            // Handle the click on txtBack
+            navigateToDiscussionFragment();
+        });
+
+
+
         return view;
     }
+
+
 
     private String retrieveToken() {
         // Retrieve the token from SharedPreferences
