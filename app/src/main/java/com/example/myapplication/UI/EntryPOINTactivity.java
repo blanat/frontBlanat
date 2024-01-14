@@ -15,15 +15,16 @@ public class EntryPOINTactivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent mainIntent = new Intent(this, MainActivity.class);
-        startActivity(mainIntent);
+        //Intent mainIntent = new Intent(this, MainActivity.class);
+        //startActivity(mainIntent);
         // Check if the token exists in SharedPreferences
         if (tokenExists()) {
             // Token exists, go to CreateDealsActivity
             Intent createDealsIntent = new Intent(this, navActivity.class);
             startActivity(createDealsIntent);
         } else {
-            // Token doesn't exist, go to MainActivity
+            Intent mainIntent = new Intent(this, MainActivity.class);
+            startActivity(mainIntent);
 
         }
 

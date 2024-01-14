@@ -107,13 +107,13 @@ public class HomeFragment extends Fragment implements selectListener {
 
     @Override
     public void onPlusButtonClicked(int position) {
-        if (!dealslist.get(position).hasInteracted()) {
+        //if (!dealslist.get(position).hasInteracted()) {
             incrementDegree(dealslist.get(position).getDealID(), position);
-            dealslist.get(position).setInteracted(true);
-        } else {
+            //dealslist.get(position).setInteracted(true);
+        //} else {
             // User has already interacted, show a message or handle accordingly
-            Log.d("DealsAdapter", "User has already interacted with this deal");
-        }
+        //    Log.d("DealsAdapter", "User has already interacted with this deal");
+        //}
     }
 
     @Override
