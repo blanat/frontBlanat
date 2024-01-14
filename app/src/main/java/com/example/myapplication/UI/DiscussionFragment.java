@@ -174,16 +174,16 @@ public class DiscussionFragment extends Fragment {
                 .create(UserApi.class);
 
         // Make a POST request to the updateSave endpoint
-        Call<Discussion> call = userApi.updateSave(discussionId);
-        call.enqueue(new Callback<Discussion>() {
+        Call<Integer> call = userApi.updateSave(discussionId);
+        call.enqueue(new Callback<Integer>() {
             @Override
-            public void onResponse(Call<Discussion> call, Response<Discussion> response) {
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
                 if (response.isSuccessful()) {
                     // Discussion save updated successfully, update UI or perform any other actions
-                    Discussion updatedDiscussion = response.body();
+                    Integer updatedDiscussion = response.body();
 
                     // You may want to handle the updated discussion accordingly
-                    Log.d("DiscussionFragment", "Save updated for discussion: " + updatedDiscussion.getId());
+                    Log.d("DiscussionFragment", "Save updated for discussion: " + updatedDiscussion);
                 } else {
                     // Log details about the failure
                     Log.e("DiscussionFragment", "Failed to update save. Code: " + response.code());
@@ -196,7 +196,7 @@ public class DiscussionFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Discussion> call, Throwable t) {
+            public void onFailure(Call<Integer> call, Throwable t) {
                 // Handle the failure
                 Log.e("DiscussionFragment", "Network error: " + t.getMessage());
             }

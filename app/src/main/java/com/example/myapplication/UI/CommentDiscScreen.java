@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.example.myapplication.Adapter.CommentDiscAdapter;
+import com.example.myapplication.UI.Adapters.CommentDiscAdapter;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
