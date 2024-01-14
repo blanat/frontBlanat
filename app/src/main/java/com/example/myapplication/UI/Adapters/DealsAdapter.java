@@ -81,6 +81,24 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsHolder> {
                 }
             }
         });
+
+        holder.plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listener != null) {
+                    listener.onPlusButtonClicked(position);
+                }
+            }
+        });
+
+        holder.moins.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listener != null) {
+                    listener.onMoinsButtonClicked(position);
+                }
+            }
+        });
     }
 
 
