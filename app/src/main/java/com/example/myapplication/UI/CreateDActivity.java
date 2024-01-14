@@ -52,6 +52,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -229,21 +230,28 @@ public class CreateDActivity extends AppCompatActivity {
 
 
         selectButton.setOnClickListener(view -> {
-            if (ContextCompat.checkSelfPermission(CreateDActivity.this, Manifest.permission.READ_MEDIA_IMAGES)
-                    != PackageManager.PERMISSION_GRANTED) {
+            boolean isReadMediaPermissionGranted = ContextCompat.checkSelfPermission(CreateDActivity.this, Manifest.permission.READ_MEDIA_IMAGES)
+                    == PackageManager.PERMISSION_GRANTED;
+
+            boolean isReadExternalStoragePermissionGranted = ContextCompat.checkSelfPermission(CreateDActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED;
+
+            if (!isReadMediaPermissionGranted && !isReadExternalStoragePermissionGranted) {
                 // Log statement to verify that this block is executed
                 Log.d("Permission", "Permission not granted, launching permission request");
 
                 // Permission is not granted, request it using the launcher
                 permissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES);
+                // or you can use permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
             } else {
                 // Permission is already granted, proceed with your logic
                 openImagePicker();
                 imageAdapter.setShowDefaultImages(false);
-
             }
+
             imageAdapter.setShowDefaultImages(false);
         });
+
 
 
 
