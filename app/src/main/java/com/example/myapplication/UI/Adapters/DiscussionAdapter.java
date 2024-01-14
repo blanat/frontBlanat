@@ -173,14 +173,18 @@ public class DiscussionAdapter extends ArrayAdapter<Discussion> {
                 if (response.isSuccessful()) {
                     // Discussion save updated successfully, update UI or perform any other actions
                     Discussion updatedDiscussion = response.body();
-
+                    Log.d("save","save"+response.body());
                     // Check the updated save value and update the icon accordingly
-                    if (updatedDiscussion != null && updatedDiscussion.getSave() == 1) {
+                    if (updatedDiscussion != null && updatedDiscussion.isSaved()) {
                         // Change the icon to img_vector
                         imageVector.setImageResource(R.drawable.img_vector);
                     } else {
-                        // Handle other cases or keep the default icon
+                        // Change the icon to the default icon (or handle other cases)
+                        imageVector.setImageResource(R.drawable.img_group);
                     }
+
+                    // Notify the adapter that the data set has changed
+                    notifyDataSetChanged();
 
                     // You may want to handle the updated discussion accordingly
                     Log.d("DiscussionAdapter", "Save updated for discussion: " + updatedDiscussion.getId());

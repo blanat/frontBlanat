@@ -17,6 +17,15 @@ public class Discussion implements Parcelable{
     private String profileImageUrl;
     private int save;
 
+    private boolean isSaved;
+
+    public boolean isSaved() {
+        return isSaved;
+    }
+
+    public void setSaved(boolean saved) {
+        isSaved = saved;
+    }
     public String getProfileImageUrl() {
         return profileImageUrl;
     }

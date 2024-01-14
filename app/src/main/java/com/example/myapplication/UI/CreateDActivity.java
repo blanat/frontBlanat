@@ -229,13 +229,13 @@ public class CreateDActivity extends AppCompatActivity {
 
 
         selectButton.setOnClickListener(view -> {
-            if (ContextCompat.checkSelfPermission(CreateDActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+            if (ContextCompat.checkSelfPermission(CreateDActivity.this, Manifest.permission.READ_MEDIA_IMAGES)
                     != PackageManager.PERMISSION_GRANTED) {
                 // Log statement to verify that this block is executed
                 Log.d("Permission", "Permission not granted, launching permission request");
 
                 // Permission is not granted, request it using the launcher
-                permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+                permissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES);
             } else {
                 // Permission is already granted, proceed with your logic
                 openImagePicker();
