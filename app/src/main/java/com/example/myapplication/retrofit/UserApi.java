@@ -4,6 +4,9 @@ import com.example.myapplication.model.Discussion;
 import com.example.myapplication.model.JwtAuthenticationResponse;
 import com.example.myapplication.model.MessageDTO;
 import com.example.myapplication.model.User;
+import com.example.myapplication.model.UserProfileStatisticsDTO;
+import com.example.myapplication.model.listData;
+
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -25,11 +28,20 @@ public interface UserApi {
     Call<JwtAuthenticationResponse> signup(@Body User user);
 
 
-    @PUT("/api/user/{email}/password")
+    @PUT("/api/users/{email}/password")
     Call<User> updatePassword(@Path("email") String email, @Body String newPassword);
 
-    @DELETE("/api/user/{email}")
+    @DELETE("/api/users/{email}/password")
     Call<Void> deleteUser(@Path("email") String email);
+
+//    @GET("/api/deals/user/{email}")
+//    Call<List<listData>> getListDealsDTOByUserEmail();
+
+    @GET("/api/users/getUserFromToken")
+    Call<String> getUserFromToken(@Header("Authorization") String token);
+
+    @POST("/api/users/userDetails/{email}")
+    Call<UserProfileStatisticsDTO> getUserDetails(@Path("email") String email);
 
 
     @GET("/api/discussions/getAllDiscussions")
