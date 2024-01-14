@@ -53,6 +53,8 @@
                     android:textColor="@color/black"
                     android:textSize="25sp" />
 
+
+
                 <ImageView
                     android:id="@+id/submit"
                     android:layout_width="40dp"
@@ -63,11 +65,8 @@
                     android:layout_marginStart="70dp"
                     android:layout_marginTop="14dp"
                     android:layout_marginBottom="30dp"
-                    android:clickable="true"
-                    android:focusable="true"
                     app:srcCompat="@drawable/checkdeal"
                     app:tint="@color/my_primary" />
-
 
             </LinearLayout>
 
@@ -566,8 +565,5 @@
         </LinearLayout>
     </ScrollView>
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
+
 </LinearLayout>
