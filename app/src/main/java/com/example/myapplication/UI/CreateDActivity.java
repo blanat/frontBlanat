@@ -1,7 +1,9 @@
 package com.example.myapplication.UI;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -11,6 +13,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -31,6 +34,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -149,7 +153,7 @@ public class CreateDActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Call the onBackPressed method to navigate back
-                onBackPressed();
+                BackToDeals();
             }
         });
 
@@ -312,12 +316,38 @@ public class CreateDActivity extends AppCompatActivity {
                         }
                     });
 
+                    showValidationDialog();
+
+                   /* // Create an intent to navigate to navActivity
+                    Intent intent = new Intent(CreateDActivity.this, navActivity.class);
+
+                    // Add extra to specify that you want to show HomeFragment initially
+                    intent.putExtra("initial_fragment", "home");
+
+                    // Start the activity
+                    startActivity(intent);
+*/
+
                 }else{
                     Toast.makeText(CreateDActivity.this, "Please fill in all required fields", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
+    }
+
+
+    private void showValidationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Deal Submission")
+                .setMessage("Bravo ! Votre offre a été soumise avec succès. Attendez-vous à une validation prochaine par notre modérateur.")
+                .setPositiveButton("OK", (dialog, which) -> {
+                    // Move to navActivity or any other logic you need
+                    startActivity(new Intent(CreateDActivity.this, navActivity.class));
+                    finish(); // Optionally finish this activity if you don't need it in the back stack
+                })
+                .setCancelable(false)
+                .show();
     }
 
 
@@ -611,19 +641,17 @@ public class CreateDActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }*/
-    @Override
-    public void onBackPressed() {
+
+    public void BackToDeals() {
         // Check if the fragment manager has fragments in the back stack
-        super.onBackPressed();
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            // Pop the back stack to navigate back
-            getSupportFragmentManager().popBackStack();
-        } else {
-            // If no fragments in the back stack, replace the current fragment with HomeFragment
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new HomeFragment())  // Replace with the ID of your fragment container
-                    .commit();
-        }
+        // Create an intent to navigate to navActivity
+        Intent intent = new Intent(CreateDActivity.this, navActivity.class);
+
+        // Add extra to specify that you want to show HomeFragment initially
+        intent.putExtra("initial_fragment", "home");
+
+        // Start the activity
+        startActivity(intent);
     }
 
 
