@@ -62,5 +62,5 @@ public interface UserApi {
     Call<Void> deleteDiscussionAndMessages(@Path("discussionId") Long discussionId);
 
     @POST("/api/discussions/{discussionId}/updateSave")
-    Call<Discussion> updateSave(@Path("discussionId") Long discussionId);
+    Call<Integer> updateSave(@Path("discussionId") Long discussionId);
 }

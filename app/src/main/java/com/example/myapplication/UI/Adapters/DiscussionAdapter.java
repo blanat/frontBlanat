@@ -2,6 +2,7 @@ package com.example.myapplication.UI.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,10 +34,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DiscussionAdapter extends ArrayAdapter<Discussion> {
+    private SharedPreferences sharedPreferences;
 
     public DiscussionAdapter(Context context, List<Discussion> discussionItemList) {
         super(context, 0, discussionItemList);
+        sharedPreferences = context.getSharedPreferences("DiscussionAdapterPrefs", Context.MODE_PRIVATE);
     }
+
 
 
     @NonNull
@@ -134,9 +138,16 @@ public class DiscussionAdapter extends ArrayAdapter<Discussion> {
         // Get the discussion item for the current position
         final Discussion discussion = getItem(position);
 
-        // Find the ImageView in your item_discussion layout
+// Find the ImageView in your item_discussion layout
         ImageView imageVector = convertView.findViewById(R.id.imageVector);
 
+// Set the icon based on the saved state in SharedPreferences
+        boolean savedState = sharedPreferences.getBoolean("saveState_" + discussion.getId(), false);
+        if (savedState) {
+            imageVector.setImageResource(R.drawable.img_vector);
+        } else {
+            imageVector.setImageResource(R.drawable.avantsaveicon);
+        }
 
 // Set an OnClickListener on the ImageView
         imageVector.setOnClickListener(new View.OnClickListener() {
@@ -149,6 +160,7 @@ public class DiscussionAdapter extends ArrayAdapter<Discussion> {
                 }
             }
         });
+
 
 
         return convertView;
@@ -166,41 +178,45 @@ public class DiscussionAdapter extends ArrayAdapter<Discussion> {
                 .create(UserApi.class);
 
         // Make a POST request to the updateSave endpoint
-        Call<Discussion> call = userApi.updateSave(discussion.getId());
-        call.enqueue(new Callback<Discussion>() {
+        Call<Integer> call = userApi.updateSave(discussion.getId());
+        call.enqueue(new Callback<Integer>() {
             @Override
-            public void onResponse(Call<Discussion> call, Response<Discussion> response) {
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
                 if (response.isSuccessful()) {
                     // Discussion save updated successfully, update UI or perform any other actions
-                    Discussion updatedDiscussion = response.body();
-                    Log.d("save","save"+response.body());
+                    Integer updatedDiscussion = response.body();
+                    Log.d("save", "save" + response.body());
                     // Check the updated save value and update the icon accordingly
-                    if (updatedDiscussion != null && updatedDiscussion.isSaved()) {
+                    if (updatedDiscussion != null) {
                         // Change the icon to img_vector
                         imageVector.setImageResource(R.drawable.img_vector);
+
+                        // Save the updated state in SharedPreferences
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean("saveState_" + discussion.getId(), true);
+                        editor.apply();
                     } else {
                         // Change the icon to the default icon (or handle other cases)
                         imageVector.setImageResource(R.drawable.img_group);
+
+                        // Save the updated state in SharedPreferences
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean("saveState_" + discussion.getId(), false);
+                        editor.apply();
                     }
 
                     // Notify the adapter that the data set has changed
                     notifyDataSetChanged();
 
                     // You may want to handle the updated discussion accordingly
-                    Log.d("DiscussionAdapter", "Save updated for discussion: " + updatedDiscussion.getId());
+                    Log.d("DiscussionAdapter", "Save updated for discussion: " + updatedDiscussion);
                 } else {
-                    // Log details about the failure
-                    Log.e("DiscussionAdapter", "Failed to update save. Code: " + response.code());
-                    try {
-                        Log.e("DiscussionAdapter", "Error body: " + response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    // ... (unchanged)
                 }
             }
 
             @Override
-            public void onFailure(Call<Discussion> call, Throwable t) {
+            public void onFailure(Call<Integer> call, Throwable t) {
                 // Handle the failure
                 Log.e("DiscussionAdapter", "Network error: " + t.getMessage());
             }
