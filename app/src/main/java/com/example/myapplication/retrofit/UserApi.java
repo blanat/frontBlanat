@@ -34,8 +34,8 @@ public interface UserApi {
     @DELETE("/api/users/{email}/password")
     Call<Void> deleteUser(@Path("email") String email);
 
-//    @GET("/api/deals/user/{email}")
-//    Call<List<listData>> getListDealsDTOByUserEmail();
+    @GET("/api/user/userFromToken")
+    Call<User> fromToke();
 
     @GET("/api/users/getUserFromToken")
     Call<String> getUserFromToken(@Header("Authorization") String token);
