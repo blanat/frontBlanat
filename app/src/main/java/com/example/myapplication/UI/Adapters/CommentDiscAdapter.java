@@ -1,4 +1,4 @@
-package com.example.myapplication.Adapter;
+package com.example.myapplication.UI.Adapters;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;

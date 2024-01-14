@@ -97,15 +97,15 @@
 
                 <ImageView
                     android:id="@+id/imageSearch"
-                    android:layout_width="@dimen/_18pxh"
-                    android:layout_height="@dimen/_18pxh"
+                    android:layout_width="@dimen/_24pxh"
+                    android:layout_height="@dimen/_24pxh"
                     android:layout_gravity="top|end"
                     android:layout_marginStart="@dimen/_53pxh"
                     android:layout_marginTop="@dimen/_10pxh"
                     android:layout_marginEnd="@dimen/_53pxh"
                     android:layout_marginBottom="@dimen/_10pxh"
                     android:scaleType="fitXY"
-                    android:src="@drawable/img_search" />
+                    android:src="@drawable/visible" />
 
 
                 <LinearLayout
@@ -172,7 +172,9 @@
                     android:layout_marginEnd="@dimen/_104pxh"
                     android:layout_marginBottom="@dimen/_10pxh"
                     android:scaleType="fitXY"
-                    android:src="@drawable/img_vector" />
+                    android:src="@drawable/avantsaveicon"
+                    android:tag="{position}" />
+
             </FrameLayout>
         </LinearLayout>
 

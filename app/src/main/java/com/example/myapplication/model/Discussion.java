@@ -15,13 +15,27 @@ public class Discussion implements Parcelable{
     private Categories categorie;
     private int nbrvue;
     private String profileImageUrl;
+    private int save;
 
+    private boolean isSaved;
+
+    public boolean isSaved() {
+        return isSaved;
+    }
+
+    public void setSaved(boolean saved) {
+        isSaved = saved;
+    }
     public String getProfileImageUrl() {
         return profileImageUrl;
     }
 
     public void setProfileImageUrl(String profileImageUrl) {
         this.profileImageUrl = profileImageUrl;
+    }
+
+    public int getSave() {
+        return save;
     }
 
     public Categories getCategorie() {

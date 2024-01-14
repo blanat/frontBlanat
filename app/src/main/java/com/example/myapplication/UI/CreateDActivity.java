@@ -1,7 +1,9 @@
 package com.example.myapplication.UI;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -11,6 +13,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -20,6 +23,7 @@ import android.widget.EditText;
 
 import com.example.myapplication.HomeFragment;
 import com.example.myapplication.model.Enum.Categories;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 
 import okhttp3.RequestBody;
@@ -30,10 +34,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +56,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -106,7 +114,7 @@ public class CreateDActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         Button selectButton = findViewById(R.id.select);
-        Button submitButton = findViewById(R.id.submit);
+        ImageView submitButton = findViewById(R.id.submit);
 
         // Initialize imagePaths and dealService
         imagePaths = new ArrayList<>();
@@ -146,7 +154,7 @@ public class CreateDActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Call the onBackPressed method to navigate back
-                onBackPressed();
+                BackToDeals();
             }
         });
 
@@ -226,27 +234,27 @@ public class CreateDActivity extends AppCompatActivity {
 
 
         selectButton.setOnClickListener(view -> {
-            if (ContextCompat.checkSelfPermission(CreateDActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) {
+            boolean isReadMediaPermissionGranted = ContextCompat.checkSelfPermission(CreateDActivity.this, Manifest.permission.READ_MEDIA_IMAGES)
+                    == PackageManager.PERMISSION_GRANTED;
+
+            boolean isReadExternalStoragePermissionGranted = ContextCompat.checkSelfPermission(CreateDActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED;
+
+            if (!isReadMediaPermissionGranted && !isReadExternalStoragePermissionGranted) {
                 // Log statement to verify that this block is executed
                 Log.d("Permission", "Permission not granted, launching permission request");
 
                 // Permission is not granted, request it using the launcher
-                permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+                permissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES);
+                // or you can use permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
             } else {
                 // Permission is already granted, proceed with your logic
                 openImagePicker();
                 imageAdapter.setShowDefaultImages(false);
-
             }
+
             imageAdapter.setShowDefaultImages(false);
         });
-
-
-
-
-
-
 
 
 
@@ -254,96 +262,266 @@ public class CreateDActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Create a Deal instance with title and description
-                EditText titleEditText = findViewById(R.id.dealtitle);
-                EditText descriptionEditText = findViewById(R.id.description);
-                EditText lienDealEditText = findViewById(R.id.dealLink);
-                EditText priceEditText = findViewById(R.id.PrixN);
-                EditText newPriceEditText = findViewById(R.id.PrixA);
-                EditText localisationEditText = findViewById(R.id.localisation);
-                AutoCompleteTextView categoryAutoComplete = findViewById(R.id.categories);
+                if (validateForm()) {
+                    // Create a Deal instance with title and description
+                    EditText titleEditText = findViewById(R.id.dealtitle);
+                    EditText descriptionEditText = findViewById(R.id.description);
+                    EditText lienDealEditText = findViewById(R.id.dealLink);
+                    EditText priceEditText = findViewById(R.id.PrixN);
+                    EditText newPriceEditText = findViewById(R.id.PrixA);
+                    EditText localisationEditText = findViewById(R.id.localisation);
+                    AutoCompleteTextView categoryAutoComplete = findViewById(R.id.categories);
 
 
-                //===================
+                    //===================
 
-                // Retrieve selected RadioButton ID from the RadioGroup
-                RadioGroup radioGroup = findViewById(R.id.segmentedControl);
-                int selectedRadioButtonId = radioGroup.getCheckedRadioButtonId();
+                    // Retrieve selected RadioButton ID from the RadioGroup
+                    RadioGroup radioGroup = findViewById(R.id.segmentedControl);
+                    int selectedRadioButtonId = radioGroup.getCheckedRadioButtonId();
 
-                // Retrieve the EditText for delivery price
-                EditText prixLivraisonEditText = findViewById(R.id.prixlivraison);
+                    // Retrieve the EditText for delivery price
+                    EditText prixLivraisonEditText = findViewById(R.id.prixlivraison);
 
-                //===================
-                // Retrieve the selected date values
-                String debutDateString = dateselect.getText().toString();
-                String finDateString = dateselectF.getText().toString();
-
-
-                //===================
+                    //===================
+                    // Retrieve the selected date values
+                    String debutDateString = dateselect.getText().toString();
+                    String finDateString = dateselectF.getText().toString();
 
 
-                String title = titleEditText.getText().toString();
-                String description = descriptionEditText.getText().toString();
-                String lienDeal = lienDealEditText.getText().toString();
-                float price = Float.parseFloat(priceEditText.getText().toString());
-                float newPrice = Float.parseFloat(newPriceEditText.getText().toString());
-                String localisation = localisationEditText.getText().toString();
-                Categories selectedCategory = Categories.valueOf(categoryAutoComplete.getText().toString());
-
-                // Use the handleCheckboxChange method to update deliveryExist and deliveryPrice
-                handleCheckboxChange(selectedRadioButtonId, prixLivraisonEditText);
+                    //===================
 
 
+                    String title = titleEditText.getText().toString();
+                    String description = descriptionEditText.getText().toString();
+                    String lienDeal = lienDealEditText.getText().toString();
+                    float price = Float.parseFloat(priceEditText.getText().toString());
+                    float newPrice = Float.parseFloat(newPriceEditText.getText().toString());
+                    String localisation = localisationEditText.getText().toString();
+                    Categories selectedCategory = Categories.valueOf(categoryAutoComplete.getText().toString());
+
+                    // Use the handleCheckboxChange method to update deliveryExist and deliveryPrice
+                    handleCheckboxChange(selectedRadioButtonId, prixLivraisonEditText);
 
 
+                    Deal deal = new Deal(title, description, lienDeal, price, newPrice, localisation, selectedCategory, deliveryExist, deliveryPrice, debutDateString, finDateString);
 
-                Deal deal = new Deal(title, description, lienDeal, price, newPrice, localisation, selectedCategory, deliveryExist, deliveryPrice,debutDateString,finDateString);
-
-                // Assuming you have GsonConverterFactory in your Retrofit setup
-                Gson gson = new Gson();
-                String dealJson = gson.toJson(deal);
-                RequestBody dealRequestBody = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), dealJson);
+                    // Assuming you have GsonConverterFactory in your Retrofit setup
+                    Gson gson = new Gson();
+                    String dealJson = gson.toJson(deal);
+                    RequestBody dealRequestBody = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), dealJson);
 
 
-                /*
-                //=======================
+                    dealService.uploadDeal(dealRequestBody, imagePaths, new Callback<RequestBody>() {
+                        @Override
+                        public void onResponse(Call<RequestBody> call, Response<RequestBody> response) {
+                            Log.d("Retrofit", "onResponse: " + response.toString());
+                        }
 
-                if (TextUtils.isEmpty(title) || TextUtils.isEmpty(description) ||
-                        TextUtils.isEmpty(priceEditText.getText()) || TextUtils.isEmpty(newPriceEditText.getText()) ||
-                        TextUtils.isEmpty(categoryAutoComplete.getText())) {
+                        @Override
+                        public void onFailure(Call<RequestBody> call, Throwable t) {
+                            Log.e("Retrofit", "onFailure: " + t.getMessage());
+                            // Handle the failure
+                        }
+                    });
 
-                    // Afficher un message d'erreur si un des champs est vide
-                    Toast.makeText(CreateDActivity.this, R.string.required_fields_message, Toast.LENGTH_SHORT).show();
+                    showValidationDialog();
 
-                    // Sortir de la méthode sans soumettre le formulaire
-                    return;
+                   /* // Create an intent to navigate to navActivity
+                    Intent intent = new Intent(CreateDActivity.this, navActivity.class);
+
+                    // Add extra to specify that you want to show HomeFragment initially
+                    intent.putExtra("initial_fragment", "home");
+
+                    // Start the activity
+                    startActivity(intent);
+*/
+
+                }else{
+                    Toast.makeText(CreateDActivity.this, "Please fill in all required fields", Toast.LENGTH_SHORT).show();
                 }
-               */
-                //==========================
-
-                dealService.uploadDeal(dealRequestBody, imagePaths, new Callback<RequestBody>() {
-                    @Override
-                    public void onResponse(Call<RequestBody> call, Response<RequestBody> response) {
-                        Log.d("Retrofit", "onResponse: " + response.toString());
-                    }
-
-                    @Override
-                    public void onFailure(Call<RequestBody> call, Throwable t) {
-                        Log.e("Retrofit", "onFailure: " + t.getMessage());
-                        // Handle the failure
-                    }
-                });
-
             }
         });
 
+    }
+
+
+    private void showValidationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Deal Submission")
+                .setMessage("Bravo ! Votre offre a été soumise avec succès. Attendez-vous à une validation prochaine par notre modérateur.")
+                .setPositiveButton("OK", (dialog, which) -> {
+                    // Move to navActivity or any other logic you need
+                    startActivity(new Intent(CreateDActivity.this, navActivity.class));
+                    finish(); // Optionally finish this activity if you don't need it in the back stack
+                })
+                .setCancelable(false)
+                .show();
+    }
+
+
+    private boolean validateForm() {
+        boolean isValid = true;
+
+
+        //=========Deal Link Validation==========
+        // Check if the deal link is provided, not empty, and starts with "http://" or "https://"
+        TextInputEditText dealLinkEditText = findViewById(R.id.dealLink);
+        String dealLink = dealLinkEditText.getText().toString().trim();
+        if ((!dealLink.startsWith("http://") && !dealLink.startsWith("https://"))) {
+            dealLinkEditText.setError(getString(R.string.enter_deal_link));
+            isValid = false;
+        }
+
+        //=========Deal Title Validation==========
+        // Check if the deal title is provided and not empty
+        TextInputEditText dealTitleEditText = findViewById(R.id.dealtitle);
+        if (TextUtils.isEmpty(dealTitleEditText.getText())) {
+            dealTitleEditText.setError(getString(R.string.msg_veuillez_entrer));
+            isValid = false;
+        }
+
+        //=========Deal Title Validation==========
+        // Check if the deal title is provided and not empty
+        TextInputEditText dealDescriptionEditText = findViewById(R.id.description);
+        if (TextUtils.isEmpty(dealDescriptionEditText.getText())) {
+            dealDescriptionEditText.setError(getString(R.string.msg_veuillez_entrer2));
+            isValid = false;
+        }
+
+
+        //=========Deal New Price Validation==========
+        // Check if "Nouveau Prix DH" field is empty
+        EditText prixNEditText = findViewById(R.id.PrixN);
+        String priceNValue = prixNEditText.getText().toString().trim();
+        if (priceNValue.isEmpty()) {
+            prixNEditText.setError(getString(R.string.msg_veuillez_entrer4));
+            isValid = false;
+        }
+
+
+        //=========Deal New Price Validation==========
+        // Check if "Nouveau Prix DH" field is empty
+        EditText prixAEditText = findViewById(R.id.PrixA);
+        String priceAValue = prixNEditText.getText().toString().trim();
+        if (priceAValue.isEmpty()) {
+            prixAEditText.setError(getString(R.string.msg_veuillez_entrer5));
+            isValid = false;
+        }
+
+
+
+        //=========Deal Localisation Validation==========
+        // Check if the deal title is provided and not empty
+        TextInputEditText dealLocalisationEditText = findViewById(R.id.localisation);
+        if (TextUtils.isEmpty(dealLocalisationEditText.getText())) {
+            dealLocalisationEditText.setError(getString(R.string.msg_veuillez_entrer3));
+            isValid = false;
+        }
+
+
+        //=======checkbox and delivery checker===========
+        // Check if at least one checkbox is selected
+        RadioGroup radioGroup = findViewById(R.id.segmentedControl);
+        if (radioGroup.getCheckedRadioButtonId() == -1) {
+            // No checkbox selected, show error
+            TextView errorTextView = findViewById(R.id.checkboxValidation); // Replace with the actual ID
+            errorTextView.setVisibility(View.VISIBLE);
+            isValid = false;
+        }
+        // Check if delivery is selected as "Yes" and price is provided
+        RadioButton deliveryYesRadioButton = findViewById(R.id.option1);
+        if (deliveryYesRadioButton.isChecked()) {
+            EditText prixLivraisonEditText = findViewById(R.id.prixlivraison);
+            if (TextUtils.isEmpty(prixLivraisonEditText.getText())) {
+                prixLivraisonEditText.setError("Please enter the delivery price");
+                isValid = false;
+            }
+        }
+
+        //=================Images Validation======================
+        // Check if at least one non-default image is selected
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        ImageAdapter adapter = (ImageAdapter) recyclerView.getAdapter();
+
+        if (adapter != null) {
+            List<String> imagePaths = adapter.getImagePaths();
+
+            boolean isAtLeastOneNonDefaultImageSelected = false;
+
+            for (String imagePath : imagePaths) {
+                // Assuming "defaultImagePath" is the value indicating a default image
+                if (!imagePath.equals("defaultImagePath")) {
+                    isAtLeastOneNonDefaultImageSelected = true;
+                    break;
+                }
+            }
+
+            TextView imageValidationTextView = findViewById(R.id.imageValidation); // Replace with the actual ID
+            if (!isAtLeastOneNonDefaultImageSelected) {
+                // No non-default image selected, show error
+                imageValidationTextView.setVisibility(View.VISIBLE);
+                isValid = false;
+            } else {
+                // At least one non-default image selected, hide the validation message
+                imageValidationTextView.setVisibility(View.GONE);
+            }
+        }
+
+        //=================Date Debut Validation======================
+        TextView dateDebutTextView = findViewById(R.id.datedebut);
+        TextView dateValidationTextViewD = findViewById(R.id.dateValidationD);
+
+        String dateDebut = dateDebutTextView.getText().toString().trim();
+
+        if (TextUtils.isEmpty(dateDebut) || dateDebut.equals("Date de Debut *")) {
+            // Date de Debut is not provided or still has the default value, show error
+            dateValidationTextViewD.setVisibility(View.VISIBLE);
+            dateValidationTextViewD.setText("La date de Debut est requise");
+            isValid = false;
+        } else {
+            // Date de Debut is provided, hide the validation message
+            dateValidationTextViewD.setVisibility(View.GONE);
+        }
+
+        //=================Date Fin Validation======================
+        TextView dateFinTextView = findViewById(R.id.datefin);
+        TextView dateValidationTextViewF = findViewById(R.id.dateValidationF);
+
+        String dateFin = dateFinTextView.getText().toString().trim();
+
+        if (TextUtils.isEmpty(dateFin) || dateFin.equals("Date de fin *")) {
+            // Date de fin is not provided or still has the default value, show error
+            dateValidationTextViewF.setVisibility(View.VISIBLE);
+            dateValidationTextViewF.setText("La date de fin est requise");
+            isValid = false;
+        } else {
+            // Date de fin is provided, hide the validation message
+            dateValidationTextViewF.setVisibility(View.GONE);
+        }
+
+
+        //=============Validation for category================
+        // Validation for category
+        AutoCompleteTextView autoCompleteTextView = findViewById(R.id.categories);
+        String selectedCategory = autoCompleteTextView.getText().toString().trim();
+
+        if (TextUtils.isEmpty(selectedCategory) || selectedCategory.equals("catégorie")) {
+            autoCompleteTextView.setError("La catégorie est requise");
+            isValid = false;
+        } else {
+            autoCompleteTextView.setError(null);
+        }
+
+
+
+        return isValid;
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE) {
+        if (requestCode == MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE ) {
             // Check if the permission is granted
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission granted, proceed with your code
@@ -471,19 +649,17 @@ public class CreateDActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }*/
-    @Override
-    public void onBackPressed() {
+
+    public void BackToDeals() {
         // Check if the fragment manager has fragments in the back stack
-        super.onBackPressed();
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            // Pop the back stack to navigate back
-            getSupportFragmentManager().popBackStack();
-        } else {
-            // If no fragments in the back stack, replace the current fragment with HomeFragment
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new HomeFragment())  // Replace with the ID of your fragment container
-                    .commit();
-        }
+        // Create an intent to navigate to navActivity
+        Intent intent = new Intent(CreateDActivity.this, navActivity.class);
+
+        // Add extra to specify that you want to show HomeFragment initially
+        intent.putExtra("initial_fragment", "home");
+
+        // Start the activity
+        startActivity(intent);
     }
 
 

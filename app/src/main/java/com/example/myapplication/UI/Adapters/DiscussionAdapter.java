@@ -1,6 +1,9 @@
 package com.example.myapplication.UI.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,19 +14,31 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.myapplication.R;
+import com.example.myapplication.UI.DiscussionFragment;
 import com.example.myapplication.model.Discussion;
 import com.example.myapplication.picasso.CircleTransform;
+import com.example.myapplication.retrofit.RetrofitService;
+import com.example.myapplication.retrofit.UserApi;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
+import java.io.IOException;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class DiscussionAdapter extends ArrayAdapter<Discussion> {
+    private SharedPreferences sharedPreferences;
 
     public DiscussionAdapter(Context context, List<Discussion> discussionItemList) {
         super(context, 0, discussionItemList);
+        sharedPreferences = context.getSharedPreferences("DiscussionAdapterPrefs", Context.MODE_PRIVATE);
     }
 
 
@@ -75,7 +90,6 @@ public class DiscussionAdapter extends ArrayAdapter<Discussion> {
         }
 
 
-
         Log.d("DiscussionAdapter1", "Discussion: " + discussionItem);
         Log.d("DiscussionAdapter2", "Discussion: " + discussionItem.getCreateurUsername());
         // Check if convertView is null and inflate the layout if needed
@@ -97,17 +111,17 @@ public class DiscussionAdapter extends ArrayAdapter<Discussion> {
             // Assuming getCategories() returns an Enum instance, you can use name() to get the enum name
             if (discussionItem.getCategories() != null) {
                 txtCategorie.setText(discussionItem.getCategories().name());
-            }else {
+            } else {
                 // Handle the case where getCategories() returns null
                 txtCategorie.setText("Unknown Category");
             }
             // Check if the user associated with the discussion is not null
 
-            if (discussionItem.getCreateurUsername()!= null) {
+            if (discussionItem.getCreateurUsername() != null) {
                 // Set the user's name to txtCreateur, with a null check
                 String userName = discussionItem.getCreateurUsername();
                 txtCreateur.setText(userName != null ? userName : "Unknown User");
-            }else {
+            } else {
                 // Handle the case where the user is null
                 txtCreateur.setText("Unknown USERNAME");
             }
@@ -121,9 +135,93 @@ public class DiscussionAdapter extends ArrayAdapter<Discussion> {
 
 
         }
+        // Get the discussion item for the current position
+        final Discussion discussion = getItem(position);
+
+// Find the ImageView in your item_discussion layout
+        ImageView imageVector = convertView.findViewById(R.id.imageVector);
+
+// Set the icon based on the saved state in SharedPreferences
+        boolean savedState = sharedPreferences.getBoolean("saveState_" + discussion.getId(), false);
+        if (savedState) {
+            imageVector.setImageResource(R.drawable.img_vector);
+        } else {
+            imageVector.setImageResource(R.drawable.avantsaveicon);
+        }
+
+// Set an OnClickListener on the ImageView
+        imageVector.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle the click event
+                if (discussion != null) {
+                    // Call the updateSave function and update the icon based on the result
+                    updateSave(discussion, imageVector);
+                }
+            }
+        });
+
+
 
         return convertView;
     }
 
+    private void updateSave(Discussion discussion, ImageView imageVector) {
+        // Retrofit setup
+        RetrofitService retrofitService = new RetrofitService(getContext());
 
+        // Create an instance of RequestInterceptor with the token
+
+        // Pass the interceptor to Retrofit setup
+        UserApi userApi = retrofitService.getRetrofit().newBuilder()
+                .build()
+                .create(UserApi.class);
+
+        // Make a POST request to the updateSave endpoint
+        Call<Integer> call = userApi.updateSave(discussion.getId());
+        call.enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                if (response.isSuccessful()) {
+                    // Discussion save updated successfully, update UI or perform any other actions
+                    Integer updatedDiscussion = response.body();
+                    Log.d("save", "save" + response.body());
+                    // Check the updated save value and update the icon accordingly
+                    if (updatedDiscussion != null) {
+                        // Change the icon to img_vector
+                        imageVector.setImageResource(R.drawable.img_vector);
+
+                        // Save the updated state in SharedPreferences
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean("saveState_" + discussion.getId(), true);
+                        editor.apply();
+                    } else {
+                        // Change the icon to the default icon (or handle other cases)
+                        imageVector.setImageResource(R.drawable.img_group);
+
+                        // Save the updated state in SharedPreferences
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean("saveState_" + discussion.getId(), false);
+                        editor.apply();
+                    }
+
+                    // Notify the adapter that the data set has changed
+                    notifyDataSetChanged();
+
+                    // You may want to handle the updated discussion accordingly
+                    Log.d("DiscussionAdapter", "Save updated for discussion: " + updatedDiscussion);
+                } else {
+                    // ... (unchanged)
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+                // Handle the failure
+                Log.e("DiscussionAdapter", "Network error: " + t.getMessage());
+            }
+        });
+
+    }
 }
+

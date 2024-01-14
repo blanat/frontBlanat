@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import static android.content.Intent.getIntent;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,6 +47,8 @@ public class HomeFragment extends Fragment implements selectListener {
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         loadDeals();
+
+
 
         return view;
     }

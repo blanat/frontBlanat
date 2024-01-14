@@ -51,8 +51,8 @@ public class navActivity extends AppCompatActivity {
         toggle.syncState();
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_settings);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+            navigationView.setCheckedItem(R.id.home);
         }
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);

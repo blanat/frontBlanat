@@ -72,4 +72,7 @@ public interface UserApi {
 
     @DELETE("/api/discussions/{discussionId}")
     Call<Void> deleteDiscussionAndMessages(@Path("discussionId") Long discussionId);
+
+    @POST("/api/discussions/{discussionId}/updateSave")
+    Call<Integer> updateSave(@Path("discussionId") Long discussionId);
 }
