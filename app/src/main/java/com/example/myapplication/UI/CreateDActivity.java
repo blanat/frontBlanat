@@ -233,7 +233,7 @@ public class CreateDActivity extends AppCompatActivity {
         //================================
 
 
-        selectButton.setOnClickListener(view -> {
+        /*selectButton.setOnClickListener(view -> {
             boolean isReadMediaPermissionGranted = ContextCompat.checkSelfPermission(CreateDActivity.this, Manifest.permission.READ_MEDIA_IMAGES)
                     == PackageManager.PERMISSION_GRANTED;
 
@@ -253,6 +253,24 @@ public class CreateDActivity extends AppCompatActivity {
                 imageAdapter.setShowDefaultImages(false);
             }
 
+            imageAdapter.setShowDefaultImages(false);
+        });
+*/
+
+        selectButton.setOnClickListener(view -> {
+            if (ContextCompat.checkSelfPermission(CreateDActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                // Log statement to verify that this block is executed
+                Log.d("Permission", "Permission not granted, launching permission request");
+
+                // Permission is not granted, request it using the launcher
+                permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+            } else {
+                // Permission is already granted, proceed with your logic
+                openImagePicker();
+                imageAdapter.setShowDefaultImages(false);
+
+            }
             imageAdapter.setShowDefaultImages(false);
         });
 

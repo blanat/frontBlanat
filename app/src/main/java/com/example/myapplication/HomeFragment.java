@@ -29,6 +29,8 @@ import retrofit2.Response;
 public class HomeFragment extends Fragment implements selectListener {
 
     private RecyclerView recyclerView;
+    private List<listData> dealslist;
+    RetrofitService retrofitService;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -46,6 +48,8 @@ public class HomeFragment extends Fragment implements selectListener {
         recyclerView = view.findViewById(R.id.deals_recycleview);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
+        retrofitService = new RetrofitService(requireContext());
+
         loadDeals();
 
 
@@ -54,14 +58,14 @@ public class HomeFragment extends Fragment implements selectListener {
     }
 
     private void loadDeals() {
-        RetrofitService retrofitService = new RetrofitService(requireContext());
         DealApi dealsApi = retrofitService.getRetrofit().create(DealApi.class);
         dealsApi.getListDeals()
                 .enqueue(new Callback<List<listData>>() {
                     @Override
                     public void onResponse(Call<List<listData>> call, Response<List<listData>> response) {
                         if (response.isSuccessful() && response.body() != null) {
-                            populateListView(response.body());
+                            dealslist = response.body();
+                            populateListView(dealslist);
                         } else {
                             Log.e("HomeFragment", " erreur : ");
                        }
@@ -97,6 +101,77 @@ public class HomeFragment extends Fragment implements selectListener {
         Intent intent = new Intent(requireContext(), DetailsDealActivity.class);
         intent.putExtra("deal", deal);
         startActivity(intent);
+    }
+
+// Inside your HomeFragment class
+
+    @Override
+    public void onPlusButtonClicked(int position) {
+        if (!dealslist.get(position).hasInteracted()) {
+            incrementDegree(dealslist.get(position).getDealID(), position);
+            dealslist.get(position).setInteracted(true);
+        } else {
+            // User has already interacted, show a message or handle accordingly
+            Log.d("DealsAdapter", "User has already interacted with this deal");
+        }
+    }
+
+    @Override
+    public void onMoinsButtonClicked(int position) {
+        if (!dealslist.get(position).hasInteracted()) {
+            decrementDegree(dealslist.get(position).getDealID(), position);
+            dealslist.get(position).setInteracted(true);
+        } else {
+            // User has already interacted, show a message or handle accordingly
+            Log.d("DealsAdapter", "User has already interacted with this deal");
+        }
+    }
+
+
+
+    private void incrementDegree(long dealId, int position) {
+        DealApi dealApi = retrofitService.getRetrofit().create(DealApi.class);
+        dealApi.incrementDeg(dealId).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    // Increment the degree in the local list
+                    dealslist.get(position).setDeg(dealslist.get(position).getDeg() + 1);
+                    // Update the corresponding item in the adapter
+                    recyclerView.getAdapter().notifyItemChanged(position);
+                } else {
+                    Log.e("HomeFragment", "Failed to increment degree");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("HomeFragment", "Error while calling incrementDeg API", t);
+            }
+        });
+    }
+
+    private void decrementDegree(long dealId, int position) {
+        DealApi dealApi = retrofitService.getRetrofit().create(DealApi.class);
+
+        dealApi.decrementDeg(dealId).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    // Decrement the degree in the local list
+                    dealslist.get(position).setDeg(Math.max(0, dealslist.get(position).getDeg() - 1));
+                    // Update the corresponding item in the adapter
+                    recyclerView.getAdapter().notifyItemChanged(position);
+                } else {
+                    Log.e("HomeFragment", "Failed to decrement degree");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("HomeFragment", "Error while calling decrementDeg API", t);
+            }
+        });
     }
 
 }

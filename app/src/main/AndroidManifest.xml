@@ -33,9 +33,9 @@
         <activity
             android:name=".UI.profile.changMdp"
             android:exported="false" />
-        <activity
+        <!--<activity
             android:name=".UI.profile.ProfileActivity"
-            android:exported="false" />
+            android:exported="false" />-->
         <activity
             android:name=".UI.navActivity"
             android:exported="false" />
@@ -65,7 +65,9 @@
             android:exported="false" />
         <activity android:name=".UI.DiscussionScreen" />
         <activity android:name=".UI.CommentDiscScreen" />
+<!--
         <activity android:name=".UI.DeleteDiscussionFragment" />
+-->
 
         <provider
             android:name="androidx.core.content.FileProvider"

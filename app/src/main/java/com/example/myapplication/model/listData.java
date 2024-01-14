@@ -31,6 +31,9 @@ public class listData implements Parcelable {
         private String firstImageUrl;
         private String timePassedSinceCreation; // corresponds to the same name in the entity
 
+    //interaction with Deals deg
+    private boolean hasInteracted;
+
 
     public listData(long dealID, String title, String description, Categories category, Date dateFin, float price,
                        float newPrice, String localisation, boolean deliveryExist, float deliveryPrice, int deg,
@@ -178,6 +181,14 @@ public class listData implements Parcelable {
         return dealCreator;
     }
 
+
+    public boolean hasInteracted() {
+        return hasInteracted;
+    }
+
+    public void setInteracted(boolean hasInteracted) {
+        this.hasInteracted = hasInteracted;
+    }
 
     //===============================================================
     protected listData(Parcel in) {

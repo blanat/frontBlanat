@@ -45,10 +45,10 @@ public interface DealApi {
 
 
 
-    @POST("/{dealId}/increment")
+    @POST("/api/deals/{dealId}/increment")
     Call<Void> incrementDeg(@Path("dealId") long dealId);
 
-    @POST("/{dealId}/decrement")
+    @POST("/api/deals/{dealId}/decrement")
     Call<Void> decrementDeg(@Path("dealId") long dealId);
 
 }
