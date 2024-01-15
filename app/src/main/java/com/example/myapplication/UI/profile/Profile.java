@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,43 +38,50 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        final CircleImageView profileImage = findViewById(R.id.profile_image);
-        final TextView usernameTextView = findViewById(R.id.textView8);
-
-        loadUserFromToken(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    User user = response.body();
-                    // Update UI with user data
-                    usernameTextView.setText(user.getUserName());
-                    // Load image using your preferred image loading library
-                    // For example, using Glide:
-                    Glide.with(Profile.this)
-                            .load(user.getImage())
-                            .placeholder(R.drawable.login)  // Placeholder image
-                            .into(profileImage);
-                } else {
-                    Log.e("YourTag", "Error: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Log.e("YourTag", "Failure: " + t.getMessage());
-            }
-        });
-
         final TextView paramsLink = findViewById(R.id.paramId);
+        final CircleImageView profileImage = findViewById(R.id.profile_image);
+        final TextView username = findViewById(R.id.username);
+
+        RetrofitService retrofitService = new RetrofitService(this);
+        UserApi userApi = retrofitService.getRetrofit().create(UserApi.class);
+
+        String jwtToken = retrieveToken();
+
+
+        userApi.fromToke("Bearer " + jwtToken)
+                .enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call, Response<User> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            User user = response.body();
+                            username.setText(user.getUserName());
+                            email = user.getEmail();
+                            Log.d("UserApiResponse", "User data: " + user.toString());
+                        } else {
+                            // Log the error
+                            Log.e("UserApiResponse", "Error: " + response.code());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+                        // Log the failure
+                        Log.e("UserApiFailure", "Failure: " + t.getMessage());
+                    }
+                });
+
 
         paramsLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent signupIntent = new Intent(Profile.this, Parameter.class);
+                Log.d("yarebi tesde9", email);
+                signupIntent.putExtra("email", email);
                 startActivity(signupIntent);
             }
         });
     }
+
 
 
 //    private void loadDealsDTOByUserId() {
@@ -134,33 +142,6 @@ public class Profile extends AppCompatActivity {
         Log.d("Token", "Retrieved JWT Token: " + jwtToken);
         return jwtToken;
     }
-
-    private void loadUserFromToken(final Callback<User> userCallback) {
-        RetrofitService retrofitService = new RetrofitService(this);
-        UserApi userApi = retrofitService.getRetrofit().create(UserApi.class);
-
-        userApi.fromToke()
-                .enqueue(new Callback<User>() {
-                    @Override
-                    public void onResponse(Call<User> call, Response<User> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-                            User user = response.body();
-                            // Call the callback with the User data
-                            userCallback.onResponse(call, Response.success(user));
-                        } else {
-                            // Handle error and call the callback with the error
-                            userCallback.onFailure(call, new IOException("Error: " + response.code()));
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<User> call, Throwable t) {
-                        // Handle failure and call the callback with the failure
-                        userCallback.onFailure(call, t);
-                    }
-                });
-    }
-
 
     private void handleApiError(String errorMessage) {
         Log.e("Profile", errorMessage);

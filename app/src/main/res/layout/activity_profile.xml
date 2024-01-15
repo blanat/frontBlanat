@@ -63,7 +63,6 @@
         android:layout_height="123dp"
         android:layout_marginStart="37dp"
         android:layout_marginTop="49dp"
-        android:src="@drawable/login"
         app:civ_border_color="@color/gray2"
         app:civ_border_width="5dp"
         app:layout_constraintBottom_toTopOf="@+id/textView9"
@@ -75,12 +74,11 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/username"
         android:layout_width="166dp"
         android:layout_height="44dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="99dp"
-        android:text="TextView"
         android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -90,8 +88,9 @@
         app:layout_constraintTop_toBottomOf="@+id/Profile"
         app:layout_constraintVertical_bias="0.0" />
 
-    <ListView
-            android:id="@+id/scrollView2"
+    <androidx.recyclerview.widget.RecyclerView
+
+        android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="430dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -100,209 +99,9 @@
             android:background="@color/gray2"
             tools:listitem="@layout/list_deals">
 
-    </ListView>
-    <!--    <ScrollView-->
-<!--        android:id="@+id/scrollView2"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="430dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        android:background="@color/gray2">-->
-
-<!--        <RelativeLayout-->
-<!--            android:id="@+id/relativeLayout"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent">-->
-
-<!--            <com.google.android.material.imageview.ShapeableImageView-->
-<!--                android:id="@+id/listImage"-->
-<!--                android:layout_width="140dp"-->
-<!--                android:layout_height="140dp"-->
-<!--                android:layout_marginStart="10dp"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:layout_marginBottom="10dp"-->
-<!--                android:scaleType="centerCrop"-->
-<!--                app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/listTime"-->
-<!--                android:layout_width="52dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="173dp"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:layout_toEndOf="@id/listImage"-->
-<!--                android:text="time"-->
-<!--                android:textColor="@color/gray"-->
-<!--                android:textSize="16sp" />-->
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="3dp"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:layout_toEndOf="@id/listImage"-->
-<!--                android:orientation="horizontal">-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/moins"-->
-<!--                    android:layout_width="15dp"-->
-<!--                    android:layout_height="20dp"-->
-<!--                    android:layout_alignParentBottom="true"-->
-<!--                    android:layout_centerHorizontal="true"-->
-<!--                    android:layout_marginBottom="90dp"-->
-<!--                    android:autoLink="all"-->
-<!--                    android:gravity="center"-->
-<!--                    android:text="-"-->
-<!--                    android:textColor="@color/red"-->
-<!--                    android:textSize="18sp"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintHorizontal_bias="0.497"-->
-<!--                    app:layout_constraintStart_toStartOf="parent" />-->
+    </androidx.recyclerview.widget.RecyclerView>
 
 
-<!--                <TextView-->
-<!--                    android:id="@+id/voteCount"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="5dp"-->
-<!--                    android:layout_marginEnd="5dp"-->
-<!--                    android:text="deg°"-->
-<!--                    android:textColor="@color/red"-->
-<!--                    android:textSize="14sp" />-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/plus"-->
-<!--                    android:layout_width="15dp"-->
-<!--                    android:layout_height="20dp"-->
-<!--                    android:layout_alignParentBottom="true"-->
-<!--                    android:layout_centerHorizontal="true"-->
-<!--                    android:layout_marginBottom="90dp"-->
-<!--                    android:autoLink="all"-->
-<!--                    android:gravity="center"-->
-<!--                    android:text="+"-->
-<!--                    android:textColor="@color/green"-->
-<!--                    android:textSize="18sp"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintHorizontal_bias="0.497"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toBottomOf="@+id/btnLogin" />-->
-
-
-<!--            </LinearLayout>-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/listtitre"-->
-<!--                android:layout_width="180dp"-->
-<!--                android:layout_height="20dp"-->
-<!--                android:layout_marginStart="25dp"-->
-<!--                android:layout_marginTop="40dp"-->
-<!--                android:layout_toEndOf="@id/listImage"-->
-<!--                android:text="titre d'article"-->
-<!--                android:textColor="@color/black"-->
-<!--                android:textSize="15sp"-->
-<!--                android:textStyle="bold" />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/listdesc"-->
-<!--                android:layout_width="180dp"-->
-<!--                android:layout_height="45dp"-->
-<!--                android:layout_below="@id/listtitre"-->
-<!--                android:layout_marginStart="175dp"-->
-<!--                android:text="Descrption de l'article..."-->
-<!--                android:textColor="@color/black"-->
-<!--                android:textSize="13sp" />-->
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@id/listdesc"-->
-<!--                android:layout_marginStart="150dp"-->
-<!--                android:layout_marginTop="1dp"-->
-<!--                android:orientation="horizontal">-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/prixN"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="10dp"-->
-<!--                    android:text="prixN"-->
-<!--                    android:textColor="@color/green"-->
-<!--                    android:textSize="11sp"-->
-<!--                    android:textStyle="bold" />-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/prixA"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="10dp"-->
-<!--                    android:text="prixA"-->
-<!--                    android:textColor="@color/red"-->
-<!--                    android:textSize="9sp"-->
-<!--                    android:textStyle="bold" />-->
-<!--                &lt;!&ndash;livraison est invisible par defaut si selement si elle est disponible&ndash;&gt;-->
-<!--                <ImageView-->
-<!--                    android:id="@+id/livraisonIcon"-->
-<!--                    android:layout_width="22dp"-->
-<!--                    android:layout_height="22dp"-->
-<!--                    android:layout_marginStart="10dp"-->
-<!--                    android:layout_marginTop="0dp"-->
-<!--                    android:scaleType="fitCenter"-->
-<!--                    android:src="@drawable/livraison"-->
-<!--                    android:visibility="invisible" />-->
-
-<!--            </LinearLayout>-->
-
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="170dp"-->
-<!--                android:layout_marginTop="124dp"-->
-<!--                android:layout_marginEnd="16dp"-->
-<!--                android:orientation="horizontal">-->
-
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/commentIcon"-->
-<!--                    android:layout_width="24dp"-->
-<!--                    android:layout_height="24dp"-->
-<!--                    android:layout_gravity="center_vertical"-->
-<!--                    android:src="@drawable/baseline_comment_24" />-->
-
-
-<!--                <TextView-->
-<!--                    android:id="@+id/commentCount"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center_vertical"-->
-<!--                    android:layout_marginStart="8dp"-->
-<!--                    android:text="0"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="14sp" />-->
-
-
-<!--                <Button-->
-<!--                    android:id="@+id/listButton"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="48dp"-->
-<!--                    android:layout_marginStart="8dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:text="Voir Deal"-->
-<!--                    android:textColor="@color/white"-->
-<!--                    android:textSize="15sp" />-->
-
-<!--            </LinearLayout>-->
-
-<!--        </RelativeLayout>-->
-
-
-<!--    </ScrollView>-->
 
     <TextView
         android:id="@+id/textView9"
@@ -317,7 +116,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/username"
         app:layout_constraintVertical_bias="1.0" />
 
 

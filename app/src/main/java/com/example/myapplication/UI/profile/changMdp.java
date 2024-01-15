@@ -8,9 +8,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.UI.LoginScreen;
 import com.example.myapplication.model.User;
 import com.example.myapplication.retrofit.RetrofitService;
 import com.example.myapplication.retrofit.UserApi;
@@ -20,7 +23,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class changMdp extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,14 +54,15 @@ public class changMdp extends AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // Perform the action when the user clicks "Yes"
-                        // You can put your logic for changing the password here
+                        updatePassword();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // User clicked "No", do nothing or handle accordingly
+                       Intent intent = new Intent(changMdp.this, Profile.class);
+                       startActivity(intent);
+
                     }
                 })
                 .show();
@@ -71,25 +74,31 @@ public class changMdp extends AppCompatActivity {
         final TextView oldpasword = findViewById(R.id.etPassword);
         final TextView newpassword = findViewById(R.id.newPassword);
 
-
         String newPassword = newpassword.getText().toString().trim();
+        Intent receivedIntent = getIntent();
+        String email = receivedIntent.getStringExtra("email");
+        String passwordOld = receivedIntent.getStringExtra("password");
 
-        Call<User> updatePasswordCall = userApi.updatePassword("user@example.com", newPassword);
+        if(!passwordOld.equals(oldpasword)){
+            oldpasword.setText("old password incorrect");
+            return;
+        }
+        Call<User> updatePasswordCall = userApi.updatePassword(email , newPassword);
         updatePasswordCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
-                    // Password updated successfully
+                    Toast.makeText(getBaseContext(), "password changed successfully!", Toast.LENGTH_SHORT).show();
                     User updatedUser = response.body();
-                    // Handle the updated user
                 } else {
-                    // Handle the failure
+                    Toast.makeText(getBaseContext(), "password can't be change try again!", Toast.LENGTH_SHORT).show();
+
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                // Handle the failure
+                Toast.makeText(getBaseContext(), "password can't be change try again later!", Toast.LENGTH_SHORT).show();
             }
         });
     }
