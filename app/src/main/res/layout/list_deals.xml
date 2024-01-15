@@ -15,10 +15,12 @@
     <!--app:cardCornerRadius="20dp"
     app:cardElevation="8dp"-->
 
+
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="385dp"
         android:layout_height="194dp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"

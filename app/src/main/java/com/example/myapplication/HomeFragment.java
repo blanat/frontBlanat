@@ -4,11 +4,16 @@ import static android.content.Intent.getIntent;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +34,9 @@ import retrofit2.Response;
 public class HomeFragment extends Fragment implements selectListener {
 
     private RecyclerView recyclerView;
+    private EditText editText;
+    private ArrayAdapter<listData> dealsAdapter;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -44,14 +52,38 @@ public class HomeFragment extends Fragment implements selectListener {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         recyclerView = view.findViewById(R.id.deals_recycleview);
+        editText = view.findViewById(R.id.edittext);
+
+
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
+
         loadDeals();
-
-
+        setupSearchFunctionality();
 
         return view;
     }
+    private void setupSearchFunctionality() {
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Filtrez la liste en temps réel pendant que l'utilisateur tape
+                if (dealsAdapter != null) {
+                    dealsAdapter.getFilter().filter(s);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Vous pouvez ajouter une logique ici si nécessaire après la saisie du texte
+            }
+        });
+    }
+
 
     private void loadDeals() {
         RetrofitService retrofitService = new RetrofitService(requireContext());
@@ -74,14 +106,35 @@ public class HomeFragment extends Fragment implements selectListener {
                 });
     }
 
+
+
     private void populateListView(List<listData> dealslist) {
         Log.d("HomeFragment", "populateListView called with " + dealslist.size() + " deals");
         if (!dealslist.isEmpty()) {
             for (listData deal : dealslist) {
-                Log.d("HomeFragment", "Deal: " + deal.getTitle()); // Ajoutez des logs pour chaque propriété que vous voulez vérifier
+                Log.d("HomeFragment", "Deal: " + deal.getTitle());
             }
-            DealsAdapter dealsAdapter = new DealsAdapter(dealslist, this);
-            recyclerView.setAdapter(dealsAdapter);
+
+            // Utilisez un ArrayAdapter pour prendre en charge la fonction de filtrage
+            dealsAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, dealslist);
+            recyclerView.setAdapter(new RecyclerView.Adapter() {
+                @NonNull
+                @Override
+                public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                    // À remplacer par votre implémentation de onCreateViewHolder
+                    return null;
+                }
+
+                @Override
+                public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+                    // À remplacer par votre implémentation de onBindViewHolder
+                }
+
+                @Override
+                public int getItemCount() {
+                    return 0;
+                }
+            });
         } else {
             Log.e("HomeFragment", "Deals list is empty");
         }
