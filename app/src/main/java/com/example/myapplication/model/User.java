@@ -6,7 +6,7 @@ public class User {
     private String email;
     private String password;
     private Enum role;
-    private String Image;
+    private String profileFilePath;
     private String profileImageUrl;
 
     private Discussion discussion;
@@ -77,11 +77,25 @@ public class User {
         this.role = role;
     }
 
-    public String getImage() {
-        return Image;
+    public String getProfileFilePath() {
+        return profileFilePath;
     }
 
-    public void setImage(String image) {
-        Image = image;
+    public void setProfileFilePath(String profileFilePath) {
+        this.profileFilePath = profileFilePath;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", Image='" + profileFilePath + '\'' +
+                ", profileImageUrl='" + profileImageUrl + '\'' +
+                ", discussion=" + discussion +
+                '}';
     }
 }

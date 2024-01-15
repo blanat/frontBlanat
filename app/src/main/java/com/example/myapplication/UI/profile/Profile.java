@@ -18,7 +18,9 @@ import com.example.myapplication.model.listData;
 import com.example.myapplication.retrofit.DealApi;
 import com.example.myapplication.retrofit.RetrofitService;
 import com.example.myapplication.retrofit.UserApi;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -54,6 +56,18 @@ public class Profile extends AppCompatActivity {
                     public void onResponse(Call<User> call, Response<User> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             User user = response.body();
+                            Uri fileUri = Uri.fromFile(new File(user.getProfileFilePath()));
+                            String imageUrl = fileUri.toString();
+
+                            Log.d("TAG", Uri.decode(imageUrl));
+                            Picasso.get()
+                                    .load(Uri.decode(imageUrl)) // Replace with the actual method to get the image URL
+                                    .placeholder(R.drawable.default_image) // You can set a placeholder image while loading
+                                    .error(R.drawable.default_image) // You can set an error image if the loading fails
+                                    .into(profileImage);
+
+
+
                             username.setText(user.getUserName());
                             email = user.getEmail();
                             Log.d("UserApiResponse", "User data: " + user.toString());
