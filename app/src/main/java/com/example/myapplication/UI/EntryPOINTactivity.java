@@ -27,6 +27,13 @@ public class EntryPOINTactivity extends AppCompatActivity {
             startActivity(mainIntent);
 
         }
+        if (getIntent().getBooleanExtra("notification_clicked", false)) {
+            // Remplacez le fragment actuel par DiscussionFragment
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, DiscussionFragment.newInstance())
+                    .addToBackStack(null)
+                    .commit();
+        }
 
         // Finish the current activity to prevent going back to it
         finish();

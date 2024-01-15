@@ -130,7 +130,6 @@ public class CreateDiscFragment extends Fragment {
 
 
 
-
         return view;
     }
 
@@ -181,7 +180,7 @@ public class CreateDiscFragment extends Fragment {
 
 
                         Log.d("MyApp", "Before sendNotification");
-                        sendNotification("Nouvelle discussion créée", "Titre : " + createdDiscussion.getTitre());
+                        sendNotification("Nouvelle Discussion créée!", "Titre : " + createdDiscussion.getTitre());
                         Log.d("MyApp", "After sendNotification");
 
 
@@ -224,6 +223,7 @@ public class CreateDiscFragment extends Fragment {
                         // Vérifiez si le jeton FCM est obtenu avec succès
                         if (targetDeviceToken != null && !targetDeviceToken.isEmpty()) {
                             // Construisez la notification
+                            // Construisez la notification
                             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(requireContext(), my_channel_id)
                                     .setSmallIcon(R.mipmap.ic_launcher)
                                     .setContentTitle(title)
@@ -231,7 +231,16 @@ public class CreateDiscFragment extends Fragment {
                                     .setAutoCancel(true)
                                     .setPriority(NotificationCompat.PRIORITY_HIGH);
 
+                            // Intent pour ouvrir DiscussionFragment
+                            Intent intent = new Intent(requireContext(), MainActivity.class);
+                            intent.putExtra("notification_clicked", true);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                            PendingIntent pendingIntent = PendingIntent.getActivity(requireContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+                            notificationBuilder.setContentIntent(pendingIntent);
+
                             // Affichez la notification
+
                             NotificationManager notificationManager = (NotificationManager) requireContext().getSystemService(Context.NOTIFICATION_SERVICE);
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                                 NotificationChannel channel = new NotificationChannel(my_channel_id, "Channel Name", NotificationManager.IMPORTANCE_DEFAULT);
@@ -250,6 +259,8 @@ public class CreateDiscFragment extends Fragment {
                         Log.e("CreateDiscussionFragment", "Failed to get FCM token", task.getException());
                     }
                 });
+
+
     }
 
     private void sendFcmMessage(String fcmMessage) {
