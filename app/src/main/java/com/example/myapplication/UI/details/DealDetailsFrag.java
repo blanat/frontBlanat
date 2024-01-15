@@ -133,6 +133,9 @@ public class DealDetailsFrag extends Fragment {
             });
         }
 
+
+
+
         return view;
     }
 // ...

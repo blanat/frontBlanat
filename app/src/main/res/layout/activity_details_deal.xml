@@ -5,10 +5,24 @@
     android:layout_height="match_parent"
     tools:context=".UI.details.DetailsDealActivity">
 
+
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="80dp">
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_margin="20dp"
+                android:src="@drawable/back_icon"/>
+        </RelativeLayout>
 
         <!-- Other views as needed -->
 
@@ -17,7 +31,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:padding="16dp"/>
+            android:padding="16dp"
+            android:layout_marginTop="70dp"/>
 
         <!-- Fragment 2 Container -->
         <FrameLayout
@@ -46,17 +61,18 @@
                 <EditText
                     android:id="@+id/editTextComment"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:hint="Type your comment here"
-                    android:layout_margin="16dp" />
+                    android:layout_margin="15dp" />
 
                 <!-- Button for sending the comment -->
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/buttonSendComment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
+                    android:layout_marginEnd="10dp"
                     android:text="Send"/>
             </LinearLayout>
         </RelativeLayout>

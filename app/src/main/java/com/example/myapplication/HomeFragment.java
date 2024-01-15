@@ -19,7 +19,10 @@ import com.example.myapplication.UI.details.DetailsDealActivity;
 import com.example.myapplication.model.listData;
 import com.example.myapplication.retrofit.DealApi;
 import com.example.myapplication.retrofit.RetrofitService;
+import com.google.android.material.tabs.TabLayout;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -31,6 +34,14 @@ public class HomeFragment extends Fragment implements selectListener {
     private RecyclerView recyclerView;
     private List<listData> dealslist;
     RetrofitService retrofitService;
+
+
+    //=========================
+    private TabLayout tabLayout;
+    private int selectedTabIndex = 0; // Default selected tab index
+
+    //=========================
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -50,11 +61,33 @@ public class HomeFragment extends Fragment implements selectListener {
 
         retrofitService = new RetrofitService(requireContext());
 
+        //=====================Changes for sort:==========================
+
+        tabLayout = view.findViewById(R.id.tabLayout);
+
+        // Set up tab selection listener
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                selectedTabIndex = tab.getPosition();
+                loadDeals(); // Load deals based on the selected tab
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+
+        // Load deals initially
         loadDeals();
 
-
-
         return view;
+        /*loadDeals();
+        return view;*/
     }
 
     private void loadDeals() {
@@ -65,6 +98,7 @@ public class HomeFragment extends Fragment implements selectListener {
                     public void onResponse(Call<List<listData>> call, Response<List<listData>> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             dealslist = response.body();
+                            sortDeals();
                             populateListView(dealslist);
                         } else {
                             Log.e("HomeFragment", " erreur : ");
@@ -91,8 +125,57 @@ public class HomeFragment extends Fragment implements selectListener {
         }
     }
 
+    private void sortDeals() {
+        // Sort the deals based on the selected tab
+        switch (selectedTabIndex) {
+            case 0:
+                // Most Commented sorting logic
+                Collections.sort(dealslist, Comparator.comparingInt(listData::getNumberOfComments).reversed());
+                break;
+            case 1:
+                // Recently Created sorting logic
+                Collections.sort(dealslist, Comparator.comparing(this::parseTimePassedSinceCreation));
+                break;
+            case 2:
+                // Highest Degree sorting logic
+                Collections.sort(dealslist, Comparator.comparingInt(listData::getDeg).reversed());
+                break;
+
+            // Add more cases for additional tabs if needed
+        }
+    }
+
+    private int parseTimePassedSinceCreation(listData deal) {
+        // Assuming timePassedSinceCreation is in the format "Xd:Yh:Zmin"
+        String timeString = deal.getTimePassedSinceCreation();
+
+        // Extract days, hours, and minutes from the string
+        String[] parts = timeString.split(":");
+        int days = 0;
+        int hours = 0;
+        int minutes = 0;
+
+        for (String part : parts) {
+            if (part.contains("d")) {
+                days = Integer.parseInt(part.split("d")[0]);
+            } else if (part.contains("h")) {
+                hours = Integer.parseInt(part.split("h")[0]);
+            } else if (part.contains("min")) {
+                minutes = Integer.parseInt(part.split("min")[0]);
+            }
+        }
+
+        // Calculate total minutes
+        return days * 24 * 60 + hours * 60 + minutes;
+    }
 
 
+
+
+
+
+
+    //deals deg code
     @Override
     public void onItemClicked(listData deal) {
         // Handle the item click

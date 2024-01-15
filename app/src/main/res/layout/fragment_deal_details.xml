@@ -115,22 +115,51 @@
         </LinearLayout>
 
         <!-- Button to view the deal -->
-        <Button
-            android:layout_width="320dp"
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="350dp"
             android:layout_height="48dp"
             android:id="@+id/DealButton"
             android:textColor="@color/white"
             android:text="Voir Deal"
             android:textSize="19sp"
             android:layout_marginTop="20dp"
-            android:layout_marginStart="40dp" />
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@color/my_primary"/>
+
+
 
         <!-- Deal Description -->
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Localisation:"
+            android:textColor="@color/darkGrey"
+            android:textStyle="bold"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:textSize="18sp"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Localisation du Deal"
+            android:textColor="@color/black"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="9dp"
+            android:textSize="16sp"
+            android:id="@+id/localdeal"
+            android:ellipsize="none" />
+
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="A propos:"
-            android:textColor="@color/black"
+            android:textColor="@color/darkGrey"
             android:textStyle="bold"
             android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
@@ -148,27 +177,7 @@
             android:ellipsize="none" />
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Localisation:"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="30dp"
-            android:textSize="18sp"/>
 
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Localisation du Deal"
-            android:textColor="@color/black"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="9dp"
-            android:textSize="16sp"
-            android:id="@+id/localdeal"
-            android:ellipsize="none" />
 
     </LinearLayout>
 </FrameLayout>
