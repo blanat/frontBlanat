@@ -30,9 +30,8 @@ public class Parameter extends AppCompatActivity {
         final TextView delAccLink = findViewById(R.id.delAcc);
         Intent intent = getIntent();
 
-        if (intent.hasExtra("email") && intent.hasExtra("password")) {
+        if (intent.hasExtra("email")) {
             email = intent.getStringExtra("email");
-            password = intent.getStringExtra("password");
         }
 
         backLink.setOnClickListener(new View.OnClickListener() {
@@ -40,7 +39,6 @@ public class Parameter extends AppCompatActivity {
             public void onClick(View view) {
                 Intent signupIntent = new Intent(Parameter.this, Profile.class);
                 signupIntent.putExtra("email", email);
-                signupIntent.putExtra("password", password);
                 startActivity(signupIntent);
             }
         });
