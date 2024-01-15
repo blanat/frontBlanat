@@ -148,7 +148,6 @@ public class HomeFragment extends Fragment implements selectListener {
     }
 
 
-
     private void populateListView(List<listData> dealslist) {
         Log.d("HomeFragment", "populateListView called with " + dealslist.size() + " deals");
         if (!dealslist.isEmpty()) {
@@ -156,25 +155,22 @@ public class HomeFragment extends Fragment implements selectListener {
                 Log.d("HomeFragment", "Deal: " + deal.getTitle());
             }
 
-            // Utilisez un ArrayAdapter pour prendre en charge la fonction de filtrage
-            dealsAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, dealslist);
-            recyclerView.setAdapter(new RecyclerView.Adapter() {
-                @NonNull
+            // Use the DealsAdapter directly
+            DealsAdapter dealsAdapter = new DealsAdapter(dealslist, this);
+            recyclerView.setAdapter(dealsAdapter);
+
+            // Update the adapter when the text in the EditText changes
+            editText.addTextChangedListener(new TextWatcher() {
                 @Override
-                public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                    // À remplacer par votre implémentation de onCreateViewHolder
-                    return null;
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    dealsAdapter.getFilter().filter(charSequence.toString());
                 }
 
                 @Override
-                public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-                    // À remplacer par votre implémentation de onBindViewHolder
-                }
-
-                @Override
-                public int getItemCount() {
-                    return 0;
-                }
+                public void afterTextChanged(Editable editable) {}
             });
         } else {
             Log.e("HomeFragment", "Deals list is empty");

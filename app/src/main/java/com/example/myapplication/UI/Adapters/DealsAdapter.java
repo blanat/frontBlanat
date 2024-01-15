@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,16 +16,19 @@ import com.example.myapplication.model.UserDTO;
 import com.example.myapplication.model.listData;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
-
-public class DealsAdapter extends RecyclerView.Adapter<DealsHolder> {
+public class DealsAdapter extends RecyclerView.Adapter<DealsHolder> implements Filterable {
 
     private final List<listData> dealslist;
+    private final List<listData> originalDealsList; // Add this field to store the original unfiltered list
+
     private selectListener listener;
 
-    public DealsAdapter(List<listData> dealsList,selectListener listener) {
+    public DealsAdapter(List<listData> dealsList, selectListener listener) {
         this.dealslist = dealsList;
+        this.originalDealsList = new ArrayList<>(dealsList); // Save a copy of the original list
         this.listener = listener;
     }
 
@@ -75,6 +80,8 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsHolder> {
             holder.livraisonIcon.setVisibility(View.INVISIBLE);
         }
 
+        // Modify the click listeners like this:
+
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,8 +95,9 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsHolder> {
         holder.plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (listener != null) {
-                    listener.onPlusButtonClicked(position);
+                int clickedPosition = holder.getAdapterPosition();
+                if (listener != null && clickedPosition != RecyclerView.NO_POSITION) {
+                    listener.onPlusButtonClicked(clickedPosition);
                 }
             }
         });
@@ -97,20 +105,50 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsHolder> {
         holder.moins.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (listener != null) {
-                    listener.onMoinsButtonClicked(position);
+                int clickedPosition = holder.getAdapterPosition();
+                if (listener != null && clickedPosition != RecyclerView.NO_POSITION) {
+                    listener.onMoinsButtonClicked(clickedPosition);
                 }
             }
         });
     }
+        @Override
+        public int getItemCount () {
+            return dealslist.size();
+        }
 
 
+
+
+        
     @Override
-    public int getItemCount() {
-        return dealslist.size();
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                List<listData> filteredList = new ArrayList<>();
+                if (charSequence == null || charSequence.length() == 0) {
+                    filteredList.addAll(originalDealsList); // If the search query is empty, show the original list
+                } else {
+                    String filterPattern = charSequence.toString().toLowerCase().trim();
+                    for (listData deal : originalDealsList) {
+                        if (deal.getTitle().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(deal);
+                        }
+                    }
+                }
+
+                FilterResults results = new FilterResults();
+                results.values = filteredList;
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                dealslist.clear();
+                dealslist.addAll((List<listData>) filterResults.values);
+                notifyDataSetChanged();
+            }
+        };
     }
-
-
-
-
 }
