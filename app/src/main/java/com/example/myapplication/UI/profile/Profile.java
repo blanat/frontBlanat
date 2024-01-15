@@ -95,63 +95,10 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent signupIntent = new Intent(Profile.this, Parameter.class);
-                Log.d("yarebi tesde9", email);
                 signupIntent.putExtra("email", email);
                 startActivity(signupIntent);
             }
         });
-    }
-
-
-
-//    private void loadDealsDTOByUserId() {
-//        // Load user email using callback
-//        loadUserFromToken(new Callback<String>() {
-//            @Override
-//            public void onResponse(Call<String> call, Response<String> response) {
-//                if (response.isSuccessful()) {
-//                    String userEmail = response.body();
-//                    // Use the user email in the deals API call
-//                    performDealsApiCall(userEmail);
-//                } else {
-//                    Log.e("Profile", "Error loading user email: " + response.message());
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<String> call, Throwable t) {
-//                Log.e("Profile", "Error loading user email: " + t.getMessage());
-//                // Handle the failure case
-//            }
-//        });
-//    }
-
-    private void performDealsApiCall(String userEmail) {
-        RetrofitService retrofitService = new RetrofitService(this);
-        DealApi dealsApi = retrofitService.getRetrofit().create(DealApi.class);
-
-        dealsApi.getListDealsDTOByUserEmail(userEmail)
-                .enqueue(new Callback<List<listData>>() {
-                    @Override
-                    public void onResponse(Call<List<listData>> call, Response<List<listData>> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-                            populateListView(response.body());
-                        } else {
-                            Log.e("Profile", "Error loading deals: " + response.message());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<listData>> call, Throwable t) {
-                        Log.e("Profile", "Error loading deals: " + t.getMessage());
-                        // Handle the failure case
-                    }
-                });
-    }
-
-    private void populateListView(List<listData> dealslist) {
-        Log.d("Profile", "populateListView called with " + dealslist.size() + " deals");
-        // Implement your logic to update UI with the list of deals
     }
 
     private String retrieveToken() {
@@ -163,8 +110,5 @@ public class Profile extends AppCompatActivity {
         return jwtToken;
     }
 
-    private void handleApiError(String errorMessage) {
-        Log.e("Profile", errorMessage);
-        // Handle the error, e.g., show an error message to the user
-    }
+
 }
