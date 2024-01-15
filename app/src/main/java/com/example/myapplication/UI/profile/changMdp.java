@@ -77,6 +77,12 @@ public class changMdp extends AppCompatActivity {
         String newPassword = newpassword.getText().toString().trim();
         Intent receivedIntent = getIntent();
         String email = receivedIntent.getStringExtra("email");
+        String passwordOld = receivedIntent.getStringExtra("password");
+
+        if(!passwordOld.equals(oldpasword)){
+            oldpasword.setText("old password incorrect");
+            return;
+        }
         Call<User> updatePasswordCall = userApi.updatePassword(email , newPassword);
         updatePasswordCall.enqueue(new Callback<User>() {
             @Override
