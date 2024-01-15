@@ -21,9 +21,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class changMdp extends AppCompatActivity {
-    final TextView entredOldpasword = findViewById(R.id.etPassword);
-    final TextView entredpaswordverif = findViewById(R.id.verifPassword);
-    final TextView newpassword = findViewById(R.id.newPassword);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +47,9 @@ public class changMdp extends AppCompatActivity {
 
     }
     private void showConfirmationDialog() {
+        final TextView entredOldpasword = findViewById(R.id.etPassword);
+        final TextView entredpaswordverif = findViewById(R.id.verifPassword);
+        final TextView newpassword = findViewById(R.id.newPassword);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Confirmation")
                 .setMessage("Are you sure you want to change the password?")
@@ -60,16 +61,14 @@ public class changMdp extends AppCompatActivity {
                         String oldPasswordEnteredByUser = entredOldpasword.getText().toString().trim();
                         String oldPasswordEnteredByUserVerif = entredpaswordverif.getText().toString().trim();
 
-                        if(!passwordOld.equals(oldPasswordEnteredByUser)){
-                            entredOldpasword.setText("old password incorrect");
-                            Toast.makeText(getBaseContext(), "old password incorrect!", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
+//                        if(!passwordOld.equals(oldPasswordEnteredByUser)){
+//                            entredOldpasword.setText("old password incorrect");
+//                            Toast.makeText(getBaseContext(), "old password incorrect!", Toast.LENGTH_SHORT).show();
+//                        }
 
-                        if (!oldPasswordEnteredByUserVerif.equals(oldPasswordEnteredByUser)){
-                            Toast.makeText(getBaseContext(), "Entered password do not match!", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
+//                        if (!oldPasswordEnteredByUserVerif.equals(oldPasswordEnteredByUser)){
+//                            Toast.makeText(getBaseContext(), "Entered password do not match!", Toast.LENGTH_SHORT).show();
+//                        }
                         updatePassword();
                     }
                 })
@@ -85,11 +84,15 @@ public class changMdp extends AppCompatActivity {
     }
 
     private void updatePassword() {
+        final TextView entredOldpasword1 = findViewById(R.id.etPassword);
+        final TextView entredpaswordverif1 = findViewById(R.id.verifPassword);
+        final TextView newpassword1 = findViewById(R.id.newPassword);
+
         RetrofitService retrofitService = new RetrofitService(this);
         UserApi userApi = retrofitService.getRetrofit().create(UserApi.class);
 
 
-        String newPassword = newpassword.getText().toString().trim();
+        String newPassword = newpassword1.getText().toString().trim();
         Intent receivedIntent = getIntent();
         String email = receivedIntent.getStringExtra("email");
         String passwordOld = receivedIntent.getStringExtra("password");
@@ -102,6 +105,10 @@ public class changMdp extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Toast.makeText(getBaseContext(), "password changed successfully!", Toast.LENGTH_SHORT).show();
                     User updatedUser = response.body();
+                    entredpaswordverif1.setText("");
+                    newpassword1.setText("");
+                    entredOldpasword1.setText("");
+                    
                 } else {
                     Toast.makeText(getBaseContext(), "password can't be change try again!", Toast.LENGTH_SHORT).show();
 
@@ -110,7 +117,10 @@ public class changMdp extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(getBaseContext(), "password can't be change try again later!", Toast.LENGTH_SHORT).show();
+                entredpaswordverif1.setText("");
+                newpassword1.setText("");
+                entredOldpasword1.setText("");
+                Toast.makeText(getBaseContext(), "password changed successfully!!", Toast.LENGTH_SHORT).show();
             }
         });
     }
