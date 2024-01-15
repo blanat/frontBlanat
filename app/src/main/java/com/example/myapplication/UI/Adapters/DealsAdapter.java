@@ -120,7 +120,7 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsHolder> implements F
 
 
 
-        
+
     @Override
     public Filter getFilter() {
         return new Filter() {

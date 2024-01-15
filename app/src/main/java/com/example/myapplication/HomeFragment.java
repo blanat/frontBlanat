@@ -181,16 +181,18 @@ public class HomeFragment extends Fragment implements selectListener {
         // Sort the deals based on the selected tab
         switch (selectedTabIndex) {
             case 0:
-                // Most Commented sorting logic
-                Collections.sort(dealslist, Comparator.comparingInt(listData::getNumberOfComments).reversed());
-                break;
-            case 1:
                 // Recently Created sorting logic
                 Collections.sort(dealslist, Comparator.comparing(this::parseTimePassedSinceCreation));
+
                 break;
-            case 2:
+            case 1:
                 // Highest Degree sorting logic
                 Collections.sort(dealslist, Comparator.comparingInt(listData::getDeg).reversed());
+                break;
+            case 2:
+                // Most Commented sorting logic
+                Collections.sort(dealslist, Comparator.comparingInt(listData::getNumberOfComments).reversed());
+
                 break;
 
             // Add more cases for additional tabs if needed

@@ -6,59 +6,77 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".HomeFragment">
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/edittext"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp" />
-
-        <!-- TabLayout for filtration -->
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            >
-
-                <!-- Add tabs based on your filtration categories -->
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tabItem1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Most Commented" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tabItem2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Recently Created" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tabItem3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Highest Degree" />
-
-        </com.google.android.material.tabs.TabLayout>
-
-        <!-- RecyclerView for displaying deals -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/deals_recycleview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="vertical">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp">
 
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/textInputLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:boxBackgroundMode="outline"
+                            app:hintEnabled="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
 
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/edittext"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:drawableStart="@drawable/loupedeal"
+                                    android:drawableLeft="@drawable/loupedeal"
+                                    android:drawablePadding="8dp"
+                                    android:inputType="text"
+                                    android:paddingStart="16dp"
+                                    android:paddingEnd="16dp"
+                                    android:background="@null"
+                                    android:hint="Search" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- TabLayout for filtration -->
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                        <!-- Add tabs based on your filtration categories -->
+                        <com.google.android.material.tabs.TabItem
+                            android:id="@+id/tabItem1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Recently Created" />
+
+                        <com.google.android.material.tabs.TabItem
+                            android:id="@+id/tabItem2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Highest Degree" />
+
+                        <com.google.android.material.tabs.TabItem
+                            android:id="@+id/tabItem3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Most Commented" />
+
+                </com.google.android.material.tabs.TabLayout>
+
+                <!-- RecyclerView for displaying deals -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/deals_recycleview"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
 
         </LinearLayout>
 </LinearLayout>
-
