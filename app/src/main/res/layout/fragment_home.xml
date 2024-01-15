@@ -55,19 +55,20 @@
                             android:id="@+id/tabItem1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Recently Created" />
+                            android:text="Récemment créé" />
 
                         <com.google.android.material.tabs.TabItem
                             android:id="@+id/tabItem2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Highest Degree" />
+                            android:text="les plus hauts" />
 
                         <com.google.android.material.tabs.TabItem
                             android:id="@+id/tabItem3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Most Commented" />
+                            android:text="Les plus commentés"
+                            />
 
                 </com.google.android.material.tabs.TabLayout>
 
