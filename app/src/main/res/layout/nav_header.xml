@@ -6,7 +6,7 @@
     android:layout_height="176dp"
     android:gravity="bottom"
     android:padding="16dp"
-    android:background="@drawable/navside"
+    android:background="@drawable/sidebar"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
    <!-- <ImageView
@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="BLANAT"
+        android:text="blanat."
         android:textColor="@color/white"
         android:textStyle="bold"
         android:textSize="40dp"
