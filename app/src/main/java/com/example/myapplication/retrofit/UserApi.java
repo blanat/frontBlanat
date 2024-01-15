@@ -28,7 +28,7 @@ public interface UserApi {
     Call<JwtAuthenticationResponse> signup(@Body User user);
 
 
-    @PUT("/api/users/{email}/password")
+    @PUT("/api/users/{email}")
     Call<User> updatePassword(@Path("email") String email, @Body String newPassword);
 
     @DELETE("/api/users/{email}/password")
@@ -38,7 +38,7 @@ public interface UserApi {
     Call<User> fromToke();
 
     @GET("/api/users/getUserFromToken")
-    Call<String> getUserFromToken(@Header("Authorization") String token);
+    Call<User> getUserFromToken(@Header("Authorization") String token);
 
     @POST("/api/users/userDetails/{email}")
     Call<UserProfileStatisticsDTO> getUserDetails(@Path("email") String email);

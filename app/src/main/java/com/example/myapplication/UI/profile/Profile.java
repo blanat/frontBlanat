@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.model.User;
 import com.example.myapplication.model.listData;
 import com.example.myapplication.retrofit.DealApi;
 import com.example.myapplication.retrofit.RetrofitService;
@@ -18,6 +19,7 @@ import com.example.myapplication.retrofit.UserApi;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,11 +29,23 @@ public class Profile extends AppCompatActivity {
     private UserApi userApi;
     private String email;
     private String password;
+    private User contectedUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        final TextView username = findViewById(R.id.textView8);
+        CircleImageView profileImage = findViewById(R.id.profile_image);
+
+        loadUserFromToken();
+
+        username.setText(contectedUser.getUserName());
+//        profileImage.setImageResource(contectedUser.setProfileImageUrl());
+
+
+
 
         final TextView paramsLink = findViewById(R.id.paramId);
 
@@ -39,37 +53,39 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent signupIntent = new Intent(Profile.this, Parameter.class);
-                signupIntent.putExtra("email", email);
-                signupIntent.putExtra("password", password);
+
+
+//                signupIntent.putExtra("email", email);
+//                signupIntent.putExtra("password", password);
                 startActivity(signupIntent);
             }
         });
 
         // Call the new method to load deals
-        loadDealsDTOByUserId();
+//        loadDealsDTOByUserId();
     }
 
-    private void loadDealsDTOByUserId() {
-        // Load user email using callback
-        loadUserFromToken(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful()) {
-                    String userEmail = response.body();
-                    // Use the user email in the deals API call
-                    performDealsApiCall(userEmail);
-                } else {
-                    Log.e("Profile", "Error loading user email: " + response.message());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Log.e("Profile", "Error loading user email: " + t.getMessage());
-                // Handle the failure case
-            }
-        });
-    }
+//    private void loadDealsDTOByUserId() {
+//        // Load user email using callback
+//        loadUserFromToken(new Callback<String>() {
+//            @Override
+//            public void onResponse(Call<String> call, Response<String> response) {
+//                if (response.isSuccessful()) {
+//                    String userEmail = response.body();
+//                    // Use the user email in the deals API call
+//                    performDealsApiCall(userEmail);
+//                } else {
+//                    Log.e("Profile", "Error loading user email: " + response.message());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<String> call, Throwable t) {
+//                Log.e("Profile", "Error loading user email: " + t.getMessage());
+//                // Handle the failure case
+//            }
+//        });
+//    }
 
     private void performDealsApiCall(String userEmail) {
         RetrofitService retrofitService = new RetrofitService(this);
@@ -108,30 +124,34 @@ public class Profile extends AppCompatActivity {
         return jwtToken;
     }
 
-    private void loadUserFromToken(final Callback<String> userCallback) {
+    private void loadUserFromToken() {
         RetrofitService retrofitService = new RetrofitService(this);
         UserApi userApi = retrofitService.getRetrofit().create(UserApi.class);
 
-        String token = retrieveToken();
 
-        userApi.getUserFromToken(token)
-                .enqueue(new Callback<String>() {
+
+        userApi.fromToke()
+                .enqueue(new Callback<User>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
+                    public void onResponse(Call<User> call, Response<User> response) {
                         if (response.isSuccessful() && response.body() != null) {
-                            String userEmail = response.body();
-                            userCallback.onResponse(call, Response.success(userEmail));
+                            User user = response.body();
+                            contectedUser = user;
+//                            userCallback.onResponse(call, Response.success(user));
                         } else {
-                            userCallback.onFailure(call, new Throwable("Error loading user information: " + response.message()));
+//                            userCallback.onFailure(call, new Throwable("Error loading user information: " + response.message()));
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        userCallback.onFailure(call, new Throwable("Error loading user information: " + t.getMessage()));
+                    public void onFailure(Call<User> call, Throwable t) {
+//                        userCallback.onFailure(call, new Throwable("Error loading user information: " + t.getMessage()));
                     }
                 });
     }
+
+
+
 
     private void handleApiError(String errorMessage) {
         Log.e("Profile", errorMessage);
