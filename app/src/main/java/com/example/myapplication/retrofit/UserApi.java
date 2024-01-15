@@ -34,7 +34,7 @@ public interface UserApi {
     @DELETE("/api/users/{email}/password")
     Call<Void> deleteUser(@Path("email") String email);
 
-    @GET("/api/user/userFromToken")
+    @GET("/api/user/userFromToken2")
     Call<User> fromToke();
 
     @GET("/api/users/getUserFromToken")

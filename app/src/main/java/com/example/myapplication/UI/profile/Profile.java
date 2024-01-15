@@ -10,14 +10,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
+import com.example.myapplication.model.User;
 import com.example.myapplication.model.listData;
 import com.example.myapplication.retrofit.DealApi;
 import com.example.myapplication.retrofit.RetrofitService;
 import com.example.myapplication.retrofit.UserApi;
 
+import java.io.IOException;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,43 +37,66 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        final CircleImageView profileImage = findViewById(R.id.profile_image);
+        final TextView usernameTextView = findViewById(R.id.textView8);
+
+        loadUserFromToken(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    User user = response.body();
+                    // Update UI with user data
+                    usernameTextView.setText(user.getUserName());
+                    // Load image using your preferred image loading library
+                    // For example, using Glide:
+                    Glide.with(Profile.this)
+                            .load(user.getImage())
+                            .placeholder(R.drawable.login)  // Placeholder image
+                            .into(profileImage);
+                } else {
+                    Log.e("YourTag", "Error: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("YourTag", "Failure: " + t.getMessage());
+            }
+        });
+
         final TextView paramsLink = findViewById(R.id.paramId);
 
         paramsLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent signupIntent = new Intent(Profile.this, Parameter.class);
-                signupIntent.putExtra("email", email);
-                signupIntent.putExtra("password", password);
                 startActivity(signupIntent);
             }
         });
-
-        // Call the new method to load deals
-        loadDealsDTOByUserId();
     }
 
-    private void loadDealsDTOByUserId() {
-        // Load user email using callback
-        loadUserFromToken(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful()) {
-                    String userEmail = response.body();
-                    // Use the user email in the deals API call
-                    performDealsApiCall(userEmail);
-                } else {
-                    Log.e("Profile", "Error loading user email: " + response.message());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Log.e("Profile", "Error loading user email: " + t.getMessage());
-                // Handle the failure case
-            }
-        });
-    }
+//    private void loadDealsDTOByUserId() {
+//        // Load user email using callback
+//        loadUserFromToken(new Callback<String>() {
+//            @Override
+//            public void onResponse(Call<String> call, Response<String> response) {
+//                if (response.isSuccessful()) {
+//                    String userEmail = response.body();
+//                    // Use the user email in the deals API call
+//                    performDealsApiCall(userEmail);
+//                } else {
+//                    Log.e("Profile", "Error loading user email: " + response.message());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<String> call, Throwable t) {
+//                Log.e("Profile", "Error loading user email: " + t.getMessage());
+//                // Handle the failure case
+//            }
+//        });
+//    }
 
     private void performDealsApiCall(String userEmail) {
         RetrofitService retrofitService = new RetrofitService(this);
@@ -108,30 +135,32 @@ public class Profile extends AppCompatActivity {
         return jwtToken;
     }
 
-    private void loadUserFromToken(final Callback<String> userCallback) {
+    private void loadUserFromToken(final Callback<User> userCallback) {
         RetrofitService retrofitService = new RetrofitService(this);
         UserApi userApi = retrofitService.getRetrofit().create(UserApi.class);
 
-        String token = retrieveToken();
-
-        userApi.getUserFromToken(token)
-                .enqueue(new Callback<String>() {
+        userApi.fromToke()
+                .enqueue(new Callback<User>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
+                    public void onResponse(Call<User> call, Response<User> response) {
                         if (response.isSuccessful() && response.body() != null) {
-                            String userEmail = response.body();
-                            userCallback.onResponse(call, Response.success(userEmail));
+                            User user = response.body();
+                            // Call the callback with the User data
+                            userCallback.onResponse(call, Response.success(user));
                         } else {
-                            userCallback.onFailure(call, new Throwable("Error loading user information: " + response.message()));
+                            // Handle error and call the callback with the error
+                            userCallback.onFailure(call, new IOException("Error: " + response.code()));
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        userCallback.onFailure(call, new Throwable("Error loading user information: " + t.getMessage()));
+                    public void onFailure(Call<User> call, Throwable t) {
+                        // Handle failure and call the callback with the failure
+                        userCallback.onFailure(call, t);
                     }
                 });
     }
+
 
     private void handleApiError(String errorMessage) {
         Log.e("Profile", errorMessage);
