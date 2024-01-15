@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.UI.CreateDActivity;
 import com.example.myapplication.UI.details.CommentListFrag;
 import com.example.myapplication.UI.details.DealDetailsFrag;
+import com.example.myapplication.UI.navActivity;
 import com.example.myapplication.model.CommentRequest;
 import com.example.myapplication.retrofit.DealApi;
 import com.example.myapplication.R;
@@ -30,6 +33,24 @@ public class DetailsDealActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_deal);
+
+
+        ImageButton btnBack = findViewById(R.id.btnBack);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an intent to navigate to navActivity
+                Intent intent = new Intent(DetailsDealActivity.this, navActivity.class);
+
+                // Add extra to specify that you want to show HomeFragment initially
+                intent.putExtra("initial_fragment", "home");
+
+                // Start the activity
+                startActivity(intent);
+            }
+        });
+
 
         // Create the RetrofitService instance
         RetrofitService retrofitService = new RetrofitService(this);
