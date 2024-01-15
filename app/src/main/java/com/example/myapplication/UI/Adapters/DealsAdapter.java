@@ -49,8 +49,8 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsHolder> implements F
 
         // Load image using Picasso
         Picasso.get().load(deals.getFirstImageUrl()).error(R.drawable.imagedef).into(holder.Image);
-
-        holder.Titre.setText(deals.getTitle());
+        Log.d("dealimage", deals.getFirstImageUrl());
+        holder.Titre.setText(deals.getFirstImageUrl());
 
         UserDTO dealCreator = deals.getDealCreator();
         if (dealCreator != null) {
