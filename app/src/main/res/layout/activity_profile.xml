@@ -90,7 +90,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
 
-        android:id="@+id/scrollView2"
+        android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="430dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -112,7 +112,7 @@
         android:textAlignment="center"
         android:textSize="25sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintBottom_toTopOf="@+id/recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
