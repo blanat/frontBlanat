@@ -27,6 +27,9 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsHolder> {
         this.listener = listener;
     }
 
+    //nv code pour search
+    //
+
     @NonNull
     @Override
     public DealsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
