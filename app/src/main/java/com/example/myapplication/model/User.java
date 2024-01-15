@@ -6,6 +6,7 @@ public class User {
     private String email;
     private String password;
     private Enum role;
+    private String Image;
     private String profileImageUrl;
 
     private Discussion discussion;
@@ -74,5 +75,13 @@ public class User {
     // Setter for role
     public void setRole(Enum role) {
         this.role = role;
+    }
+
+    public String getImage() {
+        return Image;
+    }
+
+    public void setImage(String image) {
+        Image = image;
     }
 }
