@@ -1,7 +1,11 @@
 package com.example.myapplication.UI;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -31,12 +36,14 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class CreateDiscFragment extends Fragment {
     private EditText etDiscussionTitle;
     private EditText etDiscussionDescription;
     private Button btnCreateDiscussion;
 
+    private final String my_channel_id="nassima";
     private Categories selectedCategory;
     private PowerSpinnerView spinnerCategories;
 
@@ -172,6 +179,12 @@ public class CreateDiscFragment extends Fragment {
                     if (createdDiscussion != null) {
                         Toast.makeText(requireContext(), "Discussion created successfully", Toast.LENGTH_SHORT).show();
 
+
+                        Log.d("MyApp", "Before sendNotification");
+                        sendNotification("Nouvelle discussion créée", "Titre : " + createdDiscussion.getTitre());
+                        Log.d("MyApp", "After sendNotification");
+
+
                         // Navigate to DiscussionFragment after creating the discussion
                         navigateToDiscussionFragment();
 
@@ -181,6 +194,8 @@ public class CreateDiscFragment extends Fragment {
                 } else {
                     Toast.makeText(requireContext(), "Failed to create discussion. Code: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
+
+
             }
 
             @Override
@@ -197,4 +212,50 @@ public class CreateDiscFragment extends Fragment {
                 .addToBackStack(null)
                 .commit();
     }
+
+    private void sendNotification(String title, String message) {
+        // Obtenez le jeton FCM
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        String targetDeviceToken = task.getResult();
+                        Log.d("CreateDiscussionFragment", "FCM Token: " + targetDeviceToken);
+
+                        // Vérifiez si le jeton FCM est obtenu avec succès
+                        if (targetDeviceToken != null && !targetDeviceToken.isEmpty()) {
+                            // Construisez la notification
+                            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(requireContext(), my_channel_id)
+                                    .setSmallIcon(R.mipmap.ic_launcher)
+                                    .setContentTitle(title)
+                                    .setContentText(message)
+                                    .setAutoCancel(true)
+                                    .setPriority(NotificationCompat.PRIORITY_HIGH);
+
+                            // Affichez la notification
+                            NotificationManager notificationManager = (NotificationManager) requireContext().getSystemService(Context.NOTIFICATION_SERVICE);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                NotificationChannel channel = new NotificationChannel(my_channel_id, "Channel Name", NotificationManager.IMPORTANCE_DEFAULT);
+                                notificationManager.createNotificationChannel(channel);
+                            }
+
+                            int notificationId = (int) System.currentTimeMillis();
+                            notificationManager.notify(notificationId, notificationBuilder.build());
+
+                        } else {
+                            // Échec de l'obtention du jeton FCM
+                            Log.e("CreateDiscussionFragment", "Failed to get FCM token");
+                        }
+                    } else {
+                        // Échec de l'obtention du jeton FCM
+                        Log.e("CreateDiscussionFragment", "Failed to get FCM token", task.getException());
+                    }
+                });
+    }
+
+    private void sendFcmMessage(String fcmMessage) {
+        Log.d("FCMMessage", fcmMessage);
+
+    }
+
+
 }

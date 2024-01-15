@@ -46,71 +46,79 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsHolder> implements F
     @Override
     public void onBindViewHolder(@NonNull DealsHolder holder, int position) {
         listData deals = dealslist.get(position);
+        if (deals != null) {
+            // Load image using Picasso
+            if (deals.getFirstImageUrl() != null) {
+                Picasso.get().load(deals.getFirstImageUrl()).error(R.drawable.imagedef).into(holder.Image);
+                Log.d("dealimage", deals.getFirstImageUrl());
+            } else {
+                Log.e("DealsAdapter", "onBindViewHolder: FirstImageUrl is null for deal at position " + position);
+            }
 
-        // Load image using Picasso
-        Picasso.get().load(deals.getFirstImageUrl()).error(R.drawable.imagedef).into(holder.Image);
-        Log.d("dealimage", deals.getFirstImageUrl());
-        holder.Titre.setText(deals.getTitle());
+            holder.Titre.setText(deals.getTitle());
 
-        UserDTO dealCreator = deals.getDealCreator();
-        if (dealCreator != null) {
-            // Set the user profile image
-            Picasso.get().load(dealCreator.getProfileImageUrl()).into(holder.userProfileImageView);
+            UserDTO dealCreator = deals.getDealCreator();
+            if (dealCreator != null) {
+                // Set the user profile image
+                Picasso.get().load(dealCreator.getProfileImageUrl()).into(holder.userProfileImageView);
 
-            // Set the username
-            holder.usernameTextView.setText(dealCreator.getUserName());
-        }
+                // Set the username
+                holder.usernameTextView.setText(dealCreator.getUserName());
+            }
 
 
-        holder.listDesc.setText(deals.getDescription());
-        holder.listTime.setText(deals.getTimePassedSinceCreation());
-        holder.priceA.setText(String.valueOf((int) deals.getPrice()));
-        holder.priceN.setText(String.valueOf((int) deals.getNewPrice()));
-        holder.priceA.setPaintFlags(holder.priceA.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.listDesc.setText(deals.getDescription());
+            holder.listTime.setText(deals.getTimePassedSinceCreation());
+            holder.priceA.setText(String.valueOf((int) deals.getPrice()));
+            holder.priceN.setText(String.valueOf((int) deals.getNewPrice()));
+            holder.priceA.setPaintFlags(holder.priceA.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-        holder.commentCount.setText(String.valueOf((int) deals.getNumberOfComments()));
-        Log.d("CommentCount", "Number of comments: " + deals.getNumberOfComments());
+            holder.commentCount.setText(String.valueOf((int) deals.getNumberOfComments()));
+            Log.d("CommentCount", "Number of comments: " + deals.getNumberOfComments());
 
-        holder.voteCount.setText(String.valueOf(deals.getDeg()));
+            holder.voteCount.setText(String.valueOf(deals.getDeg()));
 
-        if (deals.isDeliveryExist()) {
-            holder.livraisonIcon.setImageResource(R.drawable.livraison);
-            holder.livraisonIcon.setVisibility(View.VISIBLE);
+            if (deals.isDeliveryExist()) {
+                holder.livraisonIcon.setImageResource(R.drawable.livraison);
+                holder.livraisonIcon.setVisibility(View.VISIBLE);
+            } else {
+                holder.livraisonIcon.setVisibility(View.INVISIBLE);
+            }
+
+            // Modify the click listeners like this:
+
+            holder.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int clickedPosition = holder.getAdapterPosition();
+                    if (clickedPosition != RecyclerView.NO_POSITION) {
+                        listener.onItemClicked(dealslist.get(clickedPosition));
+                    }
+                }
+            });
+
+            holder.plus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int clickedPosition = holder.getAdapterPosition();
+                    if (listener != null && clickedPosition != RecyclerView.NO_POSITION) {
+                        listener.onPlusButtonClicked(clickedPosition);
+                    }
+                }
+            });
+
+            holder.moins.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int clickedPosition = holder.getAdapterPosition();
+                    if (listener != null && clickedPosition != RecyclerView.NO_POSITION) {
+                        listener.onMoinsButtonClicked(clickedPosition);
+                    }
+                }
+            });
         } else {
-            holder.livraisonIcon.setVisibility(View.INVISIBLE);
+        Log.e("DealsAdapter", "onBindViewHolder: deals is null at position " + position);
         }
-
-        // Modify the click listeners like this:
-
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int clickedPosition = holder.getAdapterPosition();
-                if (clickedPosition != RecyclerView.NO_POSITION) {
-                    listener.onItemClicked(dealslist.get(clickedPosition));
-                }
-            }
-        });
-
-        holder.plus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int clickedPosition = holder.getAdapterPosition();
-                if (listener != null && clickedPosition != RecyclerView.NO_POSITION) {
-                    listener.onPlusButtonClicked(clickedPosition);
-                }
-            }
-        });
-
-        holder.moins.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int clickedPosition = holder.getAdapterPosition();
-                if (listener != null && clickedPosition != RecyclerView.NO_POSITION) {
-                    listener.onMoinsButtonClicked(clickedPosition);
-                }
-            }
-        });
     }
         @Override
         public int getItemCount () {

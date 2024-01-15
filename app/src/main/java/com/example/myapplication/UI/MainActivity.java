@@ -19,8 +19,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        String token = task.getResult();
+                        Log.i(TAG, "FCM Token: " + token);
+
+                        // TODO: Envoyez le jeton à votre serveur ou effectuez d'autres actions
+                    } else {
+                        Log.w(TAG, "Échec de l'obtention du jeton d'enregistrement FCM", task.getException());
+                    }
+                });
+
+        FirebaseMessaging.getInstance().setAutoInitEnabled(true);
+
+
         Button loginButton = findViewById(R.id.btnLogin);
         Button signupButton = findViewById(R.id.btnSignup);
+
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,16 +56,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        Log.w(TAG, "Fetching FCM registration token failed", task.getException());
-                        return;
-                    }
-                    String token = task.getResult();
-                    Log.i(TAG, token.toString());
 
-                });
+
 
     }
+
 }
