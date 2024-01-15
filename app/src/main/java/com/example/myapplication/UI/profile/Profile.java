@@ -1,6 +1,7 @@
 package com.example.myapplication.UI.profile;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +10,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -33,7 +36,10 @@ public class Profile extends AppCompatActivity {
     private RetrofitService retrofitService;
     private UserApi userApi;
     private String email;
-    private String password;
+    private RecyclerView recyclerView;
+    private EditText editText;
+    private ArrayAdapter<listData> SavedDealsAdapter;
+    private List<listData> dealslist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

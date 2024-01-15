@@ -75,4 +75,5 @@ public interface UserApi {
 
     @POST("/api/discussions/{discussionId}/updateSave")
     Call<Integer> updateSave(@Path("discussionId") Long discussionId);
+
 }

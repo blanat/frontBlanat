@@ -51,7 +51,7 @@ public interface DealApi {
     @POST("/api/deals/{dealId}/decrement")
     Call<Void> decrementDeg(@Path("dealId") long dealId);
 
-    @GET("/api/deals/user/{email}")
+    @GET("/api/deals/userByEmail/{email}")
     Call<List<listData>> getListDealsDTOByUserEmail(@Path("email") String userEmail);
 }
 
