@@ -108,6 +108,8 @@ public class changMdp extends AppCompatActivity {
                     entredpaswordverif1.setText("");
                     newpassword1.setText("");
                     entredOldpasword1.setText("");
+                    Intent intent1 = new Intent(getBaseContext(), Parameter.class);
+                    startActivity(intent1);
                     
                 } else {
                     Toast.makeText(getBaseContext(), "password can't be change try again!", Toast.LENGTH_SHORT).show();
@@ -120,7 +122,9 @@ public class changMdp extends AppCompatActivity {
                 entredpaswordverif1.setText("");
                 newpassword1.setText("");
                 entredOldpasword1.setText("");
-                Toast.makeText(getBaseContext(), "password changed successfully!!", Toast.LENGTH_SHORT).show();
+                Intent intent1 = new Intent(getBaseContext(), Parameter.class);
+                startActivity(intent1);
+                Toast.makeText(getBaseContext(), "password password failed to changed !!", Toast.LENGTH_SHORT).show();
             }
         });
     }
