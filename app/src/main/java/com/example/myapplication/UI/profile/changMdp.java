@@ -1,19 +1,17 @@
 package com.example.myapplication.UI.profile;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.myapplication.R;
-import com.example.myapplication.UI.LoginScreen;
 import com.example.myapplication.model.User;
 import com.example.myapplication.retrofit.RetrofitService;
 import com.example.myapplication.retrofit.UserApi;
@@ -23,6 +21,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class changMdp extends AppCompatActivity {
+    final TextView entredOldpasword = findViewById(R.id.etPassword);
+    final TextView entredpaswordverif = findViewById(R.id.verifPassword);
+    final TextView newpassword = findViewById(R.id.newPassword);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +55,21 @@ public class changMdp extends AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        Intent receivedIntent = getIntent();
+                        String passwordOld = receivedIntent.getStringExtra("password");
+                        String oldPasswordEnteredByUser = entredOldpasword.getText().toString().trim();
+                        String oldPasswordEnteredByUserVerif = entredpaswordverif.getText().toString().trim();
+
+                        if(!passwordOld.equals(oldPasswordEnteredByUser)){
+                            entredOldpasword.setText("old password incorrect");
+                            Toast.makeText(getBaseContext(), "old password incorrect!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        if (!oldPasswordEnteredByUserVerif.equals(oldPasswordEnteredByUser)){
+                            Toast.makeText(getBaseContext(), "Entered password do not match!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         updatePassword();
                     }
                 })
@@ -71,18 +87,14 @@ public class changMdp extends AppCompatActivity {
     private void updatePassword() {
         RetrofitService retrofitService = new RetrofitService(this);
         UserApi userApi = retrofitService.getRetrofit().create(UserApi.class);
-        final TextView oldpasword = findViewById(R.id.etPassword);
-        final TextView newpassword = findViewById(R.id.newPassword);
+
 
         String newPassword = newpassword.getText().toString().trim();
         Intent receivedIntent = getIntent();
         String email = receivedIntent.getStringExtra("email");
         String passwordOld = receivedIntent.getStringExtra("password");
 
-        if(!passwordOld.equals(oldpasword)){
-            oldpasword.setText("old password incorrect");
-            return;
-        }
+
         Call<User> updatePasswordCall = userApi.updatePassword(email , newPassword);
         updatePasswordCall.enqueue(new Callback<User>() {
             @Override
