@@ -20,6 +20,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
@@ -61,6 +62,11 @@ public class DiscussionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_discussion, container, false);
         setHasOptionsMenu(true);
+
+        Toolbar toolbar = requireActivity().findViewById(R.id.toolbar);
+
+        // Set the title to the desired string
+        toolbar.setTitle("Discussion");
 
         // Setup ListView and adapter
         ListView listView = view.findViewById(R.id.listView);

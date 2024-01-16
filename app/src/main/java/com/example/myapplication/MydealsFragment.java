@@ -1,64 +1,158 @@
 package com.example.myapplication;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MydealsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class MydealsFragment extends Fragment {
+import com.example.myapplication.UI.Adapters.SavedDealsAdapter;
+import com.example.myapplication.UI.Adapters.selectListener;
+import com.example.myapplication.UI.details.DetailsDealActivity;
+import com.example.myapplication.model.User;
+import com.example.myapplication.model.listData;
+import com.example.myapplication.retrofit.DealApi;
+import com.example.myapplication.retrofit.RetrofitService;
+import com.example.myapplication.retrofit.UserApi;
+import com.squareup.picasso.Picasso;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import java.io.File;
+import java.util.List;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class MydealsFragment extends Fragment implements selectListener {
+
+    private RetrofitService retrofitService;
+
+    private RecyclerView recyclerView;
+    private String email;
+
 
     public MydealsFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MydealsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MydealsFragment newInstance(String param1, String param2) {
+
+    public static MydealsFragment newInstance() {
         MydealsFragment fragment = new MydealsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mydeals, container, false);
+        View view = inflater.inflate(R.layout.fragment_mydeals, container, false);
+
+        recyclerView = view.findViewById(R.id.recycler_view);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        // Correct initialization of retrofitService
+        retrofitService = new RetrofitService(requireContext());
+
+        UserApi userApi = retrofitService.getRetrofit().create(UserApi.class);
+
+        String jwtToken = retrieveToken();
+
+        userApi.fromToke("Bearer " + jwtToken)
+                .enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call, Response<User> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            User user = response.body();
+                            email = user.getEmail();
+                            loadDeals();
+                            Log.d("UserApiResponse", "User data: " + user.toString());
+                        } else {
+                            // Log the error
+                            Log.e("UserApiResponse", "Error: " + response.code());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+                        // Log the failure
+                        Log.e("UserApiFailure", "Failure: " + t.getMessage());
+                    }
+                });
+
+        return view;
+    }
+
+    private String retrieveToken() {
+        // Retrieve the token from SharedPreferences using the Activity's context
+        SharedPreferences preferences = requireActivity().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        String jwtToken = preferences.getString("jwtToken", "");
+        // Log the token for debugging
+        Log.d("Token", "Retrieved JWT Token: " + jwtToken);
+        return jwtToken;
+    }
+
+
+    private void loadDeals() {
+        DealApi dealsApi = retrofitService.getRetrofit().create(DealApi.class);
+        dealsApi.getListDealsDTOByUserEmail(email).enqueue(new Callback<List<listData>>() {
+            @Override
+            public void onResponse(Call<List<listData>> call, Response<List<listData>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<listData> dealsList = response.body();
+                    Log.d("ProfileActivity", "Deals retrieved: " + dealsList.size());
+                    populateListView(dealsList);
+                } else {
+                    Log.e("ProfileActivity", "Error loading deals");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<listData>> call, Throwable t) {
+                Log.e("ProfileActivity", "Failure loading deals: " + t.getMessage());
+            }
+        });
+    }
+
+
+    private void populateListView(List<listData> dealsList) {
+        Log.d("ProfileActivity", "populateListView called with " + dealsList.size() + " deals");
+        if (!dealsList.isEmpty()) {
+            for (listData deal : dealsList) {
+                Log.d("ProfileActivity", "Deal: " + deal.getTitle());
+            }
+
+            // Use the DealsAdapter directly
+            com.example.myapplication.UI.Adapters.SavedDealsAdapter dealsAdapter = new SavedDealsAdapter(dealsList, this);
+            recyclerView.setAdapter(dealsAdapter);
+
+
+        }
+    }
+
+    public void onItemClicked(listData deal) {
+        Intent intent = new Intent(requireContext(), DetailsDealActivity.class);
+        intent.putExtra("deal", deal);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onPlusButtonClicked(int position) {
+
+    }
+
+    @Override
+    public void onMoinsButtonClicked(int position) {
+
     }
 }

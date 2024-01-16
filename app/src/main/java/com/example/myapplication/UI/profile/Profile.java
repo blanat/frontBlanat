@@ -179,7 +179,7 @@ public class Profile extends AppCompatActivity implements selectListener {
             incrementDegree(dealslist.get(position).getDealID(), position);
             dealslist.get(position).setInteracted(true);
         } else {
-         //User has already interacted, show a message or handle accordingly
+            //User has already interacted, show a message or handle accordingly
             Log.d("DealsAdapter", "User has already interacted with this deal");
         }
     }
@@ -240,4 +240,3 @@ public class Profile extends AppCompatActivity implements selectListener {
         });
     }
 }
-

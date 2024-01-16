@@ -65,7 +65,8 @@ public class navActivity extends AppCompatActivity {
             } else if (itemId == R.id.add) {
                 startActivity(new Intent(navActivity.this, CreateDActivity.class));
             } else if (itemId == R.id.profil) {
-                startActivity(new Intent(navActivity.this, Profile.class));
+                //startActivity(new Intent(navActivity.this, ProfilFragment.class));
+                replaceFragment(new ProfilFragment());
             } else {
                 Log.w("Navmenu", "Unhandled item ID: " + itemId);
             }

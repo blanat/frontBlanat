@@ -25,7 +25,7 @@ public class Parameter extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parameter);
 
-        final TextView backLink = findViewById(R.id.backID);
+        //final TextView backLink = findViewById(R.id.backID);
         final TextView modMdpLink = findViewById(R.id.modMdp);
         final TextView delAccLink = findViewById(R.id.delAcc);
         Intent intent = getIntent();
@@ -34,7 +34,7 @@ public class Parameter extends AppCompatActivity {
             email = intent.getStringExtra("email");
         }
 
-        backLink.setOnClickListener(new View.OnClickListener() {
+        /*backLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent signupIntent = new Intent(Parameter.this, Profile.class);
@@ -42,7 +42,7 @@ public class Parameter extends AppCompatActivity {
                 startActivity(signupIntent);
             }
         });
-
+*/
         modMdpLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

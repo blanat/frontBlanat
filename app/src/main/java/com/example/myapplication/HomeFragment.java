@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import androidx.appcompat.widget.Toolbar;
+
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -64,6 +66,13 @@ public class HomeFragment extends Fragment implements selectListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+
+        Toolbar toolbar = requireActivity().findViewById(R.id.toolbar);
+
+        // Set the title to the desired string
+        toolbar.setTitle("Blanat");
+
 
         recyclerView = view.findViewById(R.id.deals_recycleview);
         editText = view.findViewById(R.id.edittext);
