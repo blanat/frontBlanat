@@ -1,5 +1,6 @@
 <!-- item_category_spinner.xml -->
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/text_category"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
