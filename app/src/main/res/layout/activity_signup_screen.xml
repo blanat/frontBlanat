@@ -81,6 +81,7 @@
         android:background="@drawable/custom_edittext"
         android:hint="Password"
         android:inputType="textPassword"
+        app:endIconMode="password_toggle"
         app:layout_constraintBottom_toTopOf="@+id/etPassword2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
