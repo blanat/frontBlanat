@@ -13,6 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/my_primary"
         tools:context=".UI.profile.Profile">
 
 
@@ -67,6 +68,7 @@
             android:layout_height="44dp"
             android:layout_marginStart="5dp"
             android:textSize="27sp"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toTopOf="@+id/fragmentContainer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.338"
@@ -92,7 +94,7 @@
             android:id="@+id/fragmentContainer"
             android:layout_width="match_parent"
             android:layout_height="450dp"
-            android:background="@android:color/background_light"
+            android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"></FrameLayout>
