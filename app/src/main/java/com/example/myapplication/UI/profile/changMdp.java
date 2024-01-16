@@ -3,6 +3,7 @@ package com.example.myapplication.UI.profile;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -98,19 +99,21 @@ public class changMdp extends AppCompatActivity {
         String passwordOld = receivedIntent.getStringExtra("password");
 
 
-        Call<User> updatePasswordCall = userApi.updatePassword(email , newPassword);
-        updatePasswordCall.enqueue(new Callback<User>() {
+        Call<String> updatePasswordCall = userApi.updatePassword(email , newPassword);
+        updatePasswordCall.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<String> call, Response<String> response) {
+                int statusCode = response.code();
                 if (response.isSuccessful()) {
                     Toast.makeText(getBaseContext(), "password changed successfully!", Toast.LENGTH_SHORT).show();
-                    User updatedUser = response.body();
+//                    User updatedUser = response.body();
                     entredpaswordverif1.setText("");
                     newpassword1.setText("");
                     entredOldpasword1.setText("");
+
                     Intent intent1 = new Intent(getBaseContext(), Parameter.class);
                     startActivity(intent1);
-                    
+
                 } else {
                     Toast.makeText(getBaseContext(), "password can't be change try again!", Toast.LENGTH_SHORT).show();
 
@@ -118,14 +121,16 @@ public class changMdp extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.e("onFailure", "Failed to execute call", t);
                 entredpaswordverif1.setText("");
                 newpassword1.setText("");
                 entredOldpasword1.setText("");
                 Intent intent1 = new Intent(getBaseContext(), Parameter.class);
                 startActivity(intent1);
-                //Toast.makeText(getBaseContext(), "password password failed to changed !!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "password failed to changed !!", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 }

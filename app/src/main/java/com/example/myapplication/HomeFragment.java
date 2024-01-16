@@ -310,7 +310,7 @@ public class HomeFragment extends Fragment implements selectListener {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     // Decrement the degree in the local list
-                    dealslist.get(position).setDeg(Math.max(0, dealslist.get(position).getDeg() - 1));
+                    dealslist.get(position).setDeg(dealslist.get(position).getDeg() - 1);
                     // Update the corresponding item in the adapter
                     recyclerView.getAdapter().notifyItemChanged(position);
                 } else {
