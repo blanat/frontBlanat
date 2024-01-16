@@ -124,7 +124,7 @@ public class changMdp extends AppCompatActivity {
                 entredOldpasword1.setText("");
                 Intent intent1 = new Intent(getBaseContext(), Parameter.class);
                 startActivity(intent1);
-                Toast.makeText(getBaseContext(), "password password failed to changed !!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getBaseContext(), "password password failed to changed !!", Toast.LENGTH_SHORT).show();
             }
         });
     }

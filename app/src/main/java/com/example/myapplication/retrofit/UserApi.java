@@ -29,7 +29,7 @@ public interface UserApi {
 
 
     @PUT("/api/users/{email}")
-    Call<User> updatePassword(@Path("email") String email, @Body String newPassword);
+    Call<String> updatePassword(@Path("email") String email, @Body String newPassword);
 
     @DELETE("/api/users/{email}/password")
     Call<Void> deleteUser(@Path("email") String email);
