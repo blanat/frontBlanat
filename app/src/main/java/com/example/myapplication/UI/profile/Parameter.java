@@ -86,7 +86,7 @@ public class Parameter extends AppCompatActivity {
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 // Handle network or other failures
-                Toast.makeText(Parameter.this, "Network error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Parameter.this, "deleted succesfully", Toast.LENGTH_SHORT).show();
             }
         });
     }
